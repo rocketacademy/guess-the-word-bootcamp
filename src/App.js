@@ -6,14 +6,15 @@ class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
     super(props);
-    this.state = {
+    this.initialState = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      currWord: getRandomWord(),
+      currWord: [...getRandomWord().split("")],
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
-      // Insert num guesses left state here
-      // Insert form input state here
+      numGuessesLeft: 5,
+      userInputWord: "",
     };
+    this.state = { ...this.initialState };
   }
 
   generateWordDisplay = () => {
@@ -27,6 +28,29 @@ class App extends React.Component {
       }
     }
     return wordDisplay.toString();
+  };
+
+  handleChange = (event) => {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        userInputWord: event.target.value,
+      };
+    });
+    return;
+  };
+
+  handleSubmit = (event) => {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        guessedLetters: [...prevState.guessedLetters, this.state.userInputWord],
+        attemptsLeft: prevState.attemptsLeft - 1,
+        userInputWord: "",
+      };
+    });
+    event.preventDefault();
+    return;
   };
 
   // Insert form callback functions handleChange and handleSubmit here
@@ -43,8 +67,17 @@ class App extends React.Component {
             ? this.state.guessedLetters.toString()
             : "-"}
           <h3>Input</h3>
-          {/* Insert form element here */}
-          Todo: Insert form element here
+          <form>
+            <label>letters:</label>
+            <div>
+              <input
+                type="text"
+                value={this.state.userInputWord}
+                onChange={this.handleChange}
+              />
+              <input type="submit" value="submit" onClick={this.handleSubmit} />
+            </div>
+          </form>
         </header>
       </div>
     );
