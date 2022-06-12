@@ -6,14 +6,20 @@ class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
     super(props);
-    this.state = {
+    this.initialState = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
+      numOfGuessesLeft: 10,
       // Insert form input state here
+      value: "",
     };
+
+    this.state = { ...this.initialState };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   generateWordDisplay = () => {
@@ -31,6 +37,21 @@ class App extends React.Component {
 
   // Insert form callback functions handleChange and handleSubmit here
 
+  handleChange(event) {
+    this.setState({
+      value: event.target.value,
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.setState({
+      ...this.state,
+      value: "",
+      guessedLetters: [...this.state.guessedLetters, this.state.value],
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -44,7 +65,17 @@ class App extends React.Component {
             : "-"}
           <h3>Input</h3>
           {/* Insert form element here */}
-          Todo: Insert form element here
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+              maxLength={1}
+            />
+            <div>
+              <input type="submit" value="Submit" />
+            </div>
+          </form>
         </header>
       </div>
     );
