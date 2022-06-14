@@ -6,15 +6,24 @@ class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
     super(props);
-    this.state = {
+    const currWord = getRandomWord();
+    this.initialState = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      currWord: getRandomWord(),
+      currWord: currWord,
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
-      // Insert num guesses left state here
-      // Insert form input state here
+      attemptsLeft: currWord.length + 5,
+      currInputWord: "",
+      rounds: 0,
+      score: 0,
+      guessedWord: "",
     };
+    this.state = { ...this.initialState };
   }
+
+  calculateAttemptsLeft = (word) => {
+    return word.length + 5;
+  };
 
   generateWordDisplay = () => {
     const wordDisplay = [];
@@ -30,6 +39,81 @@ class App extends React.Component {
   };
 
   // Insert form callback functions handleChange and handleSubmit here
+  handleChange = (event) => {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        currInputWord: event.target.value,
+      };
+    });
+
+    return;
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    const wordGuessed = [];
+
+    if (this.state.currWord.includes(this.state.currInputWord)) {
+      for (let letter of this.state.currWord) {
+        if (this.state.currInputWord.includes(letter)) {
+          wordGuessed.push(letter);
+        } else if (this.state.guessedLetters.includes(letter)) {
+          wordGuessed.push(letter);
+        } else {
+          wordGuessed.push("_");
+        }
+      }
+
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          currInputWord: "",
+          guessedLetters: [
+            ...prevState.guessedLetters,
+            this.state.currInputWord,
+          ],
+          guessedWord: wordGuessed.join(""),
+        };
+      });
+    } else {
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          currInputWord: "",
+          attemptsLeft: prevState.attemptsLeft - 1,
+          guessedLetters: [
+            ...prevState.guessedLetters,
+            this.state.currInputWord,
+          ],
+        };
+      });
+    }
+
+    if (this.state.guessedWord === this.state.currWord) {
+      const newWord = getRandomWord();
+      this.setState({
+        ...this.initialState,
+        currWord: newWord,
+        attemptsLeft: this.calculateAttemptsLeft(newWord),
+        rounds: this.state.rounds + 1,
+        score: this.state.score + 1,
+      });
+      return;
+    } else if (this.state.attemptsLeft === 0) {
+      const newWord = getRandomWord();
+      this.setState({
+        ...this.initialState,
+        currWord: newWord,
+        attemptsLeft: this.calculateAttemptsLeft(newWord),
+        rounds: this.state.rounds + 1,
+      });
+      return;
+    }
+  };
+
+  score = (event) => {};
 
   render() {
     return (
@@ -43,8 +127,19 @@ class App extends React.Component {
             ? this.state.guessedLetters.toString()
             : "-"}
           <h3>Input</h3>
-          {/* Insert form element here */}
-          Todo: Insert form element here
+          <form onSubmit={this.handleSubmit}>
+            <label>Make a guess</label>
+            <div>
+              <input
+                type="text"
+                value={this.state.currInputWord}
+                onChange={this.handleChange}
+              ></input>
+            </div>
+            <input type="submit" value="submit" />
+          </form>
+          <h3>Score</h3>
+          {this.state.score} / {this.state.rounds}
         </header>
       </div>
     );
