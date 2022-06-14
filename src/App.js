@@ -57,7 +57,9 @@ class App extends React.Component {
 
     if (this.state.currWord.includes(this.state.currInputWord)) {
       for (let letter of this.state.currWord) {
-        if (this.state.guessedLetters.includes(letter)) {
+        if (this.state.currInputWord.includes(letter)) {
+          wordGuessed.push(letter);
+        } else if (this.state.guessedLetters.includes(letter)) {
           wordGuessed.push(letter);
         } else {
           wordGuessed.push("_");
