@@ -67,7 +67,15 @@ class App extends React.Component {
       return;
     }
 
-    if (this.state.currWord.includes(this.state.currInputWord)) {
+    if (this.state.guessedLetters.includes(this.state.currInputWord)) {
+      alert("Letter used, please enter another letter");
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          currInputWord: "",
+        };
+      });
+    } else if (this.state.currWord.includes(this.state.currInputWord)) {
       this.setState((prevState) => {
         return {
           ...prevState,
@@ -116,7 +124,8 @@ class App extends React.Component {
                 type="text"
                 value={this.state.currInputWord}
                 onChange={this.handleChange}
-                maxLength={1}
+                pattern="[A-Za-z]{1}"
+                placeholder="enter a letter from a - z"
               ></input>
             </div>
             <input type="submit" value="submit" />
