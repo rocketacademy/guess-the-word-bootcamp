@@ -76,10 +76,12 @@ class App extends React.Component {
 
   handleClick() {
     const newWord = getRandomWord();
+    const roundsWon = this.state.numOfRoundsWon;
     this.setState({
       ...this.initialState,
       currWord: newWord,
       numOfRounds: this.state.numOfRounds + 1,
+      numOfRoundsWon: roundsWon,
       numOfUniqueLetters: countNumOfUniqueLetters(newWord),
     });
   }
