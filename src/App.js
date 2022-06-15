@@ -54,11 +54,14 @@ class App extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    if (this.state.currWord.includes(this.state.value)) {
+    if (this.state.currWord.includes(this.state.value.toLowerCase())) {
       this.setState({
         ...this.state,
         value: "",
-        guessedLetters: [...this.state.guessedLetters, this.state.value],
+        guessedLetters: [
+          ...this.state.guessedLetters,
+          this.state.value.toLowerCase(),
+        ],
         correctGuessedLetters: [
           ...this.state.correctGuessedLetters,
           this.state.value,
@@ -69,7 +72,10 @@ class App extends React.Component {
         ...this.state,
         value: "",
         numOfGuessesLeft: this.state.numOfGuessesLeft - 1,
-        guessedLetters: [...this.state.guessedLetters, this.state.value],
+        guessedLetters: [
+          ...this.state.guessedLetters,
+          this.state.value.toLowerCase(),
+        ],
       });
     }
   }
@@ -137,7 +143,7 @@ class App extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <input
               type="text"
-              value={this.state.value}
+              value={this.state.value.toLowerCase()}
               onChange={this.handleChange}
               maxLength={1}
             />
