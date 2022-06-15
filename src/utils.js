@@ -6,10 +6,7 @@ export const getRandomWord = () => {
 };
 
 export const countNumOfUniqueLetters = (word) => {
-  let setOfUniqueLetters = new Set();
+  let setOfUniqueLetters = new Set(word);
 
-  for (let i = 0; i < word.length; i++) {
-    setOfUniqueLetters.add(word[i]);
-  }
   return setOfUniqueLetters.size;
 };

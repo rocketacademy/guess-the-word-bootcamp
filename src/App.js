@@ -12,6 +12,7 @@ class App extends React.Component {
       currWord: newWord,
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
+      correctGuessedLetters: [],
       // Insert num guesses left state here
       numOfGuessesLeft: 3,
       // Insert form input state here
@@ -19,12 +20,14 @@ class App extends React.Component {
       numOfUniqueLetters: countNumOfUniqueLetters(newWord),
       numOfRounds: 1,
       numOfRoundsWon: 0,
+      displayWinOrLost: "",
     };
     this.state = {
       ...this.initialState,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   generateWordDisplay = () => {
@@ -56,7 +59,10 @@ class App extends React.Component {
         ...this.state,
         value: "",
         guessedLetters: [...this.state.guessedLetters, this.state.value],
-        numOfUniqueLetters: this.state.numOfUniqueLetters - 1,
+        correctGuessedLetters: [
+          ...this.state.correctGuessedLetters,
+          this.state.value,
+        ],
       });
     } else {
       this.setState({
@@ -68,38 +74,38 @@ class App extends React.Component {
     }
   }
 
+  handleClick() {
+    const newWord = getRandomWord();
+    this.setState({
+      ...this.initialState,
+      currWord: newWord,
+      numOfRounds: this.state.numOfRounds + 1,
+      numOfUniqueLetters: countNumOfUniqueLetters(newWord),
+    });
+  }
+
   componentDidUpdate() {
     if (this.state.numOfGuessesLeft === 0) {
-      window.alert(
-        `You lost! The word was ${this.state.currWord}. 
-Stats:
-Rounds Played: ${this.state.numOfRounds} 
-Rounds Won: ${this.state.numOfRoundsWon}`
-      );
-      const newWord = getRandomWord();
       this.setState({
-        ...this.initialState,
-        currWord: newWord,
-        numOfRounds: this.state.numOfRounds + 1,
-        numOfUniqueLetters: countNumOfUniqueLetters(newWord),
+        ...this.state,
+        displayWinOrLost:
+          'You Lost! The Word is "' +
+          this.state.currWord +
+          '". Click Restart to Play again',
+        numOfGuessesLeft: "",
       });
       return;
     }
 
-    if (this.state.numOfUniqueLetters === 0) {
-      window.alert(
-        `You won! The word is ${this.state.currWord}!
-Stats:
-Rounds Played: ${this.state.numOfRounds}
-Rounds Won: ${this.state.numOfRoundsWon + 1}`
-      );
-      const newWord = getRandomWord();
+    const numOfCorrectGuesses = countNumOfUniqueLetters(
+      this.state.correctGuessedLetters
+    );
+    if (this.state.numOfUniqueLetters === numOfCorrectGuesses) {
       this.setState({
-        ...this.initialState,
-        currWord: newWord,
-        numOfRounds: this.state.numOfRounds + 1,
+        ...this.state,
+        displayWinOrLost: "You Won! Click Restart to Play again",
+        numOfUniqueLetters: "",
         numOfRoundsWon: this.state.numOfRoundsWon + 1,
-        numOfUniqueLetters: countNumOfUniqueLetters(newWord),
       });
       return;
     }
@@ -110,12 +116,20 @@ Rounds Won: ${this.state.numOfRoundsWon + 1}`
       <div className="App">
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
+          <h3>
+            Round {this.state.numOfRounds}
+            <br></br>
+            Score {this.state.numOfRoundsWon}
+          </h3>
+          <h2>{this.state.displayWinOrLost}</h2>
           <h3>Word Display</h3>
           {this.generateWordDisplay()}
           <h3>Guessed Letters</h3>
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
+          <h3>Guesses Left</h3>
+          {this.state.numOfGuessesLeft}
           <h3>Input</h3>
           {/* Insert form element here */}
           <form onSubmit={this.handleSubmit}>
@@ -129,6 +143,7 @@ Rounds Won: ${this.state.numOfRoundsWon + 1}`
               <input type="submit" value="Submit" />
             </div>
           </form>
+          <button onClick={this.handleClick}>Restart</button>
         </header>
       </div>
     );
