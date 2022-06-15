@@ -14,7 +14,7 @@ class App extends React.Component {
       guessedLetters: [],
       correctGuessedLetters: [],
       // Insert num guesses left state here
-      numOfGuessesLeft: 3,
+      numOfGuessesLeft: 6,
       // Insert form input state here
       value: "",
       numOfUniqueLetters: countNumOfUniqueLetters(newWord),
