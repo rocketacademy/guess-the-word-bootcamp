@@ -10,13 +10,14 @@ class App extends React.Component {
     this.initialState = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       currWord: currWord,
+      currWordSet: new Set(currWord),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       attemptsLeft: 10,
       currInputWord: "",
       numOfRoundPlayed: 0,
       numOfWordsGuessCorrect: 0,
-      guessedWord: "",
+      correctGuessed: new Set(),
     };
     this.state = { ...this.initialState };
   }
@@ -49,20 +50,24 @@ class App extends React.Component {
     event.preventDefault();
     const newWord = getRandomWord();
 
-    if (this.state.attemptsLeft === 0) {
+    if (this.state.correctGuessed.size === this.state.currWordSet.size) {
       this.setState({
         ...this.initialState,
         currWord: newWord,
-        numOfRoundPlayed: this.state.numOfRoundPlayed + 1,
-        numOfWordsGuessCorrect: this.state.numOfWordsGuessCorrect,
-      });
-      return;
-    } else if (this.state.guessedWord === this.state.currWord) {
-      this.setState({
-        ...this.initialState,
-        currWord: newWord,
+        currWordSet: new Set(newWord),
         numOfRoundPlayed: this.state.numOfRoundPlayed + 1,
         numOfWordsGuessCorrect: this.state.numOfWordsGuessCorrect + 1,
+        correctGuessed: new Set(),
+      });
+      return;
+    } else if (this.state.attemptsLeft === 0) {
+      this.setState({
+        ...this.initialState,
+        currWord: newWord,
+        currWordSet: new Set(newWord),
+        numOfRoundPlayed: this.state.numOfRoundPlayed + 1,
+        numOfWordsGuessCorrect: this.state.numOfWordsGuessCorrect,
+        correctGuessed: new Set(),
       });
       return;
     }
@@ -84,7 +89,9 @@ class App extends React.Component {
             ...prevState.guessedLetters,
             this.state.currInputWord,
           ],
-          guessedWord: this.generateWordDisplay().replace(/,/g, ""),
+          correctGuessed: this.state.correctGuessed.add(
+            this.state.currInputWord
+          ),
         };
       });
     } else {
@@ -124,8 +131,10 @@ class App extends React.Component {
                 type="text"
                 value={this.state.currInputWord}
                 onChange={this.handleChange}
-                pattern="[A-Za-z]{1}"
+                maxLength="1"
+                pattern="[a-z]"
                 placeholder="enter a letter from a - z"
+                required
               ></input>
             </div>
             <input type="submit" value="submit" />
