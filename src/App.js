@@ -18,6 +18,7 @@ class App extends React.Component {
       numOfRoundPlayed: 0,
       numOfWordsGuessCorrect: 0,
       correctGuessed: new Set(),
+      message: "",
     };
     this.state = { ...this.initialState };
   }
@@ -46,11 +47,11 @@ class App extends React.Component {
     return;
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+  componentDidUpdate() {
     const newWord = getRandomWord();
 
     if (this.state.correctGuessed.size === this.state.currWordSet.size) {
+      let win = true;
       this.setState({
         ...this.initialState,
         currWord: newWord,
@@ -58,7 +59,11 @@ class App extends React.Component {
         numOfRoundPlayed: this.state.numOfRoundPlayed + 1,
         numOfWordsGuessCorrect: this.state.numOfWordsGuessCorrect + 1,
         correctGuessed: new Set(),
+        message: `You won! The word is ${this.state.currWord}`,
       });
+      if (win) {
+        alert("You won!");
+      }
       return;
     } else if (this.state.attemptsLeft === 0) {
       this.setState({
@@ -68,9 +73,13 @@ class App extends React.Component {
         numOfRoundPlayed: this.state.numOfRoundPlayed + 1,
         numOfWordsGuessCorrect: this.state.numOfWordsGuessCorrect,
         correctGuessed: new Set(),
+        message: `No attempt left! The word is ${this.state.currWord}`,
       });
       return;
     }
+  }
+  handleSubmit = (event) => {
+    event.preventDefault();
 
     if (this.state.guessedLetters.includes(this.state.currInputWord)) {
       alert("Letter used, please enter another letter");
@@ -122,6 +131,19 @@ class App extends React.Component {
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
+          <table>
+            <tr>
+              <th>Rounds Played</th>
+              <th>Correct Guesses</th>
+            </tr>
+            <tr>
+              <td>{this.state.numOfRoundPlayed}</td>
+              <td>{this.state.numOfWordsGuessCorrect}</td>
+            </tr>
+            <tr>
+              <td>{this.state.message}</td>
+            </tr>
+          </table>
           <h3>Input</h3>
           {/* Insert form element here */}
           <form onSubmit={this.handleSubmit}>
