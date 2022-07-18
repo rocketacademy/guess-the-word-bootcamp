@@ -26,8 +26,9 @@ class App extends React.Component {
     // for...of is a string and array iterator that does not use index
     for (let letter of this.state.currWord) {
       if (
-        this.state.guessedLetters.includes(letter) ||
-        this.state.numGuessesLeft === 0
+        this.state.guessedLetters.includes(letter)
+        // ||
+        // this.state.numGuessesLeft === 0
       ) {
         wordDisplay.push(letter);
       } else {
@@ -53,7 +54,7 @@ class App extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!this.state.input) {
+    if (!this.state.currUserInputCharacter) {
       return;
     }
 
@@ -72,12 +73,12 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(
-      "The current word is " +
-        this.state.currWord +
-        " and the number of guesses left is " +
-        this.state.numGuessesLeft
-    );
+    // console.log(
+    //   "The current word is " +
+    //     this.state.currWord +
+    //     " and the number of guesses left is " +
+    //     this.state.numGuessesLeft
+    // );
     return (
       <div className="App">
         <header className="App-header">
@@ -97,7 +98,7 @@ class App extends React.Component {
               <input
                 type="text"
                 onChange={this.handleChange}
-                value={this.state.currUserInputCharacter}
+                value={this.state.currUserInputCharacter.toLowerCase()}
               />
             </label>
             <input type="submit" value="Submit" />
