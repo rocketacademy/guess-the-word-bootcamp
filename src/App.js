@@ -13,7 +13,9 @@ class App extends React.Component {
       guessedLetters: [],
       // Insert num guesses left state here
       // Insert form input state here
+      currUserInputCharacter: "",
     };
+    // binding the scope of 'this' to the function 'handleChange'
   }
 
   generateWordDisplay = () => {
@@ -30,6 +32,41 @@ class App extends React.Component {
   };
 
   // Insert form callback functions handleChange and handleSubmit here
+  // can do with an arrow function instead
+
+  // handleChange needs to listen for what I'm typing (so 'onChange'), to track currUserInputCharacter
+  handleChange = (event) => {
+    this.setState((prevState) => {
+      return { ...prevState, currUserInputCharacter: event.target.value };
+    });
+  };
+
+  // handleSubmit needs to update guessedLetters
+  // by default, form will handle the submit and we get the letters from the current state
+  // event refers to the user's actions
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        guessedLetters: [
+          ...prevState.guessedLetters,
+          prevState.currUserInputCharacter,
+        ],
+        currUserInputCharacter: "",
+      };
+    });
+  };
+
+  // handleChange(event) {
+  //   this.setState({ value: event.target.value });
+  //   event.preventDefault();
+  // }
+
+  // handleSubmit(event) {
+  //   alert("A name was submitted: " + this.state.value);
+  //   event.preventDefault();
+  // }
 
   render() {
     return (
@@ -43,8 +80,18 @@ class App extends React.Component {
             ? this.state.guessedLetters.toString()
             : "-"}
           <h3>Input</h3>
-          {/* Insert form element here */}
-          Todo: Insert form element here
+          {this.state.currUserInputCharacter}
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Enter letters here:
+              <input
+                type="text"
+                onChange={this.handleChange}
+                value={this.state.currUserInputCharacter}
+              />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
         </header>
       </div>
     );
