@@ -7,7 +7,7 @@ class App extends React.Component {
     // Always call super with props in constructor to initialise parent class
     super(props);
     const currWord = getRandomWord();
-    const uniqueStr = [...new Set(currWord)].join("");
+    var uniqueStr = [...new Set(currWord)].join("");
     this.initialState = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       currWord: currWord,
@@ -18,7 +18,10 @@ class App extends React.Component {
       // Insert form input state here
       currUserInputCharacter: "",
       correctGuesses: 0,
-      uniqueStr: [...new Set(currWord)].join(""),
+      uniqueStr: uniqueStr,
+      numberOfLetters: uniqueStr.length,
+      // uniqueStr: [...new Set(currWord)].join(""),
+      // numberOfLetters: uniqueStr.size,
     };
     this.state = { ...this.initialState };
     // why is it that if i console log this.state.currWord here, i'll get two words?
@@ -91,7 +94,18 @@ class App extends React.Component {
     });
   };
 
+  checkHasUserGuessedWord = () => {
+    if (this.state.correctGuesses === this.state.numberOfLetters) {
+      return true;
+    }
+    return false;
+  };
+
   render() {
+    const hasUserGuessedWord = this.checkHasUserGuessedWord();
+    // const disableInputTrigger =
+    //   hasUserGuessedWord === true || this.state.numGuessesLeft === 0;
+    console.log(hasUserGuessedWord);
     return (
       <div className="App">
         <header className="App-header">
@@ -118,6 +132,11 @@ class App extends React.Component {
             </label>
             <input type="submit" value="Submit" />
           </form>
+          <div>
+            {this.state.hasUserGuessedWord
+              ? "Congratulations you won."
+              : "Keep guessing!"}
+          </div>
         </header>
       </div>
     );
