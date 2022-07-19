@@ -7,6 +7,7 @@ class App extends React.Component {
     // Always call super with props in constructor to initialise parent class
     super(props);
     const currWord = getRandomWord();
+    const uniqueStr = [...new Set(currWord)].join("");
     this.initialState = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       currWord: currWord,
@@ -16,6 +17,8 @@ class App extends React.Component {
       numGuessesLeft: currWord.length + 5,
       // Insert form input state here
       currUserInputCharacter: "",
+      correctGuesses: 0,
+      uniqueStr: [...new Set(currWord)].join(""),
     };
     this.state = { ...this.initialState };
     // why is it that if i console log this.state.currWord here, i'll get two words?
@@ -68,6 +71,12 @@ class App extends React.Component {
       return;
     }
 
+    if (this.state.uniqueStr.includes(this.state.currUserInputCharacter)) {
+      this.setState((prevState) => {
+        prevState.correctGuesses += 0.5;
+      });
+    }
+
     this.setState((prevState) => {
       return {
         ...prevState,
@@ -93,6 +102,7 @@ class App extends React.Component {
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
+          <h3></h3>
           <h3>You have {this.state.numGuessesLeft} guesses left.</h3>
           <h3>Input</h3>
           {this.state.currUserInputCharacter.toLowerCase()}
