@@ -102,18 +102,19 @@ class App extends React.Component {
     return false;
   };
 
+  resetGame = () => {
+    this.setState({ ...this.initialState });
+  };
+
   render() {
     let hasUserGuessedWord = this.checkHasUserGuessedWord();
-    // const disableInputTrigger =
-    //   hasUserGuessedWord === true || this.state.numGuessesLeft === 0;
+
     console.log(hasUserGuessedWord);
 
-    // var winningStatement = () => {
-    //   if (this.state.hasUserGuessedWord === true) {
-    //     return "Congratulations you've guessed the word!";
-    //   }
-    //   return "Keep guessing!";
-    // };
+    const disableInputTrigger =
+      hasUserGuessedWord === true || this.state.numGuessesLeft === 0;
+
+    const resetButton = <button onClick={this.resetGame}>Reset</button>;
 
     return (
       <div className="App">
@@ -125,27 +126,39 @@ class App extends React.Component {
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
-          <h3></h3>
-          <h3>You have {this.state.numGuessesLeft} guesses left.</h3>
           <h3>Input</h3>
           {this.state.currUserInputCharacter.toLowerCase()}
           <form onSubmit={this.handleSubmit}>
             <label>
-              Enter letters here:
-              <input
-                type="text"
-                maxLength="1"
-                onChange={this.handleChange}
-                value={this.state.currUserInputCharacter.toLowerCase()}
-              />
+              Enter letters here:{" "}
+              <p>
+                <input
+                  type="text"
+                  maxLength="1"
+                  onChange={this.handleChange}
+                  value={this.state.currUserInputCharacter.toLowerCase()}
+                  disabled={disableInputTrigger}
+                />
+              </p>
             </label>
-            <input type="submit" value="Submit" />
+            <input
+              type="submit"
+              value="Submit"
+              disabled={disableInputTrigger}
+            />
           </form>
           <div>
             {hasUserGuessedWord ? (
               <p>Congratulations you guessed the word!</p>
             ) : (
-              <p>Keep trying!</p>
+              <p>Guess the word!</p>
+            )}
+          </div>
+          <div>
+            {this.state.numGuessesLeft === 0 && !hasUserGuessedWord ? (
+              <p>You've run out of tries!</p>
+            ) : (
+              <p>You have {this.state.numGuessesLeft} guesses left.</p>
             )}
           </div>
         </header>
