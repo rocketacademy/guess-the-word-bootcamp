@@ -20,6 +20,7 @@ class App extends React.Component {
       correctGuesses: 0,
       uniqueStr: uniqueStr,
       numberOfLetters: uniqueStr.length,
+      winningStatus: "",
       // uniqueStr: [...new Set(currWord)].join(""),
       // numberOfLetters: uniqueStr.size,
     };
@@ -102,10 +103,18 @@ class App extends React.Component {
   };
 
   render() {
-    const hasUserGuessedWord = this.checkHasUserGuessedWord();
+    let hasUserGuessedWord = this.checkHasUserGuessedWord();
     // const disableInputTrigger =
     //   hasUserGuessedWord === true || this.state.numGuessesLeft === 0;
     console.log(hasUserGuessedWord);
+
+    // var winningStatement = () => {
+    //   if (this.state.hasUserGuessedWord === true) {
+    //     return "Congratulations you've guessed the word!";
+    //   }
+    //   return "Keep guessing!";
+    // };
+
     return (
       <div className="App">
         <header className="App-header">
@@ -133,9 +142,11 @@ class App extends React.Component {
             <input type="submit" value="Submit" />
           </form>
           <div>
-            {this.state.hasUserGuessedWord
-              ? "Congratulations you won."
-              : "Keep guessing!"}
+            {hasUserGuessedWord ? (
+              <p>Congratulations you guessed the word!</p>
+            ) : (
+              <p>Keep trying!</p>
+            )}
           </div>
         </header>
       </div>
