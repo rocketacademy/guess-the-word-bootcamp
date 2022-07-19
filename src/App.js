@@ -2,19 +2,18 @@ import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 
-const numStartGuesses = 10;
-
 class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
     super(props);
+    const currWord = getRandomWord();
     this.initialState = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      currWord: getRandomWord(),
+      currWord: currWord,
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
-      numGuessesLeft: numStartGuesses,
+      numGuessesLeft: currWord.length + 5,
       // Insert form input state here
       currUserInputCharacter: "",
     };
@@ -55,7 +54,12 @@ class App extends React.Component {
   handleSubmit = (event) => {
     if (this.state.numGuessesLeft === 0) {
       if (window.confirm("No more attempts left. Restart game?")) {
-        this.setState({ ...this.initialState });
+        this.setState({
+          ...this.initialState,
+          currWord: getRandomWord(),
+        });
+      } else {
+        console.log("User decided not to continue game");
       }
     }
     event.preventDefault();
@@ -79,12 +83,6 @@ class App extends React.Component {
   };
 
   render() {
-    // console.log(
-    //   "The current word is " +
-    //     this.state.currWord +
-    //     " and the number of guesses left is " +
-    //     this.state.numGuessesLeft
-    // );
     return (
       <div className="App">
         <header className="App-header">
