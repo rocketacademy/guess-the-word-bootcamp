@@ -102,27 +102,30 @@ class App extends React.Component {
     return false;
   };
 
-  resetGame = () => {
-    var uniqueStr = [...new Set(currWord)].join("");
-    var currWord = getRandomWord();
-    this.setState({
-      ...this.initialState,
-      currWord: currWord,
-      numGuessesLeft: currWord.length + 5,
-      uniqueStr: uniqueStr,
-      numberOfLetters: uniqueStr.length,
-    });
-  };
-
   render() {
     let hasUserGuessedWord = this.checkHasUserGuessedWord();
 
     console.log(hasUserGuessedWord);
 
-    const disableInputTrigger =
+    // not sure why I can't move resetGame outside of this render box?
+
+    let resetGame = () => {
+      var currWord = getRandomWord();
+      var uniqueStr = [...new Set(currWord)].join("");
+
+      this.setState({
+        ...this.initialState,
+        currWord: currWord,
+        numGuessesLeft: currWord.length + 5,
+        uniqueStr: uniqueStr,
+        numberOfLetters: uniqueStr.length,
+      });
+    };
+
+    var disableInputTrigger =
       hasUserGuessedWord === true || this.state.numGuessesLeft === 0;
 
-    const resetButton = <button onClick={this.resetGame}>Reset</button>;
+    const resetButton = <button onClick={resetGame}>Reset</button>;
 
     return (
       <div className="App">
