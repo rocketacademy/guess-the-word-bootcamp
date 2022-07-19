@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
     super(props);
-    this.state = {
+    this.initialState = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
@@ -18,6 +18,7 @@ class App extends React.Component {
       // Insert form input state here
       currUserInputCharacter: "",
     };
+    this.state = { ...this.initialState };
     // why is it that if i console log this.state.currWord here, i'll get two words?
   }
 
@@ -52,6 +53,11 @@ class App extends React.Component {
   // by default, form will handle the submit and we get the letters from the current state
   // event refers to the user's actions
   handleSubmit = (event) => {
+    if (this.state.numGuessesLeft === 0) {
+      if (window.confirm("No more attempts left. Restart game?")) {
+        this.setState({ ...this.initialState });
+      }
+    }
     event.preventDefault();
 
     if (!this.state.currUserInputCharacter) {
