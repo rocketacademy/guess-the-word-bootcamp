@@ -97,6 +97,7 @@ class App extends React.Component {
               Enter letters here:
               <input
                 type="text"
+                maxLength="1"
                 onChange={this.handleChange}
                 value={this.state.currUserInputCharacter.toLowerCase()}
               />
