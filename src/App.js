@@ -6,7 +6,7 @@ class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
     super(props);
-    const currWord = getRandomWord();
+    var currWord = getRandomWord();
     var uniqueStr = [...new Set(currWord)].join("");
     this.initialState = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
@@ -103,7 +103,15 @@ class App extends React.Component {
   };
 
   resetGame = () => {
-    this.setState({ ...this.initialState });
+    var uniqueStr = [...new Set(currWord)].join("");
+    var currWord = getRandomWord();
+    this.setState({
+      ...this.initialState,
+      currWord: currWord,
+      numGuessesLeft: currWord.length + 5,
+      uniqueStr: uniqueStr,
+      numberOfLetters: uniqueStr.length,
+    });
   };
 
   render() {
@@ -149,14 +157,14 @@ class App extends React.Component {
           </form>
           <div>
             {hasUserGuessedWord ? (
-              <p>Congratulations you guessed the word!</p>
+              <p>Congratulations you guessed the word! {resetButton}</p>
             ) : (
               <p>Guess the word!</p>
             )}
           </div>
           <div>
             {this.state.numGuessesLeft === 0 && !hasUserGuessedWord ? (
-              <p>You've run out of tries!</p>
+              <p>You've run out of tries! {resetButton}</p>
             ) : (
               <p>You have {this.state.numGuessesLeft} guesses left.</p>
             )}
