@@ -75,15 +75,21 @@ class App extends React.Component {
       return;
     }
 
+    let correctGuesses = this.state.correctGuesses;
     if (this.state.uniqueStr.includes(this.state.currUserInputCharacter)) {
-      this.setState((prevState) => {
-        prevState.correctGuesses += 0.5;
-      });
+      correctGuesses = this.state.correctGuesses + 1;
     }
+
+    // if (this.state.uniqueStr.includes(this.state.currUserInputCharacter)) {
+    //   this.setState((prevState) => {
+    //     prevState.correctGuesses += 0.5;
+    //   });
+    // }
 
     this.setState((prevState) => {
       return {
         ...prevState,
+        correctGuesses: correctGuesses,
         guessedLetters: [
           ...prevState.guessedLetters,
           prevState.currUserInputCharacter.toLowerCase(),
