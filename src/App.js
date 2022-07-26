@@ -80,16 +80,10 @@ class App extends React.Component {
       correctGuesses = this.state.correctGuesses + 1;
     }
 
-    // if (this.state.uniqueStr.includes(this.state.currUserInputCharacter)) {
-    //   this.setState((prevState) => {
-    //     prevState.correctGuesses += 0.5;
-    //   });
-    // }
-
     this.setState((prevState) => {
       return {
-        ...prevState,
         correctGuesses: correctGuesses,
+        ...prevState,
         guessedLetters: [
           ...prevState.guessedLetters,
           prevState.currUserInputCharacter.toLowerCase(),
