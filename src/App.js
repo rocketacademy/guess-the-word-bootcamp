@@ -75,6 +75,12 @@ class App extends React.Component {
       return;
     }
 
+    // if (this.state.uniqueStr.includes(this.state.currUserInputCharacter)) {
+    //   this.setState((prevState) => {
+    //     prevState.correctGuesses += 0.5;
+    //   });
+    // }
+
     let correctGuesses = this.state.correctGuesses;
     if (this.state.uniqueStr.includes(this.state.currUserInputCharacter)) {
       correctGuesses = this.state.correctGuesses + 1;
@@ -82,8 +88,8 @@ class App extends React.Component {
 
     this.setState((prevState) => {
       return {
-        correctGuesses: correctGuesses,
         ...prevState,
+        correctGuesses: correctGuesses,
         guessedLetters: [
           ...prevState.guessedLetters,
           prevState.currUserInputCharacter.toLowerCase(),
