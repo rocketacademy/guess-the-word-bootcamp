@@ -4,9 +4,26 @@ import "./App.css";
 
 const maxGuesses = 10;
 
-function CheckWord({ guessedLetters, currWord }) {
+function isCorrectWord(guessedLetters, currWord) {
+  // Check whether all letters in currWord are found in the guessedLetters array
   for (let i = 0; i < currWord.length; i++) {
-    if (!guessedLetters.includes(currWord[i])) return <p></p>;
+    if (!guessedLetters.includes(currWord[i])) return false;
+  }
+
+  return true;
+}
+
+function DisplayResult({ guessedLetters, currWord, guessesLeft }) {
+  if (!isCorrectWord(guessedLetters, currWord)) {
+    if (guessesLeft) {
+      return <p></p>;
+    } else {
+      return (
+        <p>
+          You have used up all guesses. <br /> The correct word is {currWord}.
+        </p>
+      );
+    }
   }
 
   return <p>You have correctly guessed the word!</p>;
@@ -61,6 +78,16 @@ class App extends React.Component {
     }));
   }
 
+  resetGame = () => {
+    this.setState({
+      // Reset the whole game to let user play again
+      currWord: getRandomWord(),
+      guessedLetters: [],
+      guessesLeft: maxGuesses,
+      value: "",
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -77,18 +104,28 @@ class App extends React.Component {
           {/* Insert form element here */}
           <form onSubmit={this.handleSubmit}>
             <label>
-              <p>Please submit one letter at a time: </p>
+              Please submit one letter at a time: <br />
               <input
                 type="text"
                 value={this.state.value}
                 onChange={this.handleChange}
               />
             </label>
-            <input type="submit" value="Submit" />
+            <input
+              type="submit"
+              value="Submit"
+              disabled={
+                !this.state.guessesLeft ||
+                isCorrectWord(this.state.guessedLetters, this.state.currWord)
+                  ? true
+                  : false
+              }
+            />
           </form>
-          <CheckWord
+          <DisplayResult
             guessedLetters={this.state.guessedLetters}
             currWord={this.state.currWord}
+            guessesLeft={this.state.guessesLeft}
           />
         </header>
       </div>
