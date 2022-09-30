@@ -1,4 +1,4 @@
-import React from "react";
+import React, { startTransition } from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 
@@ -9,11 +9,18 @@ class App extends React.Component {
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       currWord: getRandomWord(),
+      //currWord: "scale",
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
+      guessCounter: 10,
       // Insert form input state here
+      formInput: false,
+      // User guess
+      value: "",
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   generateWordDisplay = () => {
@@ -29,9 +36,59 @@ class App extends React.Component {
     return wordDisplay.toString();
   };
 
+  resetGame = () => {
+    this.setState({
+      currWord: getRandomWord(),
+      guessedLetters: [],
+      guessCounter: 10,
+      formInput: false,
+      value: "",
+    });
+  };
+
   // Insert form callback functions handleChange and handleSubmit here
+  handleChange(event) {
+    this.setState({
+      value: event.target.value,
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const valueLetter = this.state.value.charAt(0).toLowerCase();
+
+    if (!this.state.value) {
+      return;
+    }
+
+    this.setState((state) => ({
+      guessedLetters: [...state.guessedLetters, valueLetter],
+      formInput: true,
+      guessCounter: this.state.currWord.includes(valueLetter)
+        ? state.guessCounter
+        : state.guessCounter - 1,
+      value: "",
+    }));
+  }
+
+  guessCorrectWord = (valueLetter) => {
+    const guessedLetters = [...this.state.guessedLetters, valueLetter];
+    for (let value of this.state.currWord) {
+      if (!guessedLetters.includes(value)) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   render() {
+    const userGuessedWord = this.guessCorrectWord();
+    const resetGamePrompt = this.state.guessCounter === 0 || userGuessedWord;
+    const resetGameButton = (
+      <button onClick={this.resetGame}>Reset Game!</button>
+    );
+
     return (
       <div className="App">
         <header className="App-header">
@@ -42,9 +99,36 @@ class App extends React.Component {
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
+          <p>Number of Guesses Left:</p>
+          {this.state.guessCounter}
           <h3>Input</h3>
-          {/* Insert form element here */}
-          Todo: Insert form element here
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Please submit 1 letter at a time.
+              <br />
+              <br />
+              <input
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+                disabled={resetGamePrompt}
+              />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+          <br></br>
+          {userGuessedWord && (
+            <div>
+              <p>Good job! You guessed the word! Restart the game!</p>
+              {resetGameButton}
+            </div>
+          )}
+          {this.state.guessCounter === 0 && !userGuessedWord && (
+            <div>
+              <p>You lost! Try harder next time!</p>
+              {resetGameButton}
+            </div>
+          )}
         </header>
       </div>
     );
