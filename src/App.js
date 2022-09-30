@@ -47,6 +47,12 @@ class App extends React.Component {
       formInput: false,
       // User guess
       value: "",
+      // Game Rounds
+      gameRounds: 0,
+      // Won Game Rounds
+      wonGameRounds: 0,
+      // Correct Words
+      correctLettersCounter: 0,
     };
     // Binding handles
     this.handleChange = this.handleChange.bind(this);
@@ -68,13 +74,18 @@ class App extends React.Component {
 
   // Reset game function
   resetGame = () => {
-    this.setState({
+    this.setState((state) => ({
       currWord: getRandomWord(),
+      // currWord: "scale",
       guessedLetters: [],
       guessCounter: 10,
       formInput: false,
-      value: "",
-    });
+      gameRounds: this.state.gameRounds + 1,
+      wonGameRounds:
+        this.state.correctLettersCounter === this.state.currWord.length
+          ? state.wonGameRounds + 1
+          : state.wonGameRounds,
+    }));
   };
 
   // Insert form callback functions handleChange and handleSubmit here
@@ -109,9 +120,13 @@ class App extends React.Component {
       guessCounter: this.state.currWord.includes(valueLetter)
         ? state.guessCounter
         : state.guessCounter - 1,
+      correctLettersCounter: this.state.currWord.includes(valueLetter)
+        ? state.correctLettersCounter + 1
+        : state.correctLettersCounter,
       value: "",
     }));
   }
+
   // Create copy of guessed letters array and iterate to check whether given word has been guessed.
   guessCorrectWord = (valueLetter) => {
     const guessedLetters = [...this.state.guessedLetters, valueLetter];
@@ -168,6 +183,12 @@ class App extends React.Component {
             <div>
               <p>You lost! Try harder next time!</p>
               {resetGameButton}
+            </div>
+          )}
+          {!this.state.formInput && (
+            <div>
+              <p>Game Rounds Played: {this.state.gameRounds}</p>
+              <p>Game Rounds Won: {this.state.wonGameRounds}</p>
             </div>
           )}
         </header>
