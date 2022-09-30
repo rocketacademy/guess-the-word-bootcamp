@@ -2,6 +2,35 @@ import React, { startTransition } from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 
+const alphabet = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+];
+
 class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
@@ -9,7 +38,7 @@ class App extends React.Component {
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       currWord: getRandomWord(),
-      //currWord: "scale",
+      // currWord: "scale",
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
@@ -19,6 +48,7 @@ class App extends React.Component {
       // User guess
       value: "",
     };
+    // Binding handles
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -36,6 +66,7 @@ class App extends React.Component {
     return wordDisplay.toString();
   };
 
+  // Reset game function
   resetGame = () => {
     this.setState({
       currWord: getRandomWord(),
@@ -56,12 +87,22 @@ class App extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
+    // Take first letter of any string input
     const valueLetter = this.state.value.charAt(0).toLowerCase();
 
+    // Reject no input
     if (!this.state.value) {
       return;
     }
 
+    // Reject any input that is not in the alphabet, with alert.
+    if (!alphabet.includes(this.state.value)) {
+      this.setState({
+        value: "",
+      });
+      return alert(`Please input a letter!`);
+    }
+    // Set new state for every click of the submit button
     this.setState((state) => ({
       guessedLetters: [...state.guessedLetters, valueLetter],
       formInput: true,
@@ -71,7 +112,7 @@ class App extends React.Component {
       value: "",
     }));
   }
-
+  // Create copy of guessed letters array and iterate to check whether given word has been guessed.
   guessCorrectWord = (valueLetter) => {
     const guessedLetters = [...this.state.guessedLetters, valueLetter];
     for (let value of this.state.currWord) {
