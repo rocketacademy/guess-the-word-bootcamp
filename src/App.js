@@ -11,8 +11,8 @@ class App extends React.Component {
       currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
-      // Insert num guesses left state here
-      // Insert form input state here
+      numOfGuess: 0,// Insert num guesses left state here
+      text: ''// Insert form input state here
     };
   }
 
