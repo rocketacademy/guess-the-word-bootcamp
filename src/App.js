@@ -5,7 +5,7 @@ import "./App.css";
 export default function App() {
   const [currWord, setCurrWord] = React.useState(getRandomWord());
   const [guessedLetters, setGuessedLetters] = React.useState([]);
-  const [numOfGuesses, setNumOfGuesses] = React.useState(0);
+  const [numOfGuesses, setNumOfGuesses] = React.useState(10);
   const [formData, setFormData] = React.useState("");
 
   const generateWordDisplay = () => {
@@ -28,15 +28,14 @@ export default function App() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setGuessedLetters([...guessedLetters, formData]);
-    setNumOfGuesses((prevGuess) => prevGuess + 1);
+    setNumOfGuesses((prevGuess) => prevGuess - 1);
     setFormData((prevFormData) => "");
   };
 
   const handleReset = () => {
     setCurrWord((prevCurrWord) => getRandomWord());
     setGuessedLetters((prevGuessedLetters) => []);
-    setNumOfGuesses((prevNumOfGuesses) => 0);
-  };
+    setNumOfGuesses((prevNumOfGuesses) => 10)
 
   return (
     <div className="App">
