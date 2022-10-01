@@ -59,7 +59,7 @@ export default function App() {
         <h3>Guessed Letters</h3>
         {guessedLetters.length > 0 ? guessedLetters.toString() : "-"}
         <h3>{`Guesses Left : ${numOfGuesses}`}</h3>
-        {winner && <h3>You Won</h3>}
+        {winner ? <h3>You Won</h3> : <h3>You Lost</h3>}
         <h3>Input</h3>
         <form onSubmit={handleSubmit}>
           <input
