@@ -11,7 +11,7 @@ export default function App() {
   const generateWordDisplay = () => {
     const wordDisplay = [];
     // for...of is a string and array iterator that does not use index
-    for (let letter of currWord) {
+    for (const letter of currWord) {
       if (guessedLetters.includes(letter)) {
         wordDisplay.push(letter);
       } else {
@@ -25,6 +25,15 @@ export default function App() {
     setFormData(event.target.value);
   };
 
+  const isCorrectWord = () => {
+    for (const letter of currWord) {
+      if (!guessedLetters.includes(letter)) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setGuessedLetters([...guessedLetters, formData]);
@@ -35,16 +44,18 @@ export default function App() {
   const handleReset = () => {
     setCurrWord((prevCurrWord) => getRandomWord());
     setGuessedLetters((prevGuessedLetters) => []);
-    setNumOfGuesses((prevNumOfGuesses) => 10)
+    setNumOfGuesses((prevNumOfGuesses) => 10);
+  };
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Guess The Word 🚀</h1>
         <h3>Word Display</h3>
-        {generateWordDisplay()}
+        {!numOfGuesses ? currWord : generateWordDisplay()}
         <h3>Guessed Letters</h3>
         {guessedLetters.length > 0 ? guessedLetters.toString() : "-"}
+        <h3>{`Guesses Left: ${numOfGuesses}`}</h3>
         <h3>Input</h3>
         <form onSubmit={handleSubmit}>
           <input
@@ -54,7 +65,11 @@ export default function App() {
             onChange={handleChange}
             value={formData}
           />
-          <button>Submit</button>
+          {numOfGuesses ? (
+            <button>Submit</button>
+          ) : (
+            <button onClick={handleReset}>Reset</button>
+          )}
         </form>
       </header>
     </div>
