@@ -3,7 +3,8 @@ import { getRandomWord } from "./utils.js";
 import "./App.css";
 
 export default function App() {
-  const [currWord, setCurrWord] = React.useState(getRandomWord());
+  const [currWord, setCurrWord] = React.useState("test");
+  // const [currWord, setCurrWord] = React.useState(getRandomWord());
   const [guessedLetters, setGuessedLetters] = React.useState([]);
   const [numOfGuesses, setNumOfGuesses] = React.useState(10);
   const [formData, setFormData] = React.useState("");
@@ -41,6 +42,8 @@ export default function App() {
     setFormData((prevFormData) => "");
   };
 
+  const winner = isCorrectWord();
+
   const handleReset = () => {
     setCurrWord((prevCurrWord) => getRandomWord());
     setGuessedLetters((prevGuessedLetters) => []);
@@ -52,10 +55,11 @@ export default function App() {
       <header className="App-header">
         <h1>Guess The Word 🚀</h1>
         <h3>Word Display</h3>
-        {!numOfGuesses ? currWord : generateWordDisplay()}
+        {!numOfGuesses || winner ? currWord : generateWordDisplay()}
         <h3>Guessed Letters</h3>
         {guessedLetters.length > 0 ? guessedLetters.toString() : "-"}
-        <h3>{`Guesses Left: ${numOfGuesses}`}</h3>
+        <h3>{`Guesses Left : ${numOfGuesses}`}</h3>
+        {winner && <h3>You Won</h3>}
         <h3>Input</h3>
         <form onSubmit={handleSubmit}>
           <input
@@ -65,7 +69,7 @@ export default function App() {
             onChange={handleChange}
             value={formData}
           />
-          {numOfGuesses ? (
+          {numOfGuesses && !winner ? (
             <button>Submit</button>
           ) : (
             <button onClick={handleReset}>Reset</button>
