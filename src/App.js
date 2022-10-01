@@ -8,12 +8,19 @@ class App extends React.Component {
     super(props);
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      currWord: getRandomWord(),
+      /* currWord: getRandomWord(), */
+      currWord: "wear",
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
+      numOfGuesses: 10,
       // Insert form input state here
+      input: "",
+      guessedWord: false,
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   generateWordDisplay = () => {
@@ -30,6 +37,39 @@ class App extends React.Component {
   };
 
   // Insert form callback functions handleChange and handleSubmit here
+  handleChange(event) {
+    this.setState({ input: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    let userInput = this.state.input;
+    let guesses = [...this.state.guessedLetters];
+    let correctWord = [...this.state.currWord];
+    guesses.push(userInput);
+
+    this.setState((state) => ({
+      guessedLetters: [...state.guessedLetters, userInput],
+      input: "",
+      numOfGuesses: this.state.numOfGuesses + -1,
+    }));
+    console.log(this.state.numOfGuesses);
+
+    if (guesses.includes(...correctWord)) {
+      this.setState({ guessedWord: true });
+    }
+  }
+
+  resetGame = () => {
+    this.setState({
+      currWord: getRandomWord(),
+      guessedLetters: [],
+      numOfGuesses: 10,
+      input: "",
+      guessedWord: false,
+    });
+  };
 
   render() {
     return (
@@ -44,7 +84,14 @@ class App extends React.Component {
             : "-"}
           <h3>Input</h3>
           {/* Insert form element here */}
-          Todo: Insert form element here
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              value={this.state.input}
+              onChange={this.handleChange}
+            />
+            <input type="submit" value="submit" />
+          </form>
         </header>
       </div>
     );
