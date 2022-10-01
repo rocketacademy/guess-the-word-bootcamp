@@ -45,23 +45,24 @@ class App extends React.Component {
 
   render() {
     const element = (
-      <header className="App-header">
-        <h1>Guess The Word 🚀</h1>
-        <h3>Word Display</h3>
-        {this.generateWordDisplay()}
-        <h3>Guessed Letters</h3>
-        {this.state.guessedLetters.length > 0
-          ? this.state.guessedLetters.toString()
-          : "-"}
-        <h3>Input</h3>
-        {/* Insert form element here */}
-        Todo: Insert form element here
-      </header>
-    );
+    <div>
+      <h1>Guess The Word 🚀</h1>
+      <h3>Word Display</h3>
+      {this.generateWordDisplay()}
+      <h3>Guessed Letters</h3>
+      {this.state.guessedLetters.length > 0
+        ? this.state.guessedLetters.toString()
+        : "-"}
+      <h3>Input</h3>
+      {/* Insert form element here */}
+      Todo: Insert form element here
+    </div>);
     return (
       <div className="App">
-        {this.state.gameMode === "Start" && <Start setGameUp={this.setGameUp}/>}
-        {this.state.gameMode === "Game" && element}
+        <header className="App-header">
+          {this.state.gameMode === "Start" && (<Start setGameUp={this.setGameUp} />)}
+          {this.state.gameMode === "Game" && element}
+        </header>
       </div>
     );
   }

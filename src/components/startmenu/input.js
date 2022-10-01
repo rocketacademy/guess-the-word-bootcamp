@@ -13,15 +13,18 @@ class Input extends React.Component {
   }
 
   handleGuess = (e) => {
-    this.setStat({
-      rounds: e.target.value,
-    });
+    this.setState({
+      guess: e.target.value,
+    },console.log(this.state.guess));
   };
 
   handleRound = (e) => {
-    this.setStat({
-      rounds: e.target.value,
-    });
+    this.setState(
+      {
+        rounds: e.target.value,
+      },
+      console.log(this.state.rounds)
+    );
   };
 
   sendGameData = () => {
@@ -35,7 +38,12 @@ class Input extends React.Component {
 
   render() {
     return (
-      <forms>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          alert("You Submit")
+        }}
+      >
         <label>
           Number of Rounds:
           <input
@@ -56,7 +64,7 @@ class Input extends React.Component {
             onChange={this.handleGuess}
           />
         </label>
-      </forms>
+      </form>
     );
   }
 }
