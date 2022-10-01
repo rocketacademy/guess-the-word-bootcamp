@@ -3,8 +3,7 @@ import { getRandomWord } from "./utils.js";
 import "./App.css";
 
 export default function App() {
-  const [currWord, setCurrWord] = React.useState("test");
-  // const [currWord, setCurrWord] = React.useState(getRandomWord());
+  const [currWord, setCurrWord] = React.useState(getRandomWord());
   const [guessedLetters, setGuessedLetters] = React.useState([]);
   const [numOfGuesses, setNumOfGuesses] = React.useState(10);
   const [formData, setFormData] = React.useState("");
