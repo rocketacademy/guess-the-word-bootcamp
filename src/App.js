@@ -2,6 +2,7 @@ import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 import Start from "./components/startmenu/start"
+import Game from "./components/game/game"
 
 class App extends React.Component {
   constructor(props) {
@@ -16,52 +17,26 @@ class App extends React.Component {
       text: '',// Insert form input state here
       gameMode: "Start",
       guess: 0,
-      rounds: 10,
+      rounds: 0,
     };
   }
-
-  generateWordDisplay = () => {
-    const wordDisplay = [];
-    // for...of is a string and array iterator that does not use index
-    for (let letter of this.state.currWord) {
-      if (this.state.guessedLetters.includes(letter)) {
-        wordDisplay.push(letter);
-      } else {
-        wordDisplay.push("_");
-      }
-    }
-    return wordDisplay.toString();
-  };
 
   setGameUp = (data) =>{
     this.setState({
       gameMode: data.gameMode,
-      guess: data.guess,
-      rounds: data.rounds
-    })
+      guess: data.numOfguess,
+      rounds: data.numOfrounds
+    },console.log(this.state.guess, this.state.rounds))
   }
 
   // Insert form callback functions handleChange and handleSubmit here
 
   render() {
-    const element = (
-    <div>
-      <h1>Guess The Word 🚀</h1>
-      <h3>Word Display</h3>
-      {this.generateWordDisplay()}
-      <h3>Guessed Letters</h3>
-      {this.state.guessedLetters.length > 0
-        ? this.state.guessedLetters.toString()
-        : "-"}
-      <h3>Input</h3>
-      {/* Insert form element here */}
-      Todo: Insert form element here
-    </div>);
     return (
       <div className="App">
         <header className="App-header">
-          {this.state.gameMode === "Start" && (<Start setGameUp={this.setGameUp} />)}
-          {this.state.gameMode === "Game" && element}
+          {this.state.gameMode === "Start" && (<Start setUp={this.setGameUp} />)}
+          {this.state.gameMode === "Game" && <Game guess={this.state.guess} rounds={this.state.rounds}/>}
         </header>
       </div>
     );

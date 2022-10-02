@@ -11,10 +11,13 @@ class Start extends React.Component{
   }
 
   getGameData = (data) => {
-    this.setState({
-      rounds: data.rounds,
-      guess: data.guess
-    })
+    this.setState(
+      {
+        rounds: data.numOfrounds,
+        guess: data.numOfguess,
+      },
+      console.log(this.state.rounds, this.state.guess)
+    );
   }
 
   setGame = () => {
@@ -23,8 +26,8 @@ class Start extends React.Component{
       rounds: this.state.rounds,
       guess: this.state.guess,
     }
-
-    this.props.setGameUp(getData)
+    console.log(this.state.rounds, this.state.guess)
+    this.props.setUp(getData)
   }
 
   render(){

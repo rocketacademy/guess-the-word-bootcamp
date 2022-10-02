@@ -4,8 +4,8 @@ class Input extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rounds: 1,
-      guess: 5,
+      rounds: "1",
+      guess: "5",
     };
 
     this.handleGuess = this.handleGuess.bind(this);
@@ -29,9 +29,9 @@ class Input extends React.Component {
 
   sendGameData = () => {
     const data = {
-      rounds: this.state.rounds,
-      guess: this.state.guess
-    }
+      numOfrounds: parseInt(this.state.rounds),
+      numOfguess: parseInt(this.state.guess),
+    };
 
     this.props.onChange(data)
   }
@@ -51,7 +51,7 @@ class Input extends React.Component {
             min="1"
             max="10"
             value={this.state.rounds}
-            onChange={this.handleRound}
+            onChange={e => {this.handleRound(e) ; this.sendGameData()}}
           />
         </label>
         <label>
@@ -61,7 +61,7 @@ class Input extends React.Component {
             min="5"
             max="15"
             value={this.state.guess}
-            onChange={this.handleGuess}
+            onChange={e => {this.handleGuess(e); this.sendGameData()}}
           />
         </label>
       </form>
