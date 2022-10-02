@@ -61,17 +61,19 @@ class App extends React.Component {
   }
 
   // Insert form callback functions handleChange and handleSubmit here
-  handleFormChange(e) {
+  handleFormChange = (e) => {
     this.setState({
-      guess: e.target.value,
+      guess: e,
     });
-  }
+  };
 
   handleSubmit(e) {
     // prevent form from making a request to a certain url
     e.preventDefault();
     let numGuessesLeft = this.state.numGuessesLeft;
-    const guessValue = e.target.guess.value.toLowerCase();
+    console.log(e);
+    // const guessValue = e.target.guess.value.toLowerCase();
+    const guessValue = e;
     console.log("User's guess:" + guessValue);
     const currGuessedLetters = [...this.state.guessedLetters];
     let updatedGuessCompletion = false;
@@ -86,6 +88,7 @@ class App extends React.Component {
       numGuessesLeft: numGuessesLeft,
       guessCompletion: updatedGuessCompletion,
     });
+
     console.log(this.state);
   }
 
