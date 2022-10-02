@@ -61,10 +61,9 @@ class App extends React.Component {
   }
 
   // Insert form callback functions handleChange and handleSubmit here
-  handleFormChange(guess) {
+  handleFormChange(e) {
     this.setState({
-      guess,
-      // [e.target.name]: e.target.value,
+      guess: e.target.value,
     });
   }
 

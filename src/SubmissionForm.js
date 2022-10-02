@@ -9,6 +9,7 @@ export class SubmissionForm extends React.Component {
   }
   handleSubmit(e) {
     this.props.onSubmit(e.target.value);
+    e.preventDefault();
   }
 
   handleFormChange(e) {
