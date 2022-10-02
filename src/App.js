@@ -2,6 +2,9 @@ import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 
+import { HangmanImage } from "./HangmanImage.js";
+import { SubmissionForm } from "./SubmissionForm.js";
+
 class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
@@ -58,9 +61,10 @@ class App extends React.Component {
   }
 
   // Insert form callback functions handleChange and handleSubmit here
-  handleFormChange(e) {
+  handleFormChange(guess) {
     this.setState({
-      [e.target.name]: e.target.value,
+      guess,
+      // [e.target.name]: e.target.value,
     });
   }
 
@@ -93,7 +97,13 @@ class App extends React.Component {
         <div className="App">
           <h3>Input only one alphabet character</h3>
           <p>Number of guesses left: {this.state.numGuessesLeft}</p>
-          <form onSubmit={(e) => this.handleSubmit(e)}>
+          <HangmanImage numGuessesLeft={this.state.numGuessesLeft} /> <br />
+          <SubmissionForm
+            guess={this.state.guess}
+            onChange={this.handleFormChange}
+            onSubmit={this.handleSubmit}
+          />
+          {/* <form onSubmit={(e) => this.handleSubmit(e)}>
             <div className="form-item">
               <label htmlFor="guess">Guess:</label>
               <input
@@ -106,7 +116,7 @@ class App extends React.Component {
             </div>
 
             <button type="submit">Submit </button>
-          </form>
+          </form> */}
         </div>
       );
     } else {
@@ -114,6 +124,8 @@ class App extends React.Component {
         displayForm = (
           <div className="App">
             <h3>Congratulations! You guessed {this.state.currWord} right!</h3>
+            <HangmanImage numGuessesLeft={this.state.numGuessesLeft} />
+            <br />
             <button onClick={this.resetGame}>Play again!</button>
           </div>
         );
@@ -121,6 +133,8 @@ class App extends React.Component {
         displayForm = (
           <div className="App">
             <h3> You ran out of guesses. The word is {this.state.currWord}</h3>
+            <HangmanImage numGuessesLeft={this.state.numGuessesLeft} />
+            <br />
             <button onClick={this.resetGame}>Play again!</button>
           </div>
         );
