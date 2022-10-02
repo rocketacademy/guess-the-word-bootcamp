@@ -8,12 +8,12 @@ export class SubmissionForm extends React.Component {
     this.handleFormChange = this.handleFormChange.bind(this);
   }
   handleSubmit(e) {
-    this.props.onSubmit(e.target.value);
+    this.props.onSubmit(e);
     e.preventDefault();
   }
 
   handleFormChange(e) {
-    this.props.onChange(e.target.value);
+    this.props.onChange(e);
   }
 
   render() {
