@@ -17,6 +17,10 @@ class Input extends React.Component {
 
   submitGuess = () => {
     this.props.getGuess(this.state.guess);
+    this.setState({
+      guess: ""
+    }
+    )
   }
 
   render() {

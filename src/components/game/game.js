@@ -9,9 +9,9 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currWord: "destiny",
+      currWord: "overcook",
       guessedLetters: [],
-      displayLetters: [],
+      displayLetters: [], //empty string to fill in the blanks
       numOfAllowedGuess: this.props.guess,
       numOfGuess: 0,
       userGuess: "",
@@ -82,12 +82,9 @@ class Game extends React.Component {
     return (
       <div>
         <Score score={this.state.wins} total={this.state.currRound} />
-        <Display word={this.state.currWord} guess={this.state.guessedLetters} />
+        <Display word={this.state.currWord} display={this.state.displayLetters} />
         <Input getGuess={this.updateGuess} />
-        <Hangman
-          numGuess={this.state.numOfAllowedGuess}
-          guessLeft={this.state.numOfGuess}
-        />
+        <Hangman numGuess={this.state.numOfAllowedGuess} guessLeft={this.state.numOfGuess}/>
       </div>
     );
   }

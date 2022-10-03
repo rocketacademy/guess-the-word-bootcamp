@@ -46,7 +46,6 @@ class Start extends React.Component {
           onSubmit={(e) => {
             e.preventDefault();
             this.setGameMode();
-            alert("You Submit");
           }}
         >
           <label>
