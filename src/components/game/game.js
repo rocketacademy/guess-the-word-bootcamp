@@ -96,7 +96,14 @@ class Game extends React.Component {
   };
 
   render() {
-    const button = <p></p> //placeholder
+    let button = <p></p>
+    if(this.state.currRound === this.state.rounds){
+      button = <button onClick={this.nextGame}>Next Round</button>
+    }
+    else{
+      button = <button onClick={this.restart}>Replay Game</button>
+    }
+    
     return (
       <div>
         <Score score={this.state.wins} total={this.state.currRound} />
