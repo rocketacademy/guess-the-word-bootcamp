@@ -36,9 +36,13 @@ export default function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setGuessedLetters([...guessedLetters, formData]);
-    setNumOfGuesses((prevGuess) => prevGuess - 1);
-    setFormData((prevFormData) => "");
+    if (formData.length > 1) {
+      alert("Please only enter 1 letter");
+    } else {
+      setGuessedLetters([...guessedLetters, formData]);
+      setNumOfGuesses((prevGuess) => prevGuess - 1);
+      setFormData((prevFormData) => "");
+    }
   };
 
   const winner = isCorrectWord();
@@ -46,7 +50,7 @@ export default function App() {
   const handleReset = () => {
     setCurrWord((prevCurrWord) => getRandomWord());
     setGuessedLetters([]);
-    setNumOfGuesses(10);
+    setNumOfGuesses(11);
     setFormData("");
   };
 
