@@ -8,12 +8,11 @@ class App extends React.Component {
     super(props);
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      /* currWord: getRandomWord(), */
-      currWord: "wear",
+      currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
-      numOfGuesses: 10,
+      numOfGuesses: 5,
       // Insert form input state here
       input: "",
       guessedWord: false,
@@ -56,7 +55,7 @@ class App extends React.Component {
     this.setState((state) => ({
       guessedLetters: [...state.guessedLetters, userInput],
       input: "",
-      numOfGuesses: outcome
+      numOfGuesses: [...this.state.currWord].includes(userInput)
         ? this.state.numOfGuesses
         : this.state.numOfGuesses - 1,
       guessedWord: outcome,
@@ -65,45 +64,43 @@ class App extends React.Component {
   }
 
   checkIfCorrect(input) {
-    let correctWord = this.state.currWord;
+    let correctWord = [...this.state.currWord];
     let userInputs = [...this.state.guessedLetters, input];
     let userHasGuessed = false;
+
     for (let i = 0; i < correctWord.length; i++) {
-      if (userInputs.includes(correctWord[i])) {
-        userHasGuessed = true;
-        console.log(`userHasGuessed true: ${userHasGuessed}`);
-      } else if (!userInputs.includes(correctWord[i])) {
-        userHasGuessed = false;
-        console.log(`userHasGuessed false: ${userHasGuessed}`);
+      if (!userInputs.includes(correctWord[i])) {
+        return (userHasGuessed = false);
       }
     }
-    return userHasGuessed;
+    return (userHasGuessed = true);
   }
 
   gameForm = () => {
-    if (!this.state.guessedWord) {
-      console.log(`this.state.guessedWord: ${this.state.guessedWord}`);
+    if (!this.state.guessedWord && this.state.numOfGuesses > 0) {
       return (
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            value={this.state.input}
-            onChange={this.handleChange}
-          />
-          <input type="submit" value="submit" />
-        </form>
+        <>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              value={this.state.input}
+              onChange={this.handleChange}
+              maxLength="1"
+              minLength="1"
+            />
+            <input type="submit" value="submit" />
+          </form>
+          <h4>Guesses remaining: {this.state.numOfGuesses}</h4>
+        </>
       );
-    }
-    if (this.state.guessedWord) {
-      console.log(`it is here`);
+    } else if (this.state.guessedWord) {
       return (
         <>
           <p>You guessed the word! Reset game to try again.</p>
           <button onClick={this.resetGame}>Reset Game</button>
         </>
       );
-    }
-    if (!this.state.guessedWord && this.state.numOfGuesses === 0) {
+    } else if (!this.state.guessedWord && this.state.numOfGuesses === 0) {
       return (
         <>
           <p>You ran out of guesses! Reset game to try again.</p>
@@ -124,10 +121,7 @@ class App extends React.Component {
   };
 
   render() {
-    const endOfGame = this.state.numOfGuesses === 0 || this.state.guessedWord;
-    console.log(
-      `${endOfGame}, ${this.state.numOfGuesses}, ${this.state.guessedWord}`
-    );
+    console.log(`correct word: ${this.state.currWord}`);
 
     return (
       <div className="App">
