@@ -24,8 +24,8 @@ class App extends React.Component {
   setGameUp = (data) =>{
     this.setState({
       gameMode: data.gameMode,
-      guess: data.numOfguess,
-      rounds: data.numOfrounds
+      guess: parseInt(data.guess),
+      rounds: parseInt(data.rounds)
     },console.log(this.state.guess, this.state.rounds))
   }
 
