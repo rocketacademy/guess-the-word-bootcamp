@@ -45,21 +45,73 @@ class App extends React.Component {
     event.preventDefault();
 
     let userInput = this.state.input;
-    let guesses = [...this.state.guessedLetters];
-    let correctWord = [...this.state.currWord];
-    guesses.push(userInput);
+
+    if (userInput === "") {
+      return;
+    }
+
+    let outcome = this.checkIfCorrect(userInput);
+    console.log(`outcome: ${outcome}`);
 
     this.setState((state) => ({
       guessedLetters: [...state.guessedLetters, userInput],
       input: "",
-      numOfGuesses: this.state.numOfGuesses + -1,
+      numOfGuesses: outcome
+        ? this.state.numOfGuesses
+        : this.state.numOfGuesses - 1,
+      guessedWord: outcome,
     }));
     console.log(this.state.numOfGuesses);
-
-    if (guesses.includes(...correctWord)) {
-      this.setState({ guessedWord: true });
-    }
   }
+
+  checkIfCorrect(input) {
+    let correctWord = this.state.currWord;
+    let userInputs = [...this.state.guessedLetters, input];
+    let userHasGuessed = false;
+    for (let i = 0; i < correctWord.length; i++) {
+      if (userInputs.includes(correctWord[i])) {
+        userHasGuessed = true;
+        console.log(`userHasGuessed true: ${userHasGuessed}`);
+      } else if (!userInputs.includes(correctWord[i])) {
+        userHasGuessed = false;
+        console.log(`userHasGuessed false: ${userHasGuessed}`);
+      }
+    }
+    return userHasGuessed;
+  }
+
+  gameForm = () => {
+    if (!this.state.guessedWord) {
+      console.log(`this.state.guessedWord: ${this.state.guessedWord}`);
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            value={this.state.input}
+            onChange={this.handleChange}
+          />
+          <input type="submit" value="submit" />
+        </form>
+      );
+    }
+    if (this.state.guessedWord) {
+      console.log(`it is here`);
+      return (
+        <>
+          <p>You guessed the word! Reset game to try again.</p>
+          <button onClick={this.resetGame}>Reset Game</button>
+        </>
+      );
+    }
+    if (!this.state.guessedWord && this.state.numOfGuesses === 0) {
+      return (
+        <>
+          <p>You ran out of guesses! Reset game to try again.</p>
+          <button onClick={this.resetGame}>Reset Game</button>
+        </>
+      );
+    }
+  };
 
   resetGame = () => {
     this.setState({
@@ -72,6 +124,11 @@ class App extends React.Component {
   };
 
   render() {
+    const endOfGame = this.state.numOfGuesses === 0 || this.state.guessedWord;
+    console.log(
+      `${endOfGame}, ${this.state.numOfGuesses}, ${this.state.guessedWord}`
+    );
+
     return (
       <div className="App">
         <header className="App-header">
@@ -84,14 +141,7 @@ class App extends React.Component {
             : "-"}
           <h3>Input</h3>
           {/* Insert form element here */}
-          <form onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              value={this.state.input}
-              onChange={this.handleChange}
-            />
-            <input type="submit" value="submit" />
-          </form>
+          {this.gameForm()}
         </header>
       </div>
     );
