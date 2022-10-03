@@ -4,31 +4,6 @@ import "./App.css";
 
 const maxGuesses = 10;
 
-function isCorrectWord(guessedLetters, currWord) {
-  // Check whether all letters in currWord are found in the guessedLetters array
-  for (let i = 0; i < currWord.length; i++) {
-    if (!guessedLetters.includes(currWord[i])) return false;
-  }
-
-  return true;
-}
-
-function DisplayResult({ guessedLetters, currWord, guessesLeft }) {
-  if (!isCorrectWord(guessedLetters, currWord)) {
-    if (guessesLeft) {
-      return <p></p>;
-    } else {
-      return (
-        <p>
-          You have used up all guesses. <br /> The correct word is {currWord}.
-        </p>
-      );
-    }
-  }
-
-  return <p>You have correctly guessed the word!</p>;
-}
-
 class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
@@ -66,17 +41,24 @@ class App extends React.Component {
 
   handleSubmit(event) {
     let [newLetter] = this.state.value;
-    const haha = [...this.state.guessedLetters, newLetter];
-    alert("You submitted: " + haha + "; word is: " + this.state.currWord);
     event.preventDefault();
     this.setState((previousState) => ({
       guessedLetters: [...previousState.guessedLetters, newLetter],
-      guessesLeft: previousState.currWord.includes(previousState.value)
+      guessesLeft: previousState.currWord.includes(newLetter)
         ? previousState.guessesLeft
         : previousState.guessesLeft - 1,
       value: "",
     }));
   }
+
+  isCorrectWord = (guessedLetters, currWord) => {
+    // Check whether all letters in currWord are found in the guessedLetters array
+    for (let i = 0; i < currWord.length; i++) {
+      if (!guessedLetters.includes(currWord[i])) return false;
+    }
+
+    return true;
+  };
 
   resetGame = () => {
     this.setState({
@@ -89,6 +71,9 @@ class App extends React.Component {
   };
 
   render() {
+    const replayButton = (
+      <button onClick={() => this.resetGame()}>Play Again</button>
+    );
     return (
       <div className="App">
         <header className="App-header">
@@ -116,17 +101,35 @@ class App extends React.Component {
               value="Submit"
               disabled={
                 !this.state.guessesLeft ||
-                isCorrectWord(this.state.guessedLetters, this.state.currWord)
+                this.isCorrectWord(
+                  this.state.guessedLetters,
+                  this.state.currWord
+                )
                   ? true
                   : false
               }
             />
           </form>
-          <DisplayResult
-            guessedLetters={this.state.guessedLetters}
-            currWord={this.state.currWord}
-            guessesLeft={this.state.guessesLeft}
-          />
+          {/* Player has successfully guessed the word */}
+          {this.isCorrectWord(
+            this.state.guessedLetters,
+            this.state.currWord
+          ) && (
+            <div>
+              <p>You have correctly guessed the word!</p>
+              {replayButton}
+            </div>
+          )}
+          {/* Player has run out of tries */}
+          {!this.state.guessesLeft && (
+            <div>
+              <p>
+                You have used up all guesses. <br /> The correct word is{" "}
+                {this.state.currWord}.
+              </p>
+              {replayButton}
+            </div>
+          )}
         </header>
       </div>
     );
