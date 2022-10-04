@@ -25,8 +25,7 @@ class Game extends React.Component {
     this.updateRoundData = this.updateRoundData.bind(this);
     this.nextGame = this.nextGame.bind(this)
     this.restart = this.restart.bind(this)
-    this.evaluateWinLoss = this.evaluateWinLoss.bind(this)
-    this.isRoundComplete = this.isRoundComplete.bind(this)
+    this.isRoundComplete =this.isRoundComplete.bind(this)
   }
   
   //Update Current Round Data
@@ -42,7 +41,7 @@ class Game extends React.Component {
         guessLeft += 1
       }
     }
-    if(userGuess.length === 1 && isNaN(userGuess) === true){
+    else if(userGuess.length === 1 && isNaN(userGuess) === true){
       letters_guess.push(userGuess)
       if(word.includes(userGuess)){
         letters_display.push(userGuess)
@@ -55,36 +54,33 @@ class Game extends React.Component {
       alert("Please eneter a SINGLE letter or the word you want to guess.");
     }
     //Update Round and win
-    let roundDone = this.isRoundComplete(userGuess, guessLeft)
-    let currWin = this.state.wins
+    const [wins, roundDone] = this.isRoundComplete(userGuess, guessLeft, letters_display)
     this.setState({
       guessedLetters: letters_guess,
       displayLetters: letters_display,
       numOfGuess: guessLeft,
       isRoundDone: roundDone,
-      wins: currWin + this.evaluateWinLoss(userGuess, letters_display)
+      wins: wins,
     })
   }
 
-  isRoundComplete = (userguess, guessLeft) =>{
-    if(userguess === this.state.currRound){
-      return true
+  isRoundComplete = (userguess, guessLeft, display) =>{
+    const letterToWin = new Set(this.state.currWord)
+    console.log(letterToWin)
+    if(userguess === this.state.currWord){
+      console.log("a trigger"); 
+      return [this.state.wins + 1,  true]
     }
     if(guessLeft === this.state.numOfAllowedGuess){
-      return true
-    }
-    return false
-  }
-
-  evaluateWinLoss = (userGuess, display) => {
-    const letterToWin = new Set(...this.state.currWord)
-    if(userGuess === this.state.currWord){
-      return 1
+      console.log("b trigger"); 
+      return [this.state.wins,  true] 
     }
     if(display.length === letterToWin.size){
-      return 1
+      console.log("c trigger"); 
+      return [this.state.wins + 1, true]; 
     }
-    return 0
+    console.log("d trigger"); 
+    return [this.state.wins, false] 
   }
   
   nextGame = () => {
