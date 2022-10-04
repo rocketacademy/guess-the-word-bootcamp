@@ -50,7 +50,7 @@ export default function App() {
   const handleReset = () => {
     setCurrWord((prevCurrWord) => getRandomWord());
     setGuessedLetters([]);
-    setNumOfGuesses(11);
+    setNumOfGuesses(10);
     setFormData("");
   };
 
@@ -65,20 +65,21 @@ export default function App() {
         <h3>{`Guesses Left : ${numOfGuesses}`}</h3>
         {winner && <h3>You Won</h3>}
         {!numOfGuesses && !winner && <h3>You Lost</h3>}
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="guessedLetter"
-            placeholder="Guessed Letter"
-            onChange={handleChange}
-            value={formData}
-          />
-          {numOfGuesses && !winner ? (
+        {numOfGuesses && !winner && (
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="guessedLetter"
+              placeholder="Guessed Letter"
+              onChange={handleChange}
+              value={formData}
+            />
             <button>Submit</button>
-          ) : (
-            <button onClick={handleReset}>Reset</button>
-          )}
-        </form>
+          </form>
+        )}
+        {(winner || !numOfGuesses) && (
+          <button onClick={handleReset}>Reset</button>
+        )}
       </header>
     </div>
   );
