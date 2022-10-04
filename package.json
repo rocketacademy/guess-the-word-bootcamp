@@ -2,7 +2,7 @@
   "name": "guess-the-word-bootcamp",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ameeeralih.github.io/guess-the-word-bootcamp",
+  "homepage": "https://ameeralih.github.io/guess-the-word-bootcamp",
   "dependencies": {
     "gh-pages": "^4.0.0",
     "react": "^18.1.0",
