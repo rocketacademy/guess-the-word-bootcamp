@@ -10,7 +10,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currWord: "overcook",
+      currWord: getRandomWord(),
       guessedLetters: [],
       displayLetters: [], 
       numOfAllowedGuess: this.props.guess,
@@ -35,6 +35,11 @@ class Game extends React.Component {
     let letters_display = this.state.displayLetters
     let guessLeft = this.state.numOfGuess
     let word = this.state.currWord
+    //reject repeated words
+     if (letters_guess.indexOf(userGuess) >= 0 && letters_guess.length !== 0) {
+       alert("You have choose the letter already! Pick another letter!");
+       return;
+     }
     //If user is guessing the word
     if(userGuess.length === word.length){
       if(userGuess !== this.state.currWord){
@@ -84,15 +89,14 @@ class Game extends React.Component {
   }
   
   nextGame = () => {
-    const nextRound = this.state.rounds
+    const nextRound = this.state.currRound
     this.setState({
-      currWord: "destiny",
+      currWord: getRandomWord(),
       guessedLetters: [],
       displayLetters: [],
       numOfGuess: 0,
       userGuess: "",
-      currRound: 1,
-      rounds: nextRound + 1,
+      currRound: nextRound + 1,
       isRoundDone: false,
     });
   }
@@ -110,12 +114,25 @@ class Game extends React.Component {
       button = <button onClick={this.nextGame}>Next Game</button>
     }
     console.log(this.state.numOfGuess, this.state.numOfAllowedGuess)
+    const reveal = <p>The word is {this.state.currWord}!</p>
+    let gameOverMsg
+    if(this.state.numOfAllowedGuess === this.state.numOfGuess){
+      gameOverMsg = <p>He ded</p>
+    }
+    else{
+      gameOverMsg = <p>You Saved Him! HOORAY!</p>
+    }
+    const lastChance = <p>He is about to die! You have one last chance to save him! </p>
     return (
       <div>
         <Score score={this.state.wins} currentRound={this.state.currRound} />
+        {(this.state.numOfAllowedGuess - this.state.numOfGuess === 1) && lastChance}
+        {this.state.isRoundDone && gameOverMsg}
         <Display word={this.state.currWord} display={this.state.displayLetters} />
         <GuessDisplay letters={this.state.guessedLetters}/>
         <Input getGuess={this.updateRoundData} />
+        <p>You have {this.state.numOfAllowedGuess - this.state.numOfGuess} guess left!</p>
+        {this.state.isRoundDone && reveal}
         {this.state.isRoundDone && button}
         <Hangman numGuess={this.state.numOfAllowedGuess} guessLeft={this.state.numOfGuess}/>
       </div>

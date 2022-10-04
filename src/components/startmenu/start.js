@@ -42,13 +42,14 @@ class Start extends React.Component {
   render() {
     return (
       <div>
+        <h1>🚀 HANGMAN 🚀</h1>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             this.setGameMode();
           }}
         >
-          <label>
+          <label className="input">
             Number of Rounds:
             <input
               type="number"
@@ -58,7 +59,7 @@ class Start extends React.Component {
               onChange={this.handleRound}
             />
           </label>
-          <label>
+          <label className="label">
             Number of Guess:
             <input
               type="number"
