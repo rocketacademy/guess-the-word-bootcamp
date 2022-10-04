@@ -22,21 +22,30 @@ class App extends React.Component {
   }
 
   setGameUp = (data) =>{
+    console.log(data)
     this.setState({
       gameMode: data.gameMode,
       guess: parseInt(data.guess),
       rounds: parseInt(data.rounds)
-    },console.log(this.state.guess, this.state.rounds))
+    })
+
+  }
+
+  reset = () =>{
+    this.setState({
+      gameMode: "Start"
+    })
   }
 
   // Insert form callback functions handleChange and handleSubmit here
 
   render() {
+    console.log(this.state.guess, this.state.rounds);
     return (
       <div className="App">
         <header className="App-header">
           {this.state.gameMode === "Start" && (<Start setUp={this.setGameUp} />)}
-          {this.state.gameMode === "Game" && <Game guess={this.state.guess} rounds={this.state.rounds}/>}
+          {this.state.gameMode === "Game" && <Game guess={this.state.guess} rounds={this.state.rounds} restart={this.reset}/>}
         </header>
       </div>
     );

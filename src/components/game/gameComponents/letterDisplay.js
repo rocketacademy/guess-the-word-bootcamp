@@ -1,12 +1,9 @@
 import React from "react";
 
 class Display extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-    }
+  async game() {
+    
   }
-
   render() {
     const letterArr = this.props.display
     const word = this.props.word.split('')
@@ -15,8 +12,7 @@ class Display extends React.Component {
         {letterArr.indexOf(letter) >= 0 ? letter : "_"}
       </div>
     ));
-    
-    console.log(display);
+
     return(
       <div className="display">
         {display}
