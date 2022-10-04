@@ -40,7 +40,7 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
-    let [newLetter] = this.state.value;
+    const [newLetter] = this.state.value; // extract only first letter, in case naughty user punch many chars
     event.preventDefault();
     this.setState((previousState) => ({
       guessedLetters: [...previousState.guessedLetters, newLetter],
@@ -74,6 +74,10 @@ class App extends React.Component {
     const replayButton = (
       <button onClick={() => this.resetGame()}>Play Again</button>
     );
+    const isCorrectWord = this.isCorrectWord(
+      this.state.guessedLetters,
+      this.state.currWord
+    );
     return (
       <div className="App">
         <header className="App-header">
@@ -99,22 +103,11 @@ class App extends React.Component {
             <input
               type="submit"
               value="Submit"
-              disabled={
-                !this.state.guessesLeft ||
-                this.isCorrectWord(
-                  this.state.guessedLetters,
-                  this.state.currWord
-                )
-                  ? true
-                  : false
-              }
+              disabled={!this.state.guessesLeft || isCorrectWord ? true : false}
             />
           </form>
           {/* Player has successfully guessed the word */}
-          {this.isCorrectWord(
-            this.state.guessedLetters,
-            this.state.currWord
-          ) && (
+          {isCorrectWord && (
             <div>
               <p>You have correctly guessed the word!</p>
               {replayButton}
