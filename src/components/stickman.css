@@ -1,0 +1,90 @@
+.left {
+  width: 300px;
+  background-color: red;
+  border: 1px red solid;
+  transform: rotate(90deg);
+  position: relative;
+  right: 140px;
+  top: 150px;
+}
+
+.top {
+  width: 250px;
+  border: 1px red solid;
+  background-color: red;
+  position: relative;
+  left: 10px;
+  bottom: 1px
+}
+
+.rope {
+  width: 50px;
+  background-color: red;
+  border: 1px red solid;
+  transform: rotate(90deg);
+  position: relative;
+  left: 120px;
+  top: 23px;
+}
+
+.head {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  /* background-color: red; */
+  border: 2px red solid;
+  transform: rotate(90deg);
+  position: relative;
+  left: 120px;
+  top: 47px;
+}
+
+.body {
+  width: 100px;
+  background-color: red;
+  border: 1px red solid;
+  transform: rotate(90deg);
+  position: relative;
+  left: 95px;
+  top: 97px;
+}
+
+.rightarm {
+  width: 50px;
+  background-color: red;
+  border: 1px red solid;
+  transform: rotate(45deg);
+  position: relative;
+  left: 137px;
+  top: 80px;
+}
+
+.leftarm {
+  width: 50px;
+  background-color: red;
+  border: 1px red solid;
+  transform: rotate(-45deg);
+  position: relative;
+  left: 102px;
+  top: 83px;
+}
+
+.rightleg {
+  width: 50px;
+  background-color: red;
+  border: 1px red solid;
+  transform: rotate(45deg);
+  position: relative;
+  left: 137px;
+  top: 157px;
+}
+
+.leftleg {
+  width: 50px;
+  background-color: red;
+  border: 1px red solid;
+  transform: rotate(-45deg);
+  position: relative;
+  left: 102px;
+  top: 160px;
+}
