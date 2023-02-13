@@ -63,6 +63,13 @@ class App extends React.Component {
     }
   };
 
+  get isGameOver() {
+    return !(
+      this.state.guessesLeft > 0 &&
+      this.generateWordDisplay().replace(/ /g, "") !== this.state.currWord
+    );
+  }
+
   // Insert form callback functions handleChange and handleSubmit here
 
   handleChange = (event) => {
@@ -110,9 +117,7 @@ class App extends React.Component {
               placeholder="E.g. 'e'"
               onChange={this.handleChange}
             />
-            {this.state.guessesLeft > 0 &&
-              this.generateWordDisplay().replace(/ /g, "") !==
-                this.state.currWord && <input type="submit" value="Submit" />}
+            {!this.isGameOver && <input type="submit" value="Submit" />}
           </form>
         </header>
       </div>
