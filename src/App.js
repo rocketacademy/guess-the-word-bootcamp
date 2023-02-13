@@ -10,6 +10,8 @@ class App extends React.Component {
       guessedLetters: [],
       guessesLeft: 10,
       currGuess: "",
+      roundsPlayed: 0,
+      roundsWon: 0,
     };
   }
 
@@ -37,6 +39,7 @@ class App extends React.Component {
           );
         }, 100);
       }
+      this.endGame();
     }
   };
 
@@ -99,7 +102,21 @@ class App extends React.Component {
     }
   };
 
-  handleClick = () => {
+  endGame = () => {
+    if (this.isGameOver) {
+      const roundsWon =
+        this.generateWordDisplay().replace(/ /g, "") === this.state.currWord
+          ? this.state.roundsWon + 1
+          : this.state.roundsWon;
+
+      this.setState({
+        roundsPlayed: this.state.roundsPlayed + 1,
+        roundsWon: roundsWon,
+      });
+    }
+  };
+
+  restartGame = () => {
     this.setState({
       currWord: getRandomWord(),
       guessedLetters: [],
@@ -137,9 +154,12 @@ class App extends React.Component {
             />
             {!this.isGameOver && <input type="submit" value="Submit" />}
             {this.isGameOver && (
-              <button onClick={this.handleClick}>Another round</button>
+              <button onClick={this.restartGame}>Another round</button>
             )}
           </form>
+          <div>
+            {this.state.roundsWon} won out of {this.state.roundsPlayed} rounds
+          </div>
         </header>
       </div>
     );
