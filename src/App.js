@@ -1,6 +1,8 @@
 import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 class App extends React.Component {
   constructor(props) {
@@ -129,36 +131,47 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Guess The Word</h1>
-          <div>
-            <h3>Word Display</h3>
-            {this.generateWordDisplay()}
+          <h1>Guess The Word</h1> <br />
+          <div id="container">
+            <div id="word-display">{this.generateWordDisplay()}</div>
+            <div id="guessed-letters">
+              Guessed Letters: <br />
+              {this.state.guessedLetters.length > 0
+                ? this.state.guessedLetters.join(" ")
+                : "-"}
+            </div>
+            <div id="guesses-left">
+              Guesses Left: <br />
+              {this.state.guessesLeft}
+            </div>
           </div>
-          <div>
-            <h3>Guessed Letters</h3>
-            {this.state.guessedLetters.length > 0
-              ? this.state.guessedLetters.join(" ")
-              : "-"}
-          </div>
-          <div>
-            <h3>Guesses Left</h3>
-            {this.state.guessesLeft}
-          </div>
-          <form onSubmit={this.handleSubmit}>
-            <label>My guess: </label>
-            <input
-              type="text"
-              value={this.state.currGuess}
-              placeholder="E.g. 'e'"
-              onChange={this.handleChange}
-            />
-            {!this.isGameOver && <input type="submit" value="Submit" />}
-            {this.isGameOver && (
-              <button onClick={this.restartGame}>Another round</button>
-            )}
-          </form>
-          <div>
-            {this.state.roundsWon} won out of {this.state.roundsPlayed} rounds
+          {!this.isGameOver && (
+            <div class="form">
+              <Form.Label htmlFor="guess">Guess: </Form.Label>
+              <Form.Control
+                type="text"
+                id="guess"
+                value={this.state.currGuess}
+                placeholder="e.g. 'e'"
+                onChange={this.handleChange}
+              />
+              <Button variant="light" onClick={this.handleSubmit}>
+                Submit
+              </Button>
+            </div>
+          )}
+          {this.isGameOver && (
+            <Button
+              id="another-round"
+              variant="success"
+              onClick={this.restartGame}
+            >
+              Another round
+            </Button>
+          )}
+          <br />
+          <div id="game-score">
+            Won {this.state.roundsWon} out of {this.state.roundsPlayed} rounds
           </div>
         </header>
       </div>
