@@ -23,22 +23,37 @@ class App extends React.Component {
   };
 
   updateGameState = () => {
-    if (
-      this.state.guessesLeft === 0 &&
-      this.generateWordDisplay().replace(/ /g, "") !== this.state.currWord
-    ) {
-      setTimeout(() => {
-        alert("You ran out of tries!");
-      }, 100);
-    } else if (
-      this.generateWordDisplay().replace(/ /g, "") === this.state.currWord
-    ) {
-      setTimeout(() => {
-        alert(
-          `Congrats on guessing it with ${10 - this.state.guessesLeft} tries!`
-        );
-      }, 100);
+    if (this.isGameOver) {
+      if (
+        this.generateWordDisplay().replace(/ /g, "") !== this.state.currWord
+      ) {
+        setTimeout(() => {
+          alert("You ran out of tries!");
+        }, 100);
+      } else {
+        setTimeout(() => {
+          alert(
+            `Congrats on guessing it with ${10 - this.state.guessesLeft} tries!`
+          );
+        }, 100);
+      }
     }
+    // if (
+    //   this.state.guessesLeft === 0 &&
+    //   this.generateWordDisplay().replace(/ /g, "") !== this.state.currWord
+    // ) {
+    //   setTimeout(() => {
+    //     alert("You ran out of tries!");
+    //   }, 100);
+    // } else if (
+    //   this.generateWordDisplay().replace(/ /g, "") === this.state.currWord
+    // ) {
+    //   setTimeout(() => {
+    //     alert(
+    //       `Congrats on guessing it with ${10 - this.state.guessesLeft} tries!`
+    //     );
+    //   }, 100);
+    // }
   };
 
   generateWordDisplay = () => {
