@@ -110,7 +110,9 @@ class App extends React.Component {
               placeholder="E.g. 'e'"
               onChange={this.handleChange}
             />
-            <input type="submit" value="Submit" />
+            {this.state.guessesLeft > 0 &&
+              this.generateWordDisplay().replace(/ /g, "") !==
+                this.state.currWord && <input type="submit" value="Submit" />}
           </form>
         </header>
       </div>
