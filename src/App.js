@@ -28,7 +28,7 @@ class App extends React.Component {
         this.generateWordDisplay().replace(/ /g, "") !== this.state.currWord
       ) {
         setTimeout(() => {
-          alert("You ran out of tries!");
+          alert(`You ran out of tries! The word is "${this.state.currWord}".`);
         }, 100);
       } else {
         setTimeout(() => {
@@ -54,6 +54,12 @@ class App extends React.Component {
 
   validateInput = () => {
     const input = this.state.currGuess;
+    if (this.state.guessedLetters.includes(input.toLowerCase())) {
+      alert(
+        `You have already guessed "${this.state.currGuess}"! Try another letter.`
+      );
+      return false;
+    }
     if (!(input.match(/^[A-Za-z]+$/) && input.length === 1)) {
       alert("Please enter just one letter at a time!");
       return false;
@@ -93,6 +99,15 @@ class App extends React.Component {
     }
   };
 
+  handleClick = () => {
+    this.setState({
+      currWord: getRandomWord(),
+      guessedLetters: [],
+      guessesLeft: 10,
+      currGuess: "",
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -105,8 +120,12 @@ class App extends React.Component {
           <div>
             <h3>Guessed Letters</h3>
             {this.state.guessedLetters.length > 0
-              ? this.state.guessedLetters.toString()
+              ? this.state.guessedLetters.join(" ")
               : "-"}
+          </div>
+          <div>
+            <h3>Guesses Left</h3>
+            {this.state.guessesLeft}
           </div>
           <form onSubmit={this.handleSubmit}>
             <label>My guess: </label>
@@ -117,6 +136,9 @@ class App extends React.Component {
               onChange={this.handleChange}
             />
             {!this.isGameOver && <input type="submit" value="Submit" />}
+            {this.isGameOver && (
+              <button onClick={this.handleClick}>Another round</button>
+            )}
           </form>
         </header>
       </div>
