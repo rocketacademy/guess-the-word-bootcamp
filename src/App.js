@@ -4,6 +4,18 @@ import "./App.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+function importAll(r) {
+  let images = {};
+  r.keys().forEach((item, index) => {
+    images[item.replace("./", "")] = r(item);
+  });
+  return images;
+}
+
+const images = importAll(
+  require.context("./hanging-man", true, /\.(PNG|png)$/)
+);
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +46,7 @@ class App extends React.Component {
       ) {
         setTimeout(() => {
           alert(`You ran out of tries! The word is "${this.state.currWord}".`);
-        }, 100);
+        }, 700);
       } else {
         setTimeout(() => {
           alert(
@@ -89,6 +101,12 @@ class App extends React.Component {
     });
   };
 
+  handleKeyUp = (event) => {
+    if (event.key === "Enter") {
+      this.handleSubmit(event);
+    }
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.validateInput()) {
@@ -140,6 +158,7 @@ class App extends React.Component {
     this.setState({
       currWord: getRandomWord(),
       guessedLetters: [],
+      wrongGuesses: [],
       guessesLeft: 10,
       currGuess: "",
     });
@@ -159,19 +178,24 @@ class App extends React.Component {
                 : "-"}
             </div>
             <div id="guesses-left">
-              Guesses Left: <br />
-              {this.state.guessesLeft}
+              Guesses Left: {this.state.guessesLeft}
+              <img
+                src={images[`hm${10 - this.state.guessesLeft}.PNG`]}
+                alt=""
+              />
             </div>
           </div>
           {!this.isGameOver && (
             <div className="form">
               <Form.Label htmlFor="guess">Guess: </Form.Label>
               <Form.Control
+                autoFocus
                 type="text"
                 id="guess"
                 value={this.state.currGuess}
                 placeholder="e.g. 'e'"
                 onChange={this.handleChange}
+                onKeyUp={this.handleKeyUp}
               />
               <Button variant="light" onClick={this.handleSubmit}>
                 Submit

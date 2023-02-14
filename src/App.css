@@ -38,8 +38,8 @@ h1 {
   top: 30vh;
   display: grid;
   gap: 10px;
-  grid-template-columns: 250px 250px;
-  grid-template-areas: "top top" "bottom-left bottom-right";
+  grid-template-rows: 50px 200px;
+  grid-template-areas: "top right" "bottom right";
 }
 
 #word-display {
@@ -61,12 +61,18 @@ h1 {
 }
 
 #wrong-guesses {
-  grid-area: bottom-left;
-  color: rgb(161, 31, 31);
+  grid-area: bottom;
 }
 
 #guesses-left {
-  grid-area: bottom-right;
+  grid-area: right;
+  display: flex;
+  flex-direction: column;
+}
+
+#guesses-left img {
+  max-height: 200px;
+  width: auto;
 }
 
 .form,
@@ -104,11 +110,16 @@ button {
   }
 
   #container {
-    grid-template-columns: 60vw;
-    grid-template-areas: "top" "bottom-left" "bottom-right";
+    grid-template-rows: 50px 160px;
+    grid-template-areas: "top right" "bottom right";
   }
 
   .form {
     max-width: 70vw;
+  }
+
+  #guesses-left img {
+    max-height: 170px;
+    width: auto;
   }
 }
