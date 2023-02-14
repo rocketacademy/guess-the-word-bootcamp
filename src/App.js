@@ -221,7 +221,8 @@ class App extends React.Component {
           )}
           <br />
           <div id="game-score">
-            Won {this.state.roundsWon} out of {this.state.roundsPlayed} rounds
+            Won {this.state.roundsWon} out of {this.state.roundsPlayed}
+            {this.state.roundsPlayed > 1 ? " rounds" : " round"}
           </div>
         </header>
       </div>
