@@ -52,7 +52,7 @@ h1 {
   font-size: x-large;
 }
 
-#guessed-letters,
+#wrong-guesses,
 #guesses-left {
   background-color: #f1b963;
   color: rgb(19, 30, 37);
@@ -60,8 +60,9 @@ h1 {
   border-radius: 6px;
 }
 
-#guessed-letters {
+#wrong-guesses {
   grid-area: bottom-left;
+  color: rgb(161, 31, 31);
 }
 
 #guesses-left {

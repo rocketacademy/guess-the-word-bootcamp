@@ -10,6 +10,7 @@ class App extends React.Component {
     this.state = {
       currWord: getRandomWord(),
       guessedLetters: [],
+      wrongGuesses: [],
       guessesLeft: 10,
       currGuess: "",
       roundsPlayed: 0,
@@ -20,7 +21,7 @@ class App extends React.Component {
   updateGuessesLeft = () => {
     this.setState(
       {
-        guessesLeft: 10 - this.state.guessedLetters.length,
+        guessesLeft: 10 - this.state.wrongGuesses.length,
       },
       this.updateGameState
     );
@@ -91,16 +92,33 @@ class App extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.validateInput()) {
-      this.setState(
-        {
-          guessedLetters: [
-            ...this.state.guessedLetters,
-            this.state.currGuess.toLowerCase(),
-          ],
-          currGuess: "",
-        },
-        this.updateGuessesLeft
-      );
+      if (this.state.currWord.includes(this.state.currGuess)) {
+        this.setState(
+          {
+            guessedLetters: [
+              ...this.state.guessedLetters,
+              this.state.currGuess.toLowerCase(),
+            ],
+            currGuess: "",
+          },
+          this.updateGuessesLeft
+        );
+      } else {
+        this.setState(
+          {
+            guessedLetters: [
+              ...this.state.guessedLetters,
+              this.state.currGuess.toLowerCase(),
+            ],
+            wrongGuesses: [
+              ...this.state.wrongGuesses,
+              this.state.currGuess.toLowerCase(),
+            ],
+            currGuess: "",
+          },
+          this.updateGuessesLeft
+        );
+      }
     }
   };
 
@@ -134,10 +152,10 @@ class App extends React.Component {
           <h1>Guess The Word</h1> <br />
           <div id="container">
             <div id="word-display">{this.generateWordDisplay()}</div>
-            <div id="guessed-letters">
-              Guessed Letters: <br />
-              {this.state.guessedLetters.length > 0
-                ? this.state.guessedLetters.join(" ")
+            <div id="wrong-guesses">
+              Wrong guesses: <br />
+              {this.state.wrongGuesses.length > 0
+                ? this.state.wrongGuesses.join(" ")
                 : "-"}
             </div>
             <div id="guesses-left">
@@ -146,7 +164,7 @@ class App extends React.Component {
             </div>
           </div>
           {!this.isGameOver && (
-            <div class="form">
+            <div className="form">
               <Form.Label htmlFor="guess">Guess: </Form.Label>
               <Form.Control
                 type="text"
