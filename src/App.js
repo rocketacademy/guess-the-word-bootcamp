@@ -47,11 +47,17 @@ class App extends React.Component {
         setTimeout(() => {
           alert(`You ran out of tries! The word is "${this.state.currWord}".`);
         }, 700);
-      } else {
+      } else if (this.state.guessesLeft > 5) {
         setTimeout(() => {
-          alert(
-            `Congrats on guessing it with ${10 - this.state.guessesLeft} tries!`
-          );
+          alert("That's impressive!");
+        }, 100);
+      } else if (this.state.guessesLeft <= 5 && this.state.guessesLeft > 2) {
+        setTimeout(() => {
+          alert("Good effort!");
+        }, 100);
+      } else if (this.state.guessesLeft <= 2) {
+        setTimeout(() => {
+          alert("Phew! That was close.");
         }, 100);
       }
       this.endGame();
@@ -76,10 +82,12 @@ class App extends React.Component {
       alert(
         `You have already guessed "${this.state.currGuess}"! Try another letter.`
       );
+      this.setState({ currGuess: "" });
       return false;
     }
     if (!(input.match(/^[A-Za-z]+$/) && input.length === 1)) {
       alert("Please enter just one letter at a time!");
+      this.setState({ currGuess: "" });
       return false;
     } else {
       return true;
