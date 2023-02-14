@@ -118,7 +118,7 @@ class App extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.validateInput()) {
-      if (this.state.currWord.includes(this.state.currGuess)) {
+      if (this.state.currWord.includes(this.state.currGuess.toLowerCase())) {
         this.setState(
           {
             guessedLetters: [
