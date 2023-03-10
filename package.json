@@ -1,7 +1,7 @@
 {
   "name": "guess-the-word-bootcamp",
   "version": "0.1.0",
-  "homepage": "https://peanutyabing.github.io/guess-the-word-bootcamp",
+  "homepage": "https://peanutyabing.github.io/guess-the-word",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
