@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: "Comfortaa", cursive;
 }
 
 .App-logo {
@@ -8,12 +9,117 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background: radial-gradient(
+    circle at -8.9% 50%,
+    rgb(255, 124, 0) 0%,
+    rgb(255, 124, 0) 12%,
+    rgb(255, 163, 77) 12.2%,
+    rgb(255, 163, 77) 20%,
+    rgb(19, 30, 37) 20.2%
+  );
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1vmin);
   color: white;
+}
+
+h1 {
+  font-family: "Pacifico", cursive;
+  position: fixed;
+  top: 20vh;
+}
+
+#container {
+  position: fixed;
+  top: 30vh;
+  display: grid;
+  gap: 10px;
+  grid-template-rows: 50px 200px;
+  grid-template-areas: "top right" "bottom right";
+}
+
+#word-display {
+  grid-area: top;
+  background-color: #f8f398;
+  color: rgb(19, 30, 37);
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: x-large;
+}
+
+#wrong-guesses,
+#guesses-left {
+  background-color: #f1b963;
+  color: rgb(19, 30, 37);
+  padding: 10px 30px;
+  border-radius: 6px;
+}
+
+#wrong-guesses {
+  grid-area: bottom;
+}
+
+#guesses-left {
+  grid-area: right;
+  display: flex;
+  flex-direction: column;
+}
+
+#guesses-left img {
+  max-height: 200px;
+  width: auto;
+}
+
+.form,
+#another-round {
+  position: fixed;
+  top: 65vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  margin: 10px 0;
+}
+
+.form-label,
+#guess,
+button {
+  margin: auto 5px;
+}
+
+#game-score {
+  position: fixed;
+  top: 80vh;
+  font-size: smaller;
+}
+
+@media only screen and (max-width: 1024px) {
+  .App-header {
+    background: radial-gradient(
+      circle at -8.9% 3%,
+      rgb(255, 124, 0) 0%,
+      rgb(255, 124, 0) 12%,
+      rgb(255, 163, 77) 12.2%,
+      rgb(255, 163, 77) 20%,
+      rgb(19, 30, 37) 20.2%
+    );
+  }
+
+  #container {
+    grid-template-rows: 50px 160px;
+    grid-template-areas: "top right" "bottom right";
+  }
+
+  .form {
+    max-width: 70vw;
+  }
+
+  #guesses-left img {
+    max-height: 170px;
+    width: auto;
+  }
 }
