@@ -11,7 +11,7 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   font-size: calc(10px + 2vmin);
 }
 
@@ -23,6 +23,10 @@
 
 h1 {
   margin: 0;
+}
+
+#main-title {
+  padding: 1em;
 }
 
 .portrait {
