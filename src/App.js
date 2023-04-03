@@ -30,8 +30,6 @@ class App extends React.Component {
   checkPlayerWin = (guessedLetters) => {
     // for each letter of the secret word, if the letter is NOT inside guessedLetters, then return false
     for (let letter of this.state.currWord) {
-      console.log(letter);
-      console.log(this.state.guessedLetters);
       if (!this.state.guessedLetters.includes(letter)) {
         console.log(`${letter} is not found in ${this.state.guessedLetters}`);
         return false;
@@ -41,7 +39,6 @@ class App extends React.Component {
   };
 
   checkGameOver = () => {
-    console.log(`currLetter: ${this.state.currLetter}`);
     if (this.checkPlayerWin(this.state.guessedLetters)) {
       this.setState({
         isGameRunning: false,
@@ -75,7 +72,7 @@ class App extends React.Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     const guessesLeft = this.state.guessesLeft - 1;
-    const currLetter = this.state.currLetter;
+    const currLetter = this.state.currLetter.toLowerCase();
     if (this.state.warning.moreThanOneLetter === false) {
       await this.setState({
         guessedLetters: [...this.state.guessedLetters, currLetter],
