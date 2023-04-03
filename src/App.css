@@ -3,18 +3,23 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  gap: 1em;
 }
 
 .game-card {
-  background-color: black;
+  background-color: rgb(101, 101, 75);
+  background-image: url("paper.jpg");
+  background-size: cover;
   margin: 1em;
   padding: 1em;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .App {
   background-color: #282c34;
+  background-image: url("background.jpg");
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  color: white;
+  color: #282c34;
   text-align: center;
   display: flex;
   justify-content: center;

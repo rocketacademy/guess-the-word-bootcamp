@@ -64,7 +64,7 @@ class App extends React.Component {
       if (this.state.guessedLetters.includes(letter)) {
         wordDisplay.push(letter);
       } else {
-        wordDisplay.push("*");
+        wordDisplay.push("?");
       }
     }
     return wordDisplay.join(" ").toString();
@@ -110,6 +110,7 @@ class App extends React.Component {
         moreThanOneLetter: false,
       },
       isGameRunning: true,
+      playerWon: false,
     });
   };
 
@@ -118,12 +119,12 @@ class App extends React.Component {
       <div className="App">
         <div className="game-card">
           <div className="title">
-            <h1 id="main-title">Guess The Word</h1>
+            <h1 id="main-title">Lady Penelope's Peculiar Puzzle</h1>
           </div>
           <div className="content">
             <div className="gameDisplay">
               {" "}
-              <h3>Word Display</h3>
+              <h3>Guess The Word</h3>
               {this.state.isGameRunning && (
                 <div>
                   {this.generateWordDisplay()}
