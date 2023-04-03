@@ -1,24 +1,23 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .content {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
 
+.game-card {
+  background-color: black;
+  margin: 1em;
+  padding: 1em;
+}
+
 .App {
   background-color: #282c34;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 h1 {

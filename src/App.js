@@ -10,7 +10,7 @@ class App extends React.Component {
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       // use getRandomWord()
-      currWord: getRandomWord(),
+      currWord: "test",
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
@@ -131,10 +131,8 @@ class App extends React.Component {
                   {this.state.guessedLetters.length > 0
                     ? this.state.guessedLetters.join(" ").toString()
                     : "-"}
-                  <h3>Input</h3>
                   <form onSubmit={this.handleSubmit}>
                     <label>
-                      Guess:
                       <input
                         type="text"
                         name="guess"
@@ -143,8 +141,10 @@ class App extends React.Component {
                         value={this.state.currLetter}
                       />
                     </label>
+                    <br />
                     <input type="submit" value="Submit" />
                   </form>
+                  <br />
                   {<div>Guesses Left: {this.state.guessesLeft}</div>}
                   {this.state.warning.moreThanOneLetter && (
                     <div>You can only guess one letter at a time.</div>
