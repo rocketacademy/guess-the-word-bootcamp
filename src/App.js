@@ -1,6 +1,10 @@
 import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
+// import Form from "./Forms.js";
+
+// Checklist:
+// 1. Show what the word is after number of guesses have run out.
 
 class App extends React.Component {
   constructor(props) {
@@ -11,8 +15,8 @@ class App extends React.Component {
       currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
-      // Insert num guesses left state here
-      // Insert form input state here
+      letter: "",
+      numberOfGuesses: 10,
     };
   }
 
@@ -26,10 +30,40 @@ class App extends React.Component {
         wordDisplay.push("_");
       }
     }
+    if (this.state.numberOfGuesses === 0) {
+      wordDisplay = [...this.state.currWord];
+    }
     return wordDisplay.toString();
   };
 
-  // Insert form callback functions handleChange and handleSubmit here
+  onSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.numberOfGuesses === 0) {
+      return;
+    }
+    if (this.state.letter.length > 1) {
+      alert("Invalid input. Please input only 1 letter.");
+      return;
+    }
+
+    alert("Submitted letter:" + " " + this.state.letter);
+
+    this.setState({
+      numberOfGuesses: this.state.numberOfGuesses - 1,
+      letter: "",
+      guessedLetters: [...this.state.guessedLetters, this.state.letter],
+    });
+    if (this.state.numberOfGuesses === 1) {
+      alert("you have no more guesses left!");
+    }
+  };
+
+  handleChange = (e) => {
+    let { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  };
 
   render() {
     return (
@@ -42,9 +76,20 @@ class App extends React.Component {
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
-          <h3>Input</h3>
-          {/* Insert form element here */}
-          Todo: Insert form element here
+
+          {/* <Form /> */}
+          <form onSubmit={this.onSubmit}>
+            <h5>number of guesses left: {this.state.numberOfGuesses}</h5>
+            <label>Guess the next letter:</label>
+            <input
+              type="text"
+              name="letter"
+              value={this.state.letter}
+              onChange={this.handleChange}
+            />
+            <br />
+            <input type="submit" value="submit" />
+          </form>
         </header>
       </div>
     );
