@@ -40,6 +40,7 @@ class App extends React.Component {
   };
 
   checkGameOver = () => {
+    console.log(`currLetter: ${this.state.currLetter}`);
     if (this.checkPlayerWin(this.state.guessedLetters)) {
       this.setState({
         isGameRunning: false,
@@ -73,9 +74,10 @@ class App extends React.Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     const guessesLeft = this.state.guessesLeft - 1;
+    const currLetter = this.state.currLetter;
     if (this.state.warning.moreThanOneLetter === false) {
       await this.setState({
-        guessedLetters: [...this.state.guessedLetters, this.state.currLetter],
+        guessedLetters: [...this.state.guessedLetters, currLetter],
         guessesLeft: guessesLeft,
         currLetter: "",
       });
@@ -89,6 +91,7 @@ class App extends React.Component {
         warning: { ...this.state.warning, moreThanOneLetter: true },
       });
     } else {
+      console.log(`Setting currLetter to ${e.target.value}`);
       this.setState({
         currLetter: e.target.value,
         warning: { ...this.state.warning, moreThanOneLetter: false },
@@ -108,6 +111,7 @@ class App extends React.Component {
       isGameRunning: true,
     });
   };
+
   render() {
     return (
       <div className="App">
@@ -130,6 +134,7 @@ class App extends React.Component {
                     name="guess"
                     onChange={this.handleChange}
                     maxLength={1}
+                    value={this.state.currLetter}
                   />
                 </label>
                 <input type="submit" value="Submit" />
