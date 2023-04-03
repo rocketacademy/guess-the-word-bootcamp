@@ -113,3 +113,30 @@ input:focus {
   font-size: 20px;
   letter-spacing: 2px;
 }
+
+@media (max-width: 500px) {
+  #game-title {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
+  .letter {
+    width: 50px;
+    height: 65px;
+    margin: 0 5px;
+    font-size: 30px;
+  }
+  .scoreboard-panel {
+    margin: 0 5px;
+    padding: 15px 10px;
+  }
+
+  .scoreboard-panel p {
+    font-size: 30px;
+  }
+
+  .scoreboard,
+  .endGame,
+  form {
+    margin-bottom: 10px;
+  }
+}

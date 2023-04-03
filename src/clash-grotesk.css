@@ -29,7 +29,7 @@
 */
 
 @font-face {
-  font-family: "ClashGrotesk-Extralight";
+  font-family: "Clash Grotesk";
   src: url("./Fonts/ClashGrotesk-Extralight.woff2") format("woff2"),
     url("./Fonts/ClashGrotesk-Extralight.woff") format("woff"),
     url("./Fonts/ClashGrotesk-Extralight.ttf") format("truetype");
@@ -39,7 +39,7 @@
 }
 
 @font-face {
-  font-family: "ClashGrotesk-Light";
+  font-family: "Clash Grotesk";
   src: url("./Fonts/ClashGrotesk-Light.woff2") format("woff2"),
     url("./Fonts/ClashGrotesk-Light.woff") format("woff"),
     url("./Fonts/ClashGrotesk-Light.ttf") format("truetype");
@@ -49,7 +49,7 @@
 }
 
 @font-face {
-  font-family: "ClashGrotesk-Regular";
+  font-family: "Clash Grotesk";
   src: url("./Fonts/ClashGrotesk-Regular.woff2") format("woff2"),
     url("./Fonts/ClashGrotesk-Regular.woff") format("woff"),
     url("./Fonts/ClashGrotesk-Regular.ttf") format("truetype");
@@ -59,7 +59,7 @@
 }
 
 @font-face {
-  font-family: "ClashGrotesk-Medium";
+  font-family: "Clash Grotesk";
   src: url("./Fonts/ClashGrotesk-Medium.woff2") format("woff2"),
     url("./Fonts/ClashGrotesk-Medium.woff") format("woff"),
     url("./Fonts/ClashGrotesk-Medium.ttf") format("truetype");
@@ -69,7 +69,7 @@
 }
 
 @font-face {
-  font-family: "ClashGrotesk-Semibold";
+  font-family: "Clash Grotesk";
   src: url("./Fonts/ClashGrotesk-Semibold.woff2") format("woff2"),
     url("./Fonts/ClashGrotesk-Semibold.woff") format("woff"),
     url("./Fonts/ClashGrotesk-Semibold.ttf") format("truetype");
@@ -79,7 +79,7 @@
 }
 
 @font-face {
-  font-family: "ClashGrotesk-Bold";
+  font-family: "Clash Grotesk";
   src: url("./Fonts/ClashGrotesk-Bold.woff2") format("woff2"),
     url("./Fonts/ClashGrotesk-Bold.woff") format("woff"),
     url("./Fonts/ClashGrotesk-Bold.ttf") format("truetype");
