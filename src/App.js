@@ -124,11 +124,11 @@ class App extends React.Component {
           <div className="content">
             <div className="gameDisplay">
               {" "}
-              <h3>Guess The Word</h3>
+              <h4>Guess The Word</h4>
               {this.state.isGameRunning && (
                 <div>
                   {this.generateWordDisplay()}
-                  <h3>Guessed Letters</h3>
+                  <h4>Guessed Letters</h4>
                   {this.state.guessedLetters.length > 0
                     ? this.state.guessedLetters.join(" ").toString()
                     : "-"}
@@ -177,6 +177,9 @@ class App extends React.Component {
             <div className="artDisplay">
               <ArtDisplay guessesLeft={this.state.guessesLeft} />
             </div>
+          </div>
+          <div className="acknowledgements">
+            <i>Art by Alphonse Mucha, Frederick Sargent & Kiwihug</i>
           </div>
         </div>
       </div>

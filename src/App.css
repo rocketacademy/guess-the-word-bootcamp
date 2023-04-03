@@ -2,17 +2,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   gap: 1em;
+  margin-bottom: 2em;
 }
 
 .game-card {
   background-color: rgb(101, 101, 75);
-  background-image: url("paper.jpg");
+  background-image: url("brown-paper.jpg");
   background-size: cover;
   margin: 1em;
-  padding: 1em;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0em 3em 8em;
 }
 
 .App {
@@ -23,6 +22,10 @@
   text-align: center;
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
 }
 
 h1 {
@@ -37,14 +40,17 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 0.1em;
-  height: 100vh;
 }
 
 .portrait-segment {
-  height: 8vh;
+  height: 5vh;
 }
 
 .portrait-segment-winter {
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
+}
+
+.acknowledgements {
+  margin: 1em;
 }
