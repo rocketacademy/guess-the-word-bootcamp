@@ -28,12 +28,12 @@ body {
 }
 
 .endGame {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 h1 {
   font-size: 60px;
-  letter-spacing: -2px;
+  letter-spacing: 0px;
   font-weight: 700;
 }
 
@@ -48,6 +48,7 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 button,
@@ -93,6 +94,7 @@ input:focus {
   display: flex;
   justify-content: center;
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .scoreboard-panel {
@@ -101,4 +103,13 @@ input:focus {
   padding: 20px;
   width: 120px;
   border-radius: 5px;
+}
+
+.scoreboard-panel p {
+  font-size: 40px;
+}
+
+.guessed-letters {
+  font-size: 20px;
+  letter-spacing: 2px;
 }

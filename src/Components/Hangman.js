@@ -77,6 +77,8 @@ export default class Hangman extends React.Component {
       alert("Please input 1 letter!");
     } else if (this.state.guessedLetters.includes(this.state.guessInput)) {
       alert("You've already guessed this letter!");
+    } else if (!isNaN(this.state.guessInput)) {
+      alert("Please input a letter!");
     } else {
       newGuessedLetters.push(this.state.guessInput);
       this.setState({
@@ -104,6 +106,8 @@ export default class Hangman extends React.Component {
   render() {
     return (
       <div className="game">
+        {this.generateWordDisplay()} <br />
+        <br />
         {this.state.gameOver ? (
           <div className="endGame">
             {this.state.wordGuessed ? (
@@ -111,32 +115,31 @@ export default class Hangman extends React.Component {
             ) : (
               <h1>Game Over!</h1>
             )}
-            <button onClick={this.handleRestart}>restart</button>
+            <button onClick={this.handleRestart}>Restart</button>
           </div>
         ) : (
-          <div></div>
+          <form onSubmit={this.handleSubmit} autocomplete="off">
+            <label>
+              <h3>Enter guess here:</h3>
+            </label>
+            <input
+              type="text"
+              name="guessInput"
+              value={this.state.guessInput}
+              onChange={this.handleChange}
+            />
+            <button type="submit" name="submit">
+              Submit
+            </button>
+          </form>
         )}
-        {this.generateWordDisplay()} <br />
-        <br />
-        <h3>Guessed Letters</h3>
-        {this.state.guessedLetters.length > 0
-          ? this.state.guessedLetters.toString()
-          : "-"}
-        <form onSubmit={this.handleSubmit} autocomplete="off">
-          <label>
-            <h3>Enter guess here:</h3>
-          </label>
-          <input
-            type="text"
-            name="guessInput"
-            value={this.state.guessInput}
-            onChange={this.handleChange}
-          />
-          <button type="submit" name="submit">
-            Submit
-          </button>
-        </form>
         <Scoreboard {...this.state} />
+        <h3>Guessed Letters</h3>
+        <p className="guessed-letters">
+          {this.state.guessedLetters.length > 0
+            ? this.state.guessedLetters.toString()
+            : "-"}
+        </p>
       </div>
     );
   }
