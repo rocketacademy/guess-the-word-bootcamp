@@ -11,7 +11,7 @@
   background-image: url("brown-paper.jpg");
   background-size: cover;
   margin: 1em;
-  box-shadow: rgba(0, 0, 0, 0.24) 0em 3em 8em;
+  box-shadow: rgba(0, 0, 0, 0.8) 0em 3em 8em;
 }
 
 .App {
@@ -28,12 +28,13 @@
   background-size: cover;
 }
 
-h1 {
+h2 {
   margin: 0;
+  padding-top: 0px;
 }
 
 #main-title {
-  padding: 1em;
+  padding: 0 1em 1em 1em;
 }
 
 .portrait {
@@ -53,4 +54,23 @@ h1 {
 
 .acknowledgements {
   margin: 1em;
+}
+
+.guess-input {
+  background: none;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  text-align: center;
+  width: 3em;
+}
+
+.emblem {
+  font-size: 2em;
+  margin: 0;
+}
+
+.submit-button {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }

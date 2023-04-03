@@ -119,34 +119,44 @@ class App extends React.Component {
       <div className="App">
         <div className="game-card">
           <div className="title">
-            <h1 id="main-title">Lady Penelope's Peculiar Puzzle</h1>
+            <p className="emblem">-⚜-</p>
+            <h2 id="main-title">✽ Lady Penelope's Peculiar Puzzle ✽</h2>
           </div>
           <div className="content">
             <div className="gameDisplay">
               {" "}
-              <h4>Guess The Word</h4>
               {this.state.isGameRunning && (
                 <div>
+                  <h4>Guess The Word</h4>
                   {this.generateWordDisplay()}
                   <h4>Guessed Letters</h4>
-                  {this.state.guessedLetters.length > 0
-                    ? this.state.guessedLetters.join(" ").toString()
-                    : "-"}
+                  <p>
+                    {" "}
+                    {this.state.guessedLetters.length > 0
+                      ? this.state.guessedLetters.join(" ").toString()
+                      : "-"}
+                  </p>
                   <form onSubmit={this.handleSubmit}>
                     <label>
                       <input
                         type="text"
                         name="guess"
+                        className="guess-input"
                         onChange={this.handleChange}
                         maxLength={1}
                         value={this.state.currLetter}
                       />
                     </label>
                     <br />
-                    <input type="submit" value="Submit" />
+                    <br />
+                    <input
+                      type="submit"
+                      value="Submit"
+                      className="submit-button"
+                    />
                   </form>
                   <br />
-                  {<div>Guesses Left: {this.state.guessesLeft}</div>}
+
                   {this.state.warning.moreThanOneLetter && (
                     <div>You can only guess one letter at a time.</div>
                   )}
@@ -154,24 +164,46 @@ class App extends React.Component {
               )}
               {!this.state.isGameRunning && (
                 <div>
-                  <div>Game Over</div>
-                  <div>The Hidden Word is {this.state.currWord}</div>
+                  <h4>Game Concluded</h4>
+                  <div>
+                    The Hidden Word is:
+                    <p>
+                      <b>{this.state.currWord}</b>
+                    </p>
+                  </div>
                   {this.generateWordDisplay()}
-                  <h3>Guessed Letters</h3>
+                  <h4>Guessed Letters</h4>
                   {this.state.guessedLetters.length > 0
                     ? this.state.guessedLetters.join(" ").toString()
                     : "-"}
+                  <br />
+                  <br />
                   {this.state.playerWon ? (
-                    <div>You Won</div>
+                    <div>
+                      <i>A Monumental Victory</i>
+                    </div>
                   ) : (
-                    <div>You Lost</div>
+                    <div>
+                      <i>A Bitter Defeat</i>
+                    </div>
                   )}
+                  <br />
                   <button onClick={this.resetGame}>Reset Game</button>
                 </div>
               )}
+              <br />
               <div>
-                <div>Games Won: {this.state.totalWins}</div>
-                <div>Games Played: {this.state.totalGames}</div>
+                <div>
+                  <b>Guesses Left:</b> {this.state.guessesLeft}
+                </div>
+                <div>
+                  <b>Games Won: </b>
+                  {this.state.totalWins}
+                </div>
+                <div>
+                  <b>Games Played: </b>
+                  {this.state.totalGames}
+                </div>
               </div>
             </div>
             <div className="artDisplay">
@@ -181,6 +213,7 @@ class App extends React.Component {
           <div className="acknowledgements">
             <i>Art by Alphonse Mucha, Frederick Sargent & Kiwihug</i>
           </div>
+          <p class="emblem">༺༻</p>
         </div>
       </div>
     );
