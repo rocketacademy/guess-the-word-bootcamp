@@ -1,17 +1,17 @@
 import React from "react";
 import { getRandomWord } from "../utils";
+import Scoreboard from "./Scoreboard";
 
-export default class Wordle extends React.Component {
+export default class Hangman extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // currWord: getRandomWord(),
-      currWord: "hello",
+      currWord: getRandomWord(),
       guessedLetters: [],
       guessInput: "",
       wordGuessed: false,
       score: 0,
-      guessesLeft: 5,
+      guessesLeft: 10,
       gameOver: false,
     };
   }
@@ -65,7 +65,7 @@ export default class Wordle extends React.Component {
       guessedLetters: [],
       guessInput: "",
       wordGuessed: false,
-      guessesLeft: 5,
+      guessesLeft: 10,
       gameOver: false,
     });
   };
@@ -105,7 +105,7 @@ export default class Wordle extends React.Component {
     return (
       <div className="game">
         {this.state.gameOver ? (
-          <div>
+          <div className="endGame">
             {this.state.wordGuessed ? (
               <h1>You did it!</h1>
             ) : (
@@ -124,7 +124,7 @@ export default class Wordle extends React.Component {
           : "-"}
         <form onSubmit={this.handleSubmit} autocomplete="off">
           <label>
-            <h4>Enter guess here:</h4>
+            <h3>Enter guess here:</h3>
           </label>
           <input
             type="text"
@@ -132,12 +132,11 @@ export default class Wordle extends React.Component {
             value={this.state.guessInput}
             onChange={this.handleChange}
           />
-          <input type="submit" name="submit" value="Submit guess" />
+          <button type="submit" name="submit">
+            Submit
+          </button>
         </form>
-        <h3>Your score:</h3>
-        {this.state.score}
-        <h3>Guesses left:</h3>
-        {this.state.guessesLeft}
+        <Scoreboard {...this.state} />
       </div>
     );
   }

@@ -3,11 +3,19 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: "Clash Grotesk", sans-serif;
 }
 
 body {
   background-color: #a8d6de;
-  font-family: "Clash Grotesk", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  min-height: 100vh;
+  max-width: 700px;
+  margin: auto;
 }
 
 #game-title {
@@ -19,13 +27,8 @@ body {
   margin-bottom: 40px;
 }
 
-.App {
-  text-align: center;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.endGame {
+  margin-bottom: 40px;
 }
 
 h1 {
@@ -34,8 +37,35 @@ h1 {
   font-weight: 700;
 }
 
+h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button,
+input {
+  padding: 10px;
+  font-weight: 500;
+  margin: 5px;
+  font-size: 20px;
+  text-align: center;
+}
+
+input:focus {
+  outline: none;
+}
+
 .word {
   display: flex;
+  justify-content: center;
 }
 
 .letter {
@@ -57,4 +87,18 @@ h1 {
 
 .green {
   background: #24ba65;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.scoreboard-panel {
+  margin: 0 10px;
+  background-color: white;
+  padding: 20px;
+  width: 120px;
+  border-radius: 5px;
 }

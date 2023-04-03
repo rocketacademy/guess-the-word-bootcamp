@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
-import Wordle from "./Components/Wordle";
+import Hangman from "./Components/Hangman";
 
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
+      <div>
         <h1 id="game-title">Guess The Word!</h1>
-        <Wordle />
+        <Hangman />
       </div>
     );
   }
