@@ -30,7 +30,7 @@ class App extends React.Component {
       if (this.state.guessedLetters.includes(letter)) {
         wordDisplay.push(letter);
       } else {
-        wordDisplay.push("_");
+        wordDisplay.push("*");
       }
     }
     return wordDisplay.toString();
@@ -39,10 +39,16 @@ class App extends React.Component {
   // Insert form callback functions handleChange and handleSubmit here
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.warning.moreThanOneLetter === false) {
+    const guessesLeft = this.state.guessesLeft - 1;
+    if (guessesLeft <= 0) {
+      this.setState({
+        isGameRunning: false,
+        guessesLeft: guessesLeft,
+      });
+    } else if (this.state.warning.moreThanOneLetter === false) {
       this.setState({
         guessedLetters: [...this.state.guessedLetters, this.state.currLetter],
-        guessesLeft: this.state.guessesLeft - 1,
+        guessesLeft: guessesLeft,
       });
     }
   };
@@ -66,23 +72,26 @@ class App extends React.Component {
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
           <h3>Word Display</h3>
-          {this.generateWordDisplay()}
-          <h3>Guessed Letters</h3>
-          {this.state.guessedLetters.length > 0
-            ? this.state.guessedLetters.toString()
-            : "-"}
-          <h3>Input</h3>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Guess:
-              <input type="text" name="guess" onChange={this.handleChange} />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
-          {<div>Guesses Left: {this.state.guessesLeft}</div>}
-          {this.state.warning.moreThanOneLetter && (
-            <div>You can only guess one letter at a time.</div>
-          )}
+          <div>
+            {this.state.isGameRunning && <div>Game Over</div>}
+            {this.generateWordDisplay()}
+            <h3>Guessed Letters</h3>
+            {this.state.guessedLetters.length > 0
+              ? this.state.guessedLetters.toString()
+              : "-"}
+            <h3>Input</h3>
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Guess:
+                <input type="text" name="guess" onChange={this.handleChange} />
+              </label>
+              <input type="submit" value="Submit" />
+            </form>
+            {<div>Guesses Left: {this.state.guessesLeft}</div>}
+            {this.state.warning.moreThanOneLetter && (
+              <div>You can only guess one letter at a time.</div>
+            )}
+          </div>
         </header>
       </div>
     );
