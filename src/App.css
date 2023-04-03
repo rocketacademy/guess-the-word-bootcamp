@@ -27,4 +27,15 @@ h1 {
 .portrait {
   display: flex;
   flex-direction: column;
+  gap: 0.1em;
+  height: 100vh;
+}
+
+.portrait-segment {
+  height: 8vh;
+}
+
+.portrait-segment-winter {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
 }

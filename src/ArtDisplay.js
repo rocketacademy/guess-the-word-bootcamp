@@ -48,25 +48,39 @@ class ArtDisplay extends React.Component {
         winter_8,
         winter_9,
       ],
+      displayArr: [],
     };
   }
+
+  componentDidMount = () => {
+    console.log("Component Mounted");
+    this.createDisplayArr();
+  };
+
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.guessesLeft !== this.props.guessesLeft) {
+      this.createDisplayArr();
+    }
+  };
+
+  createDisplayArr = () => {
+    const newDisplayArr = [];
+    let i;
+    for (i = 0; i < this.props.guessesLeft; i++) {
+      newDisplayArr.push(this.state.summer[i]);
+    }
+    for (let j = i; j <= 9; i = j++) {
+      newDisplayArr.push(this.state.winter[j]);
+    }
+    this.setState({
+      displayArr: newDisplayArr,
+    });
+  };
 
   render() {
     return (
       <div className="portrait">
-        {this.state.winter.map((element) => {
-          console.log(element);
-          return (
-            <img
-              src={element}
-              alt={element.toString()}
-              key={element}
-              className="portrait-segment"
-            />
-          );
-        })}
-        {this.state.summer.map((element) => {
-          console.log(element);
+        {this.state.displayArr.map((element) => {
           return (
             <img
               src={element}

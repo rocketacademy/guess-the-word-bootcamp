@@ -174,7 +174,7 @@ class App extends React.Component {
             </div>
           </div>
           <div className="artDisplay">
-            <ArtDisplay />
+            <ArtDisplay guessesLeft={this.state.guessesLeft} />
           </div>
         </div>
       </div>
