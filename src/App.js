@@ -19,6 +19,7 @@ class App extends React.Component {
       warning: {
         moreThanOneLetter: false,
       },
+      isGameRunning: true,
     };
   }
 
