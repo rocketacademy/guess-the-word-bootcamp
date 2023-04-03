@@ -185,7 +185,9 @@ class App extends React.Component {
                     </div>
                   )}
                   <br />
-                  <button onClick={this.resetGame}>Reset Game</button>
+                  <button onClick={this.resetGame} className="submit-button">
+                    Reset Game
+                  </button>
                 </div>
               )}
               <br />

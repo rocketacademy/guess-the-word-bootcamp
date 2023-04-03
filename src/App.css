@@ -40,7 +40,6 @@ h2 {
 .portrait {
   display: flex;
   flex-direction: column;
-  gap: 0.1em;
 }
 
 .portrait-segment {
