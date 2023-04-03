@@ -8,11 +8,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      currWord: getRandomWord(),
+      // use getRandomWord()
+      currWord: "test",
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
       // Insert form input state here
+      currLetter: "",
     };
   }
 
@@ -30,6 +32,18 @@ class App extends React.Component {
   };
 
   // Insert form callback functions handleChange and handleSubmit here
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.setState({
+      guessedLetters: [...this.state.guessedLetters, this.state.currLetter],
+    });
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      currLetter: e.target.value,
+    });
+  };
 
   render() {
     return (
@@ -43,8 +57,13 @@ class App extends React.Component {
             ? this.state.guessedLetters.toString()
             : "-"}
           <h3>Input</h3>
-          {/* Insert form element here */}
-          Todo: Insert form element here
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Guess:
+              <input type="text" name="guess" onChange={this.handleChange} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
         </header>
       </div>
     );
