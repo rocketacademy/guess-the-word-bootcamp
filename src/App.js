@@ -1,6 +1,7 @@
 import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
+import ArtDisplay from "./ArtDisplay.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -115,54 +116,67 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1>Guess The Word 🚀</h1>
-          <h3>Word Display</h3>
-          {this.state.isGameRunning && (
+        <div className="title">
+          <h1 id="main-title">Guess The Word</h1>
+        </div>
+        <div className="content">
+          {" "}
+          <div className="gameDisplay">
+            {" "}
+            <h3>Word Display</h3>
+            {this.state.isGameRunning && (
+              <div>
+                {this.generateWordDisplay()}
+                <h3>Guessed Letters</h3>
+                {this.state.guessedLetters.length > 0
+                  ? this.state.guessedLetters.join(" ").toString()
+                  : "-"}
+                <h3>Input</h3>
+                <form onSubmit={this.handleSubmit}>
+                  <label>
+                    Guess:
+                    <input
+                      type="text"
+                      name="guess"
+                      onChange={this.handleChange}
+                      maxLength={1}
+                      value={this.state.currLetter}
+                    />
+                  </label>
+                  <input type="submit" value="Submit" />
+                </form>
+                {<div>Guesses Left: {this.state.guessesLeft}</div>}
+                {this.state.warning.moreThanOneLetter && (
+                  <div>You can only guess one letter at a time.</div>
+                )}
+              </div>
+            )}
+            {!this.state.isGameRunning && (
+              <div>
+                <div>Game Over</div>
+                <div>The Hidden Word is {this.state.currWord}</div>
+                {this.generateWordDisplay()}
+                <h3>Guessed Letters</h3>
+                {this.state.guessedLetters.length > 0
+                  ? this.state.guessedLetters.join(" ").toString()
+                  : "-"}
+                {this.state.playerWon ? (
+                  <div>You Won</div>
+                ) : (
+                  <div>You Lost</div>
+                )}
+                <button onClick={this.resetGame}>Reset Game</button>
+              </div>
+            )}
             <div>
-              {this.generateWordDisplay()}
-              <h3>Guessed Letters</h3>
-              {this.state.guessedLetters.length > 0
-                ? this.state.guessedLetters.join(" ").toString()
-                : "-"}
-              <h3>Input</h3>
-              <form onSubmit={this.handleSubmit}>
-                <label>
-                  Guess:
-                  <input
-                    type="text"
-                    name="guess"
-                    onChange={this.handleChange}
-                    maxLength={1}
-                    value={this.state.currLetter}
-                  />
-                </label>
-                <input type="submit" value="Submit" />
-              </form>
-              {<div>Guesses Left: {this.state.guessesLeft}</div>}
-              {this.state.warning.moreThanOneLetter && (
-                <div>You can only guess one letter at a time.</div>
-              )}
+              <div>Games Won: {this.state.totalWins}</div>
+              <div>Games Played: {this.state.totalGames}</div>
             </div>
-          )}
-          {!this.state.isGameRunning && (
-            <div>
-              <div>Game Over</div>
-              <div>The Hidden Word is {this.state.currWord}</div>
-              {this.generateWordDisplay()}
-              <h3>Guessed Letters</h3>
-              {this.state.guessedLetters.length > 0
-                ? this.state.guessedLetters.join(" ").toString()
-                : "-"}
-              {this.state.playerWon ? <div>You Won</div> : <div>You Lost</div>}
-              <button onClick={this.resetGame}>Reset Game</button>
-            </div>
-          )}
-          <div>
-            <div>Games Won: {this.state.totalWins}</div>
-            <div>Games Played: {this.state.totalGames}</div>
           </div>
-        </header>
+          <div className="artDisplay">
+            <ArtDisplay />
+          </div>
+        </div>
       </div>
     );
   }
