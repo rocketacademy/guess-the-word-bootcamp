@@ -10,7 +10,7 @@ class App extends React.Component {
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       // use getRandomWord()
-      currWord: "test",
+      currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
