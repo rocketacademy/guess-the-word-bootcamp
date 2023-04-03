@@ -5,7 +5,8 @@ export default class Wordle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currWord: getRandomWord(),
+      // currWord: getRandomWord(),
+      currWord: "hello",
       guessedLetters: [],
       guessInput: "",
       wordGuessed: false,
@@ -20,16 +21,22 @@ export default class Wordle extends React.Component {
     let guessed = true;
     if (this.state.gameOver) {
       for (let letter of this.state.currWord) {
-        wordDisplay.push(<div className="letter">{letter.toUpperCase()}</div>);
+        wordDisplay.push(
+          <div
+            className={this.state.wordGuessed ? "letter green" : "letter red"}
+          >
+            {letter.toUpperCase()}
+          </div>
+        );
       }
     } else {
       for (let letter of this.state.currWord) {
         if (this.state.guessedLetters.includes(letter)) {
           wordDisplay.push(
-            <div className="letter">{letter.toUpperCase()}</div>
+            <div className="letter green">{letter.toUpperCase()}</div>
           );
         } else {
-          wordDisplay.push(<div className="letter">—</div>);
+          wordDisplay.push(<div className="letter red">-</div>);
           guessed = false;
         }
       }
@@ -96,7 +103,7 @@ export default class Wordle extends React.Component {
 
   render() {
     return (
-      <div className="App-header">
+      <div className="game">
         {this.state.gameOver ? (
           <div>
             {this.state.wordGuessed ? (
