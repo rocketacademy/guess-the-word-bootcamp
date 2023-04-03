@@ -20,6 +20,8 @@ class App extends React.Component {
         moreThanOneLetter: false,
       },
       isGameRunning: true,
+      totalGames: 0,
+      totalWins: 0,
     };
   }
 
@@ -33,7 +35,7 @@ class App extends React.Component {
         wordDisplay.push("*");
       }
     }
-    return wordDisplay.toString();
+    return wordDisplay.join(" ").toString();
   };
 
   // Insert form callback functions handleChange and handleSubmit here
@@ -66,31 +68,64 @@ class App extends React.Component {
     }
   };
 
+  resetGame = () => {
+    this.setState({
+      currWord: "test",
+      guessedLetters: [],
+      guessesLeft: 10,
+      currLetter: "",
+      warning: {
+        moreThanOneLetter: false,
+      },
+      isGameRunning: true,
+    });
+  };
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
           <h3>Word Display</h3>
+          {this.state.isGameRunning && (
+            <div>
+              {this.generateWordDisplay()}
+              <h3>Guessed Letters</h3>
+              {this.state.guessedLetters.length > 0
+                ? this.state.guessedLetters.toString()
+                : "-"}
+              <h3>Input</h3>
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  Guess:
+                  <input
+                    type="text"
+                    name="guess"
+                    onChange={this.handleChange}
+                    maxLength={1}
+                  />
+                </label>
+                <input type="submit" value="Submit" />
+              </form>
+              {<div>Guesses Left: {this.state.guessesLeft}</div>}
+              {this.state.warning.moreThanOneLetter && (
+                <div>You can only guess one letter at a time.</div>
+              )}
+            </div>
+          )}
+          {!this.state.isGameRunning && (
+            <div>
+              <div>Game Over</div>
+              {this.generateWordDisplay()}
+              <h3>Guessed Letters</h3>
+              {this.state.guessedLetters.length > 0
+                ? this.state.guessedLetters.toString()
+                : "-"}
+              <button onClick={this.resetGame}>Reset Game</button>
+            </div>
+          )}
           <div>
-            {this.state.isGameRunning && <div>Game Over</div>}
-            {this.generateWordDisplay()}
-            <h3>Guessed Letters</h3>
-            {this.state.guessedLetters.length > 0
-              ? this.state.guessedLetters.toString()
-              : "-"}
-            <h3>Input</h3>
-            <form onSubmit={this.handleSubmit}>
-              <label>
-                Guess:
-                <input type="text" name="guess" onChange={this.handleChange} />
-              </label>
-              <input type="submit" value="Submit" />
-            </form>
-            {<div>Guesses Left: {this.state.guessesLeft}</div>}
-            {this.state.warning.moreThanOneLetter && (
-              <div>You can only guess one letter at a time.</div>
-            )}
+            <div>Games Won: {this.state.totalWins}</div>
+            <div>Games Played: {this.state.totalGames}</div>
           </div>
         </header>
       </div>
