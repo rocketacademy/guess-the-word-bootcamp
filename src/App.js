@@ -13,8 +13,12 @@ class App extends React.Component {
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
+      guessesLeft: 10,
       // Insert form input state here
       currLetter: "",
+      warning: {
+        moreThanOneLetter: false,
+      },
     };
   }
 
@@ -34,15 +38,25 @@ class App extends React.Component {
   // Insert form callback functions handleChange and handleSubmit here
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({
-      guessedLetters: [...this.state.guessedLetters, this.state.currLetter],
-    });
+    if (this.state.warning.moreThanOneLetter === false) {
+      this.setState({
+        guessedLetters: [...this.state.guessedLetters, this.state.currLetter],
+        guessesLeft: this.state.guessesLeft - 1,
+      });
+    }
   };
 
   handleChange = (e) => {
-    this.setState({
-      currLetter: e.target.value,
-    });
+    if (e.target.value.length >= 2) {
+      this.setState({
+        warning: { ...this.state.warning, moreThanOneLetter: true },
+      });
+    } else {
+      this.setState({
+        currLetter: e.target.value,
+        warning: { ...this.state.warning, moreThanOneLetter: false },
+      });
+    }
   };
 
   render() {
@@ -64,6 +78,10 @@ class App extends React.Component {
             </label>
             <input type="submit" value="Submit" />
           </form>
+          {<div>Guesses Left: {this.state.guessesLeft}</div>}
+          {this.state.warning.moreThanOneLetter && (
+            <div>You can only guess one letter at a time.</div>
+          )}
         </header>
       </div>
     );
