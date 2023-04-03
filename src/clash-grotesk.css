@@ -29,11 +29,61 @@
 */
 
 @font-face {
-  font-family: "ClashGrotesk-Variable";
-  src: url("./Fonts/ClashGrotesk-Variable.woff2") format("woff2"),
-    url("./Fonts/ClashGrotesk-Variable.woff") format("woff"),
-    url("./Fonts/ClashGrotesk-Variable.ttf") format("truetype");
-  font-weight: 200 700;
+  font-family: "ClashGrotesk-Extralight";
+  src: url("./Fonts/ClashGrotesk-Extralight.woff2") format("woff2"),
+    url("./Fonts/ClashGrotesk-Extralight.woff") format("woff"),
+    url("./Fonts/ClashGrotesk-Extralight.ttf") format("truetype");
+  font-weight: 200;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ClashGrotesk-Light";
+  src: url("./Fonts/ClashGrotesk-Light.woff2") format("woff2"),
+    url("./Fonts/ClashGrotesk-Light.woff") format("woff"),
+    url("./Fonts/ClashGrotesk-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ClashGrotesk-Regular";
+  src: url("./Fonts/ClashGrotesk-Regular.woff2") format("woff2"),
+    url("./Fonts/ClashGrotesk-Regular.woff") format("woff"),
+    url("./Fonts/ClashGrotesk-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ClashGrotesk-Medium";
+  src: url("./Fonts/ClashGrotesk-Medium.woff2") format("woff2"),
+    url("./Fonts/ClashGrotesk-Medium.woff") format("woff"),
+    url("./Fonts/ClashGrotesk-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ClashGrotesk-Semibold";
+  src: url("./Fonts/ClashGrotesk-Semibold.woff2") format("woff2"),
+    url("./Fonts/ClashGrotesk-Semibold.woff") format("woff"),
+    url("./Fonts/ClashGrotesk-Semibold.ttf") format("truetype");
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ClashGrotesk-Bold";
+  src: url("./Fonts/ClashGrotesk-Bold.woff2") format("woff2"),
+    url("./Fonts/ClashGrotesk-Bold.woff") format("woff"),
+    url("./Fonts/ClashGrotesk-Bold.ttf") format("truetype");
+  font-weight: 700;
   font-display: swap;
   font-style: normal;
 }
