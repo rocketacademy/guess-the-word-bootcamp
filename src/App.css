@@ -23,3 +23,8 @@
 h1 {
   margin: 0;
 }
+
+.portrait {
+  display: flex;
+  flex-direction: column;
+}
