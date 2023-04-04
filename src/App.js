@@ -13,7 +13,7 @@ class App extends React.Component {
       guessedLetters: [],
       // Insert num guesses left state here
       // Insert form input state here
-      letter: '',
+      letter: '', //this is the name given to the input field
       numGuessLeft: 12,
       
     };
@@ -46,12 +46,18 @@ class App extends React.Component {
 
   handleSubmit = (e) =>{
     e.preventDefault()
-    console.log(e)
+    /* console.log(e) */
+
+    //create a variable to ensure that first letter submitted is lowercase
     const inputLetter = this.state.letter[0].toLowerCase();
 
+    //use prevState as parameter for both the setState
+    //as well as value for the state's value
     this.setState(prevState=>({
-      guessedLetters: [...this.prevState.guessedLetters, inputLetter],
-      numGuessLeft: this.prevState.currWord.includes(inputLetter) ? this.prevState.numGuessLeft : this.prevState.numGuessLeft -1,
+      guessedLetters: [...this.state.guessedLetters, inputLetter],
+      numGuessLeft: this.state.currWord.includes(inputLetter) ? this.state.numGuessLeft : this.state.numGuessLeft -1,
+      
+      //resets the input field
       letter: "",
     }));
     /* this.setState({
@@ -68,6 +74,8 @@ class App extends React.Component {
       input: ""
     })
   }
+
+
 
 
 
