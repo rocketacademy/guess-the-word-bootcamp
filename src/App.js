@@ -14,9 +14,10 @@ class App extends React.Component {
       // Insert num guesses left state here
       // Insert form input state here
       letter: '',
+      numGuessLeft: 12,
       
     };
-    console.log(this.state.currWord);
+    /* console.log(this.state.currWord); */
   }
 
   generateWordDisplay = () => {
@@ -34,10 +35,10 @@ class App extends React.Component {
  
   // Insert form callback functions handleChange and handleSubmit here
   handleChange = (event) =>{
-    console.log(event);
+    /* console.log(event); */
     const { value, name } = event.target;
-    console.log("value:", value);
-    console.log("name:", name);
+    /* console.log("value:", value);
+    console.log("name:", name); */
     this.setState({
       [name]: value,
     })
@@ -46,11 +47,29 @@ class App extends React.Component {
   handleSubmit = (e) =>{
     e.preventDefault()
     console.log(e)
-    this.setState({
-      guessedLetters: [...this.state.letterArray, this.state.letter],
+    const inputLetter = this.state.letter[0].toLowerCase();
+
+    this.setState(prevState=>({
+      guessedLetters: [...this.prevState.guessedLetters, inputLetter],
+      numGuessLeft: this.prevState.currWord.includes(inputLetter) ? this.prevState.numGuessLeft : this.prevState.numGuessLeft -1,
+      letter: "",
+    }));
+    /* this.setState({
+      guessedLetters: [...this.state.guessedLetters, this.state.letter],
       letter: ''
+    }) */
+  }
+
+  resetGame = () =>{
+    this.setState({
+      currWord: getRandomWord(),
+      guessedLetters: [],
+      numGuessLeft: 12,
+      input: ""
     })
   }
+
+
 
   render() {
     return (
