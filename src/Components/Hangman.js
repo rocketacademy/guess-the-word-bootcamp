@@ -1,6 +1,9 @@
 import React from "react";
 import { getRandomWord } from "../utils";
 import Scoreboard from "./Scoreboard";
+import GuessInput from "./GuessInput";
+import LetterDisplay from "./LetterDisplay";
+import GuessedLetters from "./GuessedLetters";
 
 export default class Hangman extends React.Component {
   constructor(props) {
@@ -22,21 +25,19 @@ export default class Hangman extends React.Component {
     if (this.state.gameOver) {
       for (let letter of this.state.currWord) {
         wordDisplay.push(
-          <div
-            className={this.state.wordGuessed ? "letter green" : "letter red"}
-          >
-            {letter.toUpperCase()}
-          </div>
+          <LetterDisplay color={this.state.wordGuessed ? "green" : "red"}>
+            {letter}
+          </LetterDisplay>
         );
       }
     } else {
       for (let letter of this.state.currWord) {
         if (this.state.guessedLetters.includes(letter)) {
           wordDisplay.push(
-            <div className="letter green">{letter.toUpperCase()}</div>
+            <LetterDisplay color="green">{letter}</LetterDisplay>
           );
         } else {
-          wordDisplay.push(<div className="letter red">-</div>);
+          wordDisplay.push(<LetterDisplay color="red">-</LetterDisplay>);
           guessed = false;
         }
       }
@@ -73,18 +74,17 @@ export default class Hangman extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const newGuessedLetters = [...this.state.guessedLetters];
-    if (this.state.guessInput.length !== 1) {
-      alert("Please input 1 letter!");
-    } else if (this.state.guessedLetters.includes(this.state.guessInput)) {
-      alert("You've already guessed this letter!");
-    } else if (!isNaN(this.state.guessInput)) {
-      alert("Please input a letter!");
-    } else {
-      newGuessedLetters.push(this.state.guessInput);
+    const validInput = new RegExp("^[a-zA-Z]{1}$");
+    if (this.state.guessedLetters.includes(this.state.guessInput)) {
+      alert("You've guessed this letter before!");
+    } else if (validInput.test(this.state.guessInput)) {
+      newGuessedLetters.push(this.state.guessInput.toLowerCase());
       this.setState({
-        guessedLetters: newGuessedLetters,
+        guessedLetters: newGuessedLetters.sort(),
         guessesLeft: this.state.guessesLeft - 1,
       });
+    } else {
+      alert("Please guess one letter!");
     }
     this.setState({
       guessInput: "",
@@ -118,28 +118,17 @@ export default class Hangman extends React.Component {
             <button onClick={this.handleRestart}>Restart</button>
           </div>
         ) : (
-          <form onSubmit={this.handleSubmit} autocomplete="off">
-            <label>
-              <h3>Enter guess here:</h3>
-            </label>
-            <input
-              type="text"
-              name="guessInput"
-              value={this.state.guessInput}
-              onChange={this.handleChange}
-            />
-            <button type="submit" name="submit">
-              Submit
-            </button>
-          </form>
+          <GuessInput
+            guessInput={this.state.guessInput}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
         )}
-        <Scoreboard {...this.state} />
-        <h3>Guessed Letters</h3>
-        <p className="guessed-letters">
-          {this.state.guessedLetters.length > 0
-            ? this.state.guessedLetters.toString()
-            : "-"}
-        </p>
+        <Scoreboard
+          score={this.state.score}
+          guessesLeft={this.state.guessesLeft}
+        />
+        <GuessedLetters guessedLetters={this.state.guessedLetters} />
       </div>
     );
   }
