@@ -13,7 +13,10 @@ class App extends React.Component {
       guessedLetters: [],
       // Insert num guesses left state here
       // Insert form input state here
+      letterInput: '',
+      letterArray: []
     };
+    console.log(this.state.currWord);
   }
 
   generateWordDisplay = () => {
@@ -28,8 +31,26 @@ class App extends React.Component {
     }
     return wordDisplay.toString();
   };
-
+ 
   // Insert form callback functions handleChange and handleSubmit here
+  handleChange = (event) =>{
+    console.log(event);
+    const { value, name } = event.target;
+    console.log("value:", value);
+    console.log("name:", name);
+    this.setState({
+      [name]: value,
+    })
+  }
+
+  handleSubmit = (e) =>{
+    e.preventDefault()
+    console.log(e)
+    this.setState({
+      letterArray: [...this.state.letterArray, this.state.letter],
+      letter: ''
+    })
+  }
 
   render() {
     return (
@@ -44,11 +65,25 @@ class App extends React.Component {
             : "-"}
           <h3>Input</h3>
           {/* Insert form element here */}
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Letter:
+            </label>
+            <input 
+              type="text" 
+              name="letter"
+              value={this.state.letter} 
+              onChange={this.handleChange}
+              placeholder="Type in single letter here">
+            </input>
+            <br />
+            <button type='submit'>Submit Letter</button>
+          </form>
           Todo: Insert form element here
         </header>
       </div>
     );
   }
 }
-
+ 
 export default App;
