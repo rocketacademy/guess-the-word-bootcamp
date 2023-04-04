@@ -4,8 +4,6 @@ import "./App.css";
 
 // Checklist:
 
-//
-//                  ***** 2. winning condition not working.*****
 // *** don't forget to put back getRandomWord throughout this App.js including import and in the constructor props and in restart function to put this back to original game mode.
 
 class App extends React.Component {
@@ -117,18 +115,6 @@ class App extends React.Component {
       winLose: "",
     });
   };
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.state.numberOfGuesses > 0) {
-  //     return;
-  //   }
-  //   if (
-  //     prevState.winLose === "Congrats, you've won the game" ||
-  //     prevState.winLose === "Sorry, you've lost the game"
-  //   ) {
-  //     this.restartGame();
-  //   }
-  // }
 
   render() {
     return (
