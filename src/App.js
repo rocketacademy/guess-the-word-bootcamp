@@ -4,7 +4,7 @@ import "./App.css";
 
 // Checklist:
 
-// 2 problems here: 1. when restart button pressed, alert for "if (!/^[a-zA-Z]$/.test(this.state.letter)) {alert("Invalid input. Please input only ONE letter.");" POPS UP
+//
 //                  ***** 2. winning condition not working.*****
 // *** don't forget to put back getRandomWord throughout this App.js including import and in the constructor props and in restart function to put this back to original game mode.
 
@@ -41,13 +41,17 @@ class App extends React.Component {
   };
 
   declareGameWinOrLose = () => {
-    if (this.state.wordDisplay === this.state.currWord) {
+    const checkWordDisplay = this.generateWordDisplay().replace(/,/g, "");
+
+    // this.generateWordDisplay().replaceAll(/,/, ""); is not accepted in the above.
+
+    if (checkWordDisplay === this.state.currWord) {
       this.setState({
         winLose: "Congrats, you've won the game",
       });
     } else if (
       this.state.numberOfGuesses === 1 &&
-      this.state.wordDisplay !== this.state.currWord
+      checkWordDisplay !== this.state.currWord
     ) {
       this.setState({
         winLose: "Sorry, you've lost the game",
