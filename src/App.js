@@ -13,8 +13,8 @@ class App extends React.Component {
       guessedLetters: [],
       // Insert num guesses left state here
       // Insert form input state here
-      letterInput: '',
-      letterArray: []
+      letter: '',
+      
     };
     console.log(this.state.currWord);
   }
@@ -47,7 +47,7 @@ class App extends React.Component {
     e.preventDefault()
     console.log(e)
     this.setState({
-      letterArray: [...this.state.letterArray, this.state.letter],
+      guessedLetters: [...this.state.letterArray, this.state.letter],
       letter: ''
     })
   }
