@@ -47,10 +47,7 @@ class App extends React.Component {
       this.setState({
         winLose: "Congrats, you've won the game",
       });
-    } else if (
-      this.state.numberOfGuesses === 1 &&
-      checkWordDisplay !== this.state.currWord
-    ) {
+    } else if (this.state.numberOfGuesses === 1) {
       this.setState({
         winLose: "Sorry, you've lost the game",
       });
@@ -60,10 +57,13 @@ class App extends React.Component {
   };
 
   onSubmit = (e) => {
-    this.declareGameWinOrLose();
     e.preventDefault();
 
     if (this.state.numberOfGuesses === 0) {
+      return;
+    }
+
+    if (this.state.winLose === "Congrats, you've won the game") {
       return;
     }
     if (this.state.letter.length > 1) {
@@ -91,9 +91,11 @@ class App extends React.Component {
       letter: "",
       guessedLetters: [...this.state.guessedLetters, this.state.letter],
     });
+
     if (this.state.numberOfGuesses === 1) {
       alert("you have no more guesses left!");
     }
+    this.declareGameWinOrLose();
   };
 
   handleChange = (e) => {
