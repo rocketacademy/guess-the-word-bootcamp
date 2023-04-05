@@ -18,7 +18,7 @@ class App extends React.Component {
       // Insert num guesses left state here
       // Insert form input state here
       letter: '', //this is the name given to the input field
-      numGuessLeft: 12,
+      numGuessLeft: 9,
       
     };
     /* console.log(this.state.currWord); */
@@ -99,10 +99,37 @@ class App extends React.Component {
     const playAgainButton = (
       <button onClick={this.resetGame}>Play Again?</button>
     );
+    let wrongArray = [];
+
     return (
       <div className="App">
         <header className="App-header">
-          <Alert key="primary" variant="primary"><h1>Guess The Word 🚀</h1></Alert>
+          <div className="row">
+            <div className="col-md-4 hangmanCon">
+              <h1 className="flex-item">Picture of hangman</h1>
+              <div className="flex-item picCon">
+                <div>
+                  <p className="pole"></p>
+                  <p className="horizonBar"></p>
+                  <p className="shortBar"></p>
+                  <div className="bodyParts">
+                    <p className="roundHead"></p>
+                    <p className="torso"></p>
+                    <p className="leftArm"></p>
+                    <p className="rightArm"></p>
+                    <p className="leftLeg"></p>
+                    <p className="rightLeg"></p>
+                    <p className="leftEye"></p>
+                    <p className="rightEye"></p>
+                    <p className="frown"></p>
+                  </div>
+                  
+                </div>
+                 
+              </div>
+            </div>
+            <div className="col-md-8 gameCon">
+              <Alert key="primary" variant="primary"><h1>Guess The Word 🚀</h1></Alert>
           <h3>Word Display</h3>
           {this.generateWordDisplay()}
           <h3>Guessed Letters</h3>
@@ -127,7 +154,6 @@ class App extends React.Component {
               disabled={shouldDisableInput}
               >
             </input>
-            
             <br />
             <Button variant="primary" type='submit'>Submit Letter</Button>
           </form>
@@ -144,7 +170,10 @@ class App extends React.Component {
                 <p>Sorry, you ran out of guesses.</p>
                 {playAgainButton}
               </div>
-            ) }  
+            ) } 
+            </div>
+          </div>
+           
 
         </header>
       </div>
