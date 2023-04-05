@@ -75,7 +75,9 @@ export default class Hangman extends React.Component {
     e.preventDefault();
     const newGuessedLetters = [...this.state.guessedLetters];
     const validInput = new RegExp("^[a-zA-Z]{1}$");
-    if (this.state.guessedLetters.includes(this.state.guessInput)) {
+    if (
+      this.state.guessedLetters.includes(this.state.guessInput.toLowerCase())
+    ) {
       alert("You've guessed this letter before!");
     } else if (validInput.test(this.state.guessInput)) {
       newGuessedLetters.push(this.state.guessInput.toLowerCase());
