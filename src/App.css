@@ -1,19 +1,171 @@
-.App {
-  text-align: center;
+@import "clash-grotesk.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Clash Grotesk", sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  background-color: #a8d6de;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  text-align: center;
+  align-items: center;
+  min-height: 100vh;
+  max-width: 700px;
+  margin: auto;
+}
+
+#game-title {
+  letter-spacing: 0px;
+  font-size: 120px;
+  padding: 20px;
   color: white;
+  line-height: 0.8;
+  margin-bottom: 40px;
+}
+
+.endGame {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 60px;
+  letter-spacing: 0px;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+button,
+input {
+  padding: 10px;
+  font-weight: 500;
+  margin: 5px;
+  font-size: 20px;
+  text-align: center;
+  background-color: white;
+  color: black;
+  border: 0.5px solid grey;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.word {
+  display: flex;
+  justify-content: center;
+}
+
+.letter {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.large {
+  width: 60px;
+  height: 80px;
+  margin: 0 10px;
+  font-size: 40px;
+}
+
+.small {
+  width: 30px;
+  height: 40px;
+  margin: 0 3px;
+  font-size: 20px;
+}
+
+.red {
+  background: #d24128;
+}
+
+.green {
+  background: #24ba65;
+}
+
+.grey {
+  background: #9b9b9b;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.scoreboard-panel {
+  margin: 0 10px;
+  background-color: white;
+  padding: 20px;
+  width: 120px;
+  border-radius: 5px;
+}
+
+.scoreboard-panel p {
+  font-size: 40px;
+}
+
+.guessed-letters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+@media (max-width: 500px) {
+  #game-title {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
+
+  .large {
+    width: 50px;
+    height: 65px;
+    margin: 0 5px;
+    font-size: 30px;
+  }
+
+  .small {
+    width: 25px;
+    height: 30px;
+    margin: 0 3px 3px;
+    font-size: 15px;
+  }
+
+  .scoreboard-panel {
+    margin: 0 5px;
+    padding: 15px 10px;
+  }
+
+  .scoreboard-panel p {
+    font-size: 30px;
+  }
+
+  .scoreboard,
+  .endGame,
+  form {
+    margin-bottom: 10px;
+  }
 }
