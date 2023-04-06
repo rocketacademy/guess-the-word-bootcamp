@@ -10,7 +10,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: /* #282c34 */  rgba(0, 188, 212, 1);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -68,9 +68,9 @@
   left:8rem;
 } 
 
-.bodyParts {
+/* .bodyParts {
   display: none;
-}
+} */
 .roundHead {
   background-color: black;
   width: 5rem;
@@ -150,8 +150,8 @@
 }
 .frown::after {
   content: image-set('frown-mouth1.png');
-  top:6rem;
-  left: 8.5rem;
+  top: 5.5rem;
+  left: 8.25rem;
   position: absolute;
 }
 

@@ -19,6 +19,13 @@ class App extends React.Component {
       // Insert form input state here
       letter: '', //this is the name given to the input field
       numGuessLeft: 9,
+      wrongGuess: 0,
+      wrongGuessArr: [],
+       
+      bodyPartsArr: [
+      "roundHead", "torso", "leftArm", "rightArm", "leftLeg", "rightLeg", "leftEye", "rightEye", "frown"
+      ],
+      shownBodyPartsArr: []
       
     };
     /* console.log(this.state.currWord); */
@@ -55,12 +62,12 @@ class App extends React.Component {
     //create a variable to ensure that first letter submitted is lowercase
     const inputLetter = this.state.letter[0].toLowerCase();
 
-    //use prevState as parameter for both the setState
-    //as well as value for the state's value
+   
+    this.handleWrongGuess();
+    //use prevState as parameter for both the setState 
     this.setState(prevState=>({
       guessedLetters: [...this.state.guessedLetters, inputLetter],
-      numGuessLeft: this.state.currWord.includes(inputLetter) ? this.state.numGuessLeft : this.state.numGuessLeft -1,
-      
+      numGuessLeft: this.state.currWord.includes(inputLetter) ? this.state.numGuessLeft : this.state.numGuessLeft-1,
       //resets the input field
       letter: "",
     }));
@@ -87,11 +94,31 @@ class App extends React.Component {
     this.setState({
       currWord: getRandomWord(),
       guessedLetters: [],
-      numGuessLeft: 12,
-      input: ""
+      numGuessLeft: 9,
+      input: "",
+      shownBodyPartsArr: []
     })
   }
 
+  
+  handleWrongGuess = () =>{
+    console.log(this.state.shownBodyPartsArr)
+    this.setState(prevState=>({
+      wrongGuess: this.state.wrongGuess+1,
+      /*wrongGuessArr: [...this.state.wrongGuess, this.state.wrongGuess], */
+      //wrongGuessArr adds 1
+      /* wrongGuessArr: wrongGuessArr.push(wrongGuess), */
+      shownBodyPartsArr: [...this.state.shownBodyPartsArr, this.state.bodyPartsArr[0]],
+      bodyPartsArr: this.state.bodyPartsArr.slice(1)
+     //use the index of the wrongGuessArr to match the index of the bodyPartsArr 
+     //if(wrongGuessArr[] == bodyPartsArr[]){
+     //
+     //}
+     //so if the wrongGuessArr's index is 0, it should match to the bodyPartsArr index of 0
+     //and render the corresponding bodypart <p> in the return
+     //make the <p> CSS display: visible
+    }))
+  }
   render() {
     //Check whether user has guessed correctly the word
     const hasUserGuessedWord = this.checkUserGuessedWord();
@@ -99,7 +126,12 @@ class App extends React.Component {
     const playAgainButton = (
       <button onClick={this.resetGame}>Play Again?</button>
     );
-    let wrongArray = [];
+     
+
+    
+    
+
+
 
     return (
       <div className="App">
@@ -113,15 +145,9 @@ class App extends React.Component {
                   <p className="horizonBar"></p>
                   <p className="shortBar"></p>
                   <div className="bodyParts">
-                    <p className="roundHead"></p>
-                    <p className="torso"></p>
-                    <p className="leftArm"></p>
-                    <p className="rightArm"></p>
-                    <p className="leftLeg"></p>
-                    <p className="rightLeg"></p>
-                    <p className="leftEye"></p>
-                    <p className="rightEye"></p>
-                    <p className="frown"></p>
+                    {this.state.shownBodyPartsArr.map((bodypart)=>{
+                      return <p className={bodypart} value={bodypart}></p>
+                    })}
                   </div>
                   
                 </div>
