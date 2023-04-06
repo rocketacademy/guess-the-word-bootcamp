@@ -1,3 +1,5 @@
+ 
+
 .App {
   text-align: center;
 }
@@ -8,7 +10,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: /* #282c34 */  rgba(0, 188, 212, 1);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -16,4 +18,144 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+.hangmanCon {
+  background-color: aqua;
+  color: black;
+  text-decoration: underline;
+  display: flex;
+  flex-direction: column;
+  gap: 3%; 
+  align-items: stretch;
+  width: 100%;
+  position: relative;
+}
+.flex-item {
+  flex-basis: auto;
+  align-self: center;
+}
+.picCon {
+  background-color: orange;
+  height: 100%;
+  width: 100%;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.pole {
+  background-color: black;
+  width: 1rem;
+  height: 26rem;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  position: absolute;
+}
+.horizonBar {
+   background-color: black;
+   width: 8rem;
+   height: 1rem;
+   position: absolute;
+   left: 1rem;
+   top: 1rem;
+}
+ .shortBar {
+  background-color: black;
+  width: 1rem;
+  height: 3rem;
+  margin-left: 1rem;
+  position: absolute;
+  top: 1rem;
+  left:8rem;
+} 
+
+/* .bodyParts {
+  display: none;
+} */
+.roundHead {
+  background-color: black;
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  left: 7rem;
+  top: 4rem;
+  border-radius: 50%;
+}
+.torso {
+  background-color: black;
+  width: 1rem;
+  height: 13rem;
+  margin-left: 1rem;
+  position: absolute;
+  top: 7rem;
+  left:8rem;
+}
+.leftArm {
+  background-color: black;
+  width: 5rem;
+  height: 1rem;
+  position: absolute;
+  left: 5rem;
+  top: 10rem;
+  transform: rotate(135deg)
+}
+.rightArm {
+  background-color: black;
+  width: 5rem;
+  height: 1rem;
+  position: absolute;
+  left: 9rem;
+  top: 10rem;
+  transform: rotate(45deg)
+}
+
+.leftLeg {
+  background-color: black;
+  width: 5rem;
+  height: 1rem;
+  position: absolute;
+  left: 5.5rem;
+  top: 21rem;
+  transform: rotate(135deg)
+}
+
+.rightLeg {
+  background-color: black;
+  width: 5rem;
+  height: 1rem;
+  position: absolute;
+  left: 8.5rem;
+  top: 21rem;
+  transform: rotate(45deg)
+}
+
+.leftEye::after {
+  content: image-set('cross-eye-origin.png');
+  /* width: 0.8rem;
+  height: 0.8rem;
+  background-color: white;
+  border-radius: 50%; */
+  top:4rem;
+  left: 8.5rem;
+  position: absolute;
+}
+.rightEye::after {
+  content: image-set('cross-eye-origin.png');
+  /* width: 0.8rem;
+  height: 0.8rem;
+  background-color: white;
+  border-radius: 50%; */
+  top:4rem;
+  left: 10rem;
+  position: absolute;
+}
+.frown::after {
+  content: image-set('frown-mouth1.png');
+  top: 5.5rem;
+  left: 8.25rem;
+  position: absolute;
+}
+
+.gameCon {
+  background-color: #f5f5f5;
+  color: black;
 }
