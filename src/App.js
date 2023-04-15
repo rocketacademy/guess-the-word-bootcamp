@@ -2,6 +2,8 @@ import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 
+const numGuesses = 5;
+
 class App extends React.Component {
   constructor(props) {
     // Always call super with props in constructor to initialise parent class
@@ -12,7 +14,7 @@ class App extends React.Component {
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
-      guessesLeft: 10,
+      guessesLeft: numGuesses,
       // Insert form input state here
       input: "",
     };
@@ -50,6 +52,15 @@ class App extends React.Component {
     }));
   };
 
+  resetGame = () => {
+    this.setState({
+      currWord: getRandomWord(),
+      input: "",
+      guessedLetters: [],
+      guessesLeft: numGuesses,
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -63,17 +74,24 @@ class App extends React.Component {
             : "-"}
           <p>Number of guesses left : {this.state.guessesLeft}</p>
           <h3>Input</h3>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Guess a letter:
-              <input
-                type="text"
-                value={this.state.input}
-                onChange={this.handleChange}
-              />
-            </label>
-            <input type="submit" value="Submit your guess" />
-          </form>
+          {this.state.guessesLeft > 0 ? (
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Guess a letter:
+                <input
+                  type="text"
+                  value={this.state.input}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <input type="submit" value="Submit your guess" />
+            </form>
+          ) : (
+            <button type="button" onClick={this.resetGame}>
+              {" "}
+              Reset the game
+            </button>
+          )}
         </header>
       </div>
     );
