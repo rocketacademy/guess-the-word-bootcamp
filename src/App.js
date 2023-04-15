@@ -12,11 +12,18 @@ class App extends React.Component {
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
+      numGuess: 10,
       // Insert form input state here
+      formInput: '',
+      verdict: '',
+      buttonText: 'Submit',
+      answer: 0, //Counter for the scores
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  generateWordDisplay = () => {
+  generateWordDisplay = () => {//Display letter
     const wordDisplay = [];
     // for...of is a string and array iterator that does not use index
     for (let letter of this.state.currWord) {
@@ -26,12 +33,70 @@ class App extends React.Component {
         wordDisplay.push("_");
       }
     }
+
     return wordDisplay.toString();
   };
+
+  checkHasUserGuessedWord = (guessL) => {
+    // Create new array with spread operator because we do not wish to alter this.state.guessedLetters
+    const guessedLetters = [...guessL];
+    for (let letter of this.state.currWord) {
+      if (!guessedLetters.includes(letter)) {
+        return false;
+      }
+    }
+    // Return true if guessedLetters contains all letters in this.state.currWord
+    return true;
+  };
+
+  handleChange(event) {
+    //console.log(event)
+    //console.log(event.target.value)
+    this.setState({
+      formInput: event.target.value
+    });
+    console.log(this.state.currWord)
+  }
+
+  handleSubmit(event) {
+    let inputL = [...this.state.formInput][0];//first letter
+    let guessL = [...this.state.guessedLetters,inputL];//add to output
+    let numTurns = this.state.numGuess-1;
+    let win = this.checkHasUserGuessedWord(guessL);
+    console.log(guessL);
+    console.log([numTurns,win]);
+
+    //if the game is over
+    if (numTurns === 0 || win){
+      //Evaluate the verdict
+      let verdict = (this.checkHasUserGuessedWord(guessL) ? 'win!' : 'lose!');
+      let output = "Game has ended! You " + verdict + "\nThe word is " + this.state.currWord+".";
+      alert(output)
+      this.setState({
+        numGuess: 10,
+        buttonText: 'Restart',
+        guessedLetters: [],
+        currWord: getRandomWord()
+      });
+    }
+
+    else{
+      this.setState({
+        guessedLetters: guessL,
+        numGuess: numTurns,
+        buttonText: 'Submit'
+      });
+      //alert('Letter: ' + event.target.value);
+    }
+    
+
+    event.preventDefault();
+  }
 
   // Insert form callback functions handleChange and handleSubmit here
 
   render() {
+    let firstLetter = this.state.formInput.charAt(0) //showfirst letter only
     return (
       <div className="App">
         <header className="App-header">
@@ -44,7 +109,12 @@ class App extends React.Component {
             : "-"}
           <h3>Input</h3>
           {/* Insert form element here */}
-          Todo: Insert form element here
+          <h4>Turns Left: {this.state.numGuess}</h4>
+          <form onSubmit={this.handleSubmit}>
+            <h4>Please Submit 1 Letter at a Time</h4>
+            <input type='text' value={firstLetter} onChange={this.handleChange}/>
+            <input type='submit' value={this.state.buttonText}/>
+          </form>
         </header>
       </div>
     );
