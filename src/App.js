@@ -109,6 +109,7 @@ class App extends React.Component {
             ) : (
               <div>
                 <div>
+                  <br />
                   <Keyboard onClick={this.handleInput} />
                 </div>{" "}
                 {/* <h3>Key in your guess here:</h3>
