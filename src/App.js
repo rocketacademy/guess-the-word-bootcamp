@@ -12,7 +12,9 @@ class App extends React.Component {
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
+      guessesLeft: 10,
       // Insert form input state here
+      input: "",
     };
   }
 
@@ -30,6 +32,23 @@ class App extends React.Component {
   };
 
   // Insert form callback functions handleChange and handleSubmit here
+  handleChange = (event) => {
+    this.setState({
+      input: event.target.value,
+    });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const usersCurrentGuess = this.state.input;
+    this.setState((state) => ({
+      guessedLetters: [...state.guessedLetters, usersCurrentGuess],
+      guessesLeft: this.state.currWord.includes(usersCurrentGuess)
+        ? this.state.guessesLeft
+        : this.state.guessesLeft - 1,
+      input: "",
+    }));
+  };
 
   render() {
     return (
@@ -42,9 +61,19 @@ class App extends React.Component {
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
+          <p>Number of guesses left : {this.state.guessesLeft}</p>
           <h3>Input</h3>
-          {/* Insert form element here */}
-          Todo: Insert form element here
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Guess a letter:
+              <input
+                type="text"
+                value={this.state.input}
+                onChange={this.handleChange}
+              />
+            </label>
+            <input type="submit" value="Submit your guess" />
+          </form>
         </header>
       </div>
     );
