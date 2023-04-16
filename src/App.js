@@ -2,6 +2,8 @@ import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 import Keyboard from "./Keyboard.js";
+import Sprite from "./Sprites.js";
+// import { Box, Grid } from "@mui/material";
 
 class App extends React.Component {
   constructor(props) {
@@ -19,6 +21,8 @@ class App extends React.Component {
       // Insert num guesses left state here
       numGuessLeft: 10,
       characterInput: "",
+      maxSpaceWidth: 750,
+      minSpaceWidth: 0,
     };
     // bind handleChange and handleSubmit methods to component instance,to keep the reference
     this.handleChange = this.handleChange.bind(this);
@@ -84,16 +88,47 @@ class App extends React.Component {
   };
 
   render() {
-    const { numGuessLeft, currWord, guessedLetters } = this.state;
+    const {
+      numGuessLeft,
+      currWord,
+      guessedLetters,
+      maxSpaceWidth,
+      minSpaceWidth,
+    } = this.state;
     let wordDisplayed = this.generateWordDisplay();
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Guess The Word 🚀</h1>
+          <h1>Guess The Word - Save Princess Peach!</h1>
+          <Sprite
+            numGuessLeft={numGuessLeft}
+            maxSpaceWidth={maxSpaceWidth}
+            minSpaceWidth={minSpaceWidth}
+          />
           <h3>Word Display</h3>
+          {/* <Grid container spacing={1} justifyContent="center">
+            {this.generateWordDisplay().map((letter, index) => (
+              <Grid item xs={2} key={index}>
+                <Box
+                  sx={{
+                    height: "50px",
+                    width: "50px",
+                    border: "1px solid black",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {letter}
+                </Box>
+              </Grid>
+            ))}
+          </Grid> */}
           {this.generateWordDisplay()}
           <h3>Guessed Letters</h3>
-          {guessedLetters.length > 0 ? guessedLetters.join(" ") : "[ ]"}
+          {guessedLetters.length > 0
+            ? "[" + guessedLetters.join(" ") + "]"
+            : "[ ]"}
           {wordDisplayed.includes("_") ? (
             numGuessLeft === 0 ? (
               <div>
