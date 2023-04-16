@@ -93,7 +93,7 @@ class App extends React.Component {
           <h3>Word Display</h3>
           {this.generateWordDisplay()}
           <h3>Guessed Letters</h3>
-          {guessedLetters.length > 0 ? guessedLetters.toString() : "-"}
+          {guessedLetters.length > 0 ? guessedLetters.join(" ") : "[ ]"}
           {wordDisplayed.includes("_") ? (
             numGuessLeft === 0 ? (
               <div>
