@@ -31,8 +31,8 @@
   background-color: #ddd;
 }
 
-button.grayed-out {
-  background-color: gray;
+button:disabled {
+  background-color: #bcbcbc;
   cursor: not-allowed;
   pointer-events: none;
 }

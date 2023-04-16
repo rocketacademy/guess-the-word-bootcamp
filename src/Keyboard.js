@@ -5,148 +5,97 @@ class Keyboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      buttons: [
+        "q",
+        "w",
+        "e",
+        "r",
+        "t",
+        "y",
+        "u",
+        "i",
+        "o",
+        "p",
+        "a",
+        "s",
+        "d",
+        "f",
+        "g",
+        "h",
+        "j",
+        "k",
+        "l",
+        "z",
+        "x",
+        "c",
+        "v",
+        "b",
+        "n",
+        "m",
+      ],
       clickedKeys: [],
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick = (key) => {
+  handleClick(key) {
     const { onClick } = this.props;
     onClick(key.target.value);
     this.setState((prevState) => ({
-      clickedKeys: [...prevState.clickedKeys, key],
+      clickedKeys: [...prevState.clickedKeys, key.target.value],
     }));
-  };
+  }
 
-  isKeyClicked = (key) => {
-    return this.state.clickedKeys.includes(key);
-  };
+  componentDidUpdate() {
+    console.log(this.state.clickedKeys);
+  }
+
+  // componentDidUpdate() {
+  //   setTimeout(() => {
+  //     console.log(JSON.stringify(this.state.clickedKeys));
+  //   }, 1000);
+  // }
 
   render() {
+    const { buttons, clickedKeys } = this.state;
+    const firstRow = buttons.slice(0, 10);
+    const secondRow = buttons.slice(10, 19);
+    const thirdRow = buttons.slice(19);
+
     return (
       <div className="keyboard">
         <div className="row">
-          <button
-            className={this.isKeyClicked("Q") ? "grayed-out" : ""}
-            value="q"
-            onClick={this.handleClick}
-          >
-            Q
-          </button>
-          <button
-            className={this.isKeyClicked("W") ? "grayed-out" : ""}
-            value="w"
-            onClick={this.handleClick}
-          >
-            W
-          </button>
-          <button
-            className={this.isKeyClicked("E") ? "grayed-out" : ""}
-            value="e"
-            onClick={this.handleClick}
-          >
-            E
-          </button>
-          <button
-            className={this.isKeyClicked("R") ? "grayed-out" : ""}
-            value="r"
-            onClick={this.handleClick}
-          >
-            R
-          </button>
-          <button
-            className={this.isKeyClicked("T") ? "grayed-out" : ""}
-            value="t"
-            onClick={this.handleClick}
-          >
-            T
-          </button>
-          <button
-            className={this.isKeyClicked("Y") ? "grayed-out" : ""}
-            value="y"
-            onClick={this.handleClick}
-          >
-            Y
-          </button>
-          <button
-            className={this.isKeyClicked("U") ? "grayed-out" : ""}
-            value="u"
-            onClick={this.handleClick}
-          >
-            U
-          </button>
-          <button
-            className={this.isKeyClicked("I") ? "grayed-out" : ""}
-            value="i"
-            onClick={this.handleClick}
-          >
-            I
-          </button>
-          <button
-            className={this.isKeyClicked("O") ? "grayed-out" : ""}
-            value="o"
-            onClick={this.handleClick}
-          >
-            O
-          </button>
-          <button
-            className={this.isKeyClicked("P") ? "grayed-out" : ""}
-            value="p"
-            onClick={this.handleClick}
-          >
-            P
-          </button>
+          {firstRow.map((key) => (
+            <button
+              value={key}
+              onClick={this.handleClick}
+              disabled={clickedKeys.includes(key)}
+            >
+              {key}
+            </button>
+          ))}
         </div>
         <div className="row">
-          <button value="a" onClick={this.handleClick}>
-            A
-          </button>
-          <button value="s" onClick={this.handleClick}>
-            S
-          </button>
-          <button value="d" onClick={this.handleClick}>
-            D
-          </button>
-          <button value="f" onClick={this.handleClick}>
-            F
-          </button>
-          <button value="g" onClick={this.handleClick}>
-            G
-          </button>
-          <button value="h" onClick={this.handleClick}>
-            H
-          </button>
-          <button value="j" onClick={this.handleClick}>
-            J
-          </button>
-          <button value="k" onClick={this.handleClick}>
-            K
-          </button>
-          <button value="l" onClick={this.handleClick}>
-            L
-          </button>
+          {secondRow.map((key) => (
+            <button
+              value={key}
+              onClick={this.handleClick}
+              disabled={clickedKeys.includes(key)}
+            >
+              {key}
+            </button>
+          ))}
         </div>
         <div className="row">
-          <button value="z" onClick={this.handleClick}>
-            Z
-          </button>
-          <button value="x" onClick={this.handleClick}>
-            X
-          </button>
-          <button value="c" onClick={this.handleClick}>
-            C
-          </button>
-          <button value="v" onClick={this.handleClick}>
-            V
-          </button>
-          <button value="b" onClick={this.handleClick}>
-            B
-          </button>
-          <button value="n" onClick={this.handleClick}>
-            N
-          </button>
-          <button value="m" onClick={this.handleClick}>
-            M
-          </button>
+          {thirdRow.map((key) => (
+            <button
+              value={key}
+              onClick={this.handleClick}
+              disabled={clickedKeys.includes(key)}
+            >
+              {key}
+            </button>
+          ))}
         </div>
       </div>
     );
