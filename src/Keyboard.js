@@ -36,8 +36,32 @@ class Keyboard extends React.Component {
       clickedKeys: [],
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
+  componentDidMount() {
+    window.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  handleKeyDown(event) {
+    // Convert the key code to a character
+    const key = String.fromCharCode(event.keyCode).toLowerCase();
+
+    // Check if the character is in the list of valid keys
+    const { buttons } = this.state;
+    if (buttons.includes(key)) {
+      // Find the corresponding button and trigger a click on it
+      const button = this[key];
+      // Creates an object with a value being the char to mimic the button element
+      this.handleClick({ target: { value: button.value } });
+    }
+  }
+
+  // Takes in a button element that is an object
   handleClick(key) {
     const { onClick } = this.props;
     onClick(key.target.value);
@@ -70,6 +94,9 @@ class Keyboard extends React.Component {
               value={key}
               onClick={this.handleClick}
               disabled={clickedKeys.includes(key)}
+              ref={(button) => {
+                this[key] = button;
+              }}
             >
               {key}
             </button>
@@ -81,6 +108,9 @@ class Keyboard extends React.Component {
               value={key}
               onClick={this.handleClick}
               disabled={clickedKeys.includes(key)}
+              ref={(button) => {
+                this[key] = button;
+              }}
             >
               {key}
             </button>
@@ -92,6 +122,9 @@ class Keyboard extends React.Component {
               value={key}
               onClick={this.handleClick}
               disabled={clickedKeys.includes(key)}
+              ref={(button) => {
+                this[key] = button;
+              }}
             >
               {key}
             </button>

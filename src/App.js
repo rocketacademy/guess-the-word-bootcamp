@@ -2,7 +2,7 @@ import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 import Keyboard from "./Keyboard.js";
-import Sprite from "./Sprites.js";
+// import Sprite from "./Sprites.js";
 // import { Box, Grid } from "@mui/material";
 
 class App extends React.Component {
@@ -21,8 +21,8 @@ class App extends React.Component {
       // Insert num guesses left state here
       numGuessLeft: 10,
       characterInput: "",
-      maxSpaceWidth: 750,
-      minSpaceWidth: 0,
+      // maxSpaceWidth: 750,
+      // minSpaceWidth: 0,
     };
     // bind handleChange and handleSubmit methods to component instance,to keep the reference
     this.handleChange = this.handleChange.bind(this);
@@ -87,13 +87,32 @@ class App extends React.Component {
     });
   };
 
+  componentDidMount() {
+    // Add event listener for keydown on the document object
+    document.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    // Remove event listener when component is unmounted
+    document.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  handleKeyDown = (event) => {
+    // Check if the key pressed is the "Enter" key (keyCode 13)
+    if (event.keyCode === 13) {
+      // Trigger a click event on the "Restart" button
+      const restartButton = document.getElementById("restart-button");
+      restartButton.click();
+    }
+  };
+
   render() {
     const {
       numGuessLeft,
       currWord,
       guessedLetters,
-      maxSpaceWidth,
-      minSpaceWidth,
+      // maxSpaceWidth,
+      // minSpaceWidth,
     } = this.state;
     let wordDisplayed = this.generateWordDisplay();
     return (
@@ -136,7 +155,11 @@ class App extends React.Component {
                   Game over. The word is "{currWord}".
                   <br />
                   <br />
-                  <button className="Button" onClick={this.handleRestart}>
+                  <button
+                    className="Button"
+                    id="restart-button"
+                    onClick={this.handleRestart}
+                  >
                     Restart
                   </button>
                 </h3>
@@ -170,7 +193,11 @@ class App extends React.Component {
                 Congrats! You guessed the word!
                 <br />
                 <br />
-                <button className="Button" onClick={this.handleRestart}>
+                <button
+                  className="Button"
+                  id="restart-button"
+                  onClick={this.handleRestart}
+                >
                   Restart
                 </button>
               </h3>
