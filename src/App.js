@@ -99,12 +99,12 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Guess The Word - Save Princess Peach!</h1>
-          <Sprite
+          <h1>Guess The Word 🚀</h1>
+          {/* <Sprite
             numGuessLeft={numGuessLeft}
             maxSpaceWidth={maxSpaceWidth}
             minSpaceWidth={minSpaceWidth}
-          />
+          /> */}
           <h3>Word Display</h3>
           {/* <Grid container spacing={1} justifyContent="center">
             {this.generateWordDisplay().map((letter, index) => (
