@@ -18,8 +18,10 @@ class App extends React.Component {
       verdict: '',
       buttonText: 'Submit',
       answer: 0, //Counter for the scores
+      rounds: 0, //Counter for number of rounds
+      winRounds: 0, //Counter for wins
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this); //to bind to the button
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -63,24 +65,37 @@ class App extends React.Component {
     let guessL = [...this.state.guessedLetters,inputL];//add to output
     let numTurns = this.state.numGuess-1;
     let win = this.checkHasUserGuessedWord(guessL);
+    let winCounter = this.state.winRounds; 
+    let roundCount = this.state.rounds;
     console.log(guessL);
     console.log([numTurns,win]);
+    console.log([winCounter,roundCount]);
+
+    roundCount += 1; //roundCount increased by 1
 
     //if the game is over
     if (numTurns === 0 || win){
       //Evaluate the verdict
       let verdict = (this.checkHasUserGuessedWord(guessL) ? 'win!' : 'lose!');
       let output = "Game has ended! You " + verdict + "\nThe word is " + this.state.currWord+".";
+      if (win === true){ //If it wins then the scores will be displayed
+        winCounter += 1; //Increase by 1
+      }
+
+
       alert(output)
       this.setState({
         numGuess: 10,
         buttonText: 'Restart',
         guessedLetters: [],
-        currWord: getRandomWord()
+        currWord: getRandomWord(),
+        rounds: roundCount,
+        winRounds: winCounter
       });
     }
 
     else{
+
       this.setState({
         guessedLetters: guessL,
         numGuess: numTurns,
@@ -110,6 +125,7 @@ class App extends React.Component {
           <h3>Input</h3>
           {/* Insert form element here */}
           <h4>Turns Left: {this.state.numGuess}</h4>
+          <h4>Winning Streak: {this.state.winRounds}/{this.state.rounds}</h4>
           <form onSubmit={this.handleSubmit}>
             <h4>Please Submit 1 Letter at a Time</h4>
             <input type='text' value={firstLetter} onChange={this.handleChange}/>
