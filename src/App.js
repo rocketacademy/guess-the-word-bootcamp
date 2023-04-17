@@ -12,7 +12,7 @@ class App extends React.Component {
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
-      numGuess: 10,
+      NUM_GUESS: 10,
       // Insert form input state here
       formInput: '',
       verdict: '',
@@ -63,7 +63,7 @@ class App extends React.Component {
   handleSubmit(event) {
     let inputL = [...this.state.formInput][0];//first letter
     let guessL = [...this.state.guessedLetters,inputL];//add to output
-    let numTurns = this.state.numGuess-1;
+    let numTurns = this.state.NUM_GUESS-1;
     let win = this.checkHasUserGuessedWord(guessL);
     let winCounter = this.state.winRounds; 
     let roundCount = this.state.rounds;
@@ -85,7 +85,7 @@ class App extends React.Component {
 
       alert(output)
       this.setState({
-        numGuess: 10,
+        NUM_GUESS: 10,
         buttonText: 'Restart',
         guessedLetters: [],
         currWord: getRandomWord(),
@@ -98,7 +98,7 @@ class App extends React.Component {
 
       this.setState({
         guessedLetters: guessL,
-        numGuess: numTurns,
+        NUM_GUESS: numTurns,
         buttonText: 'Submit'
       });
       //alert('Letter: ' + event.target.value);
@@ -124,7 +124,7 @@ class App extends React.Component {
             : "-"}
           <h3>Input</h3>
           {/* Insert form element here */}
-          <h4>Turns Left: {this.state.numGuess}</h4>
+          <h4>Turns Left: {this.state.NUM_GUESS}</h4>
           <h4>Winning Streak: {this.state.winRounds}/{this.state.rounds}</h4>
           <form onSubmit={this.handleSubmit}>
             <h4>Please Submit 1 Letter at a Time</h4>
