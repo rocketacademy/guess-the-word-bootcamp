@@ -23,6 +23,8 @@ class App extends React.Component {
       characterInput: "",
       // maxSpaceWidth: 750,
       // minSpaceWidth: 0,
+      roundNumber: 1,
+      scoreData: [{ round: 0, guess: "nothing" }],
     };
     // bind handleChange and handleSubmit methods to component instance,to keep the reference
     this.handleChange = this.handleChange.bind(this);
@@ -106,11 +108,49 @@ class App extends React.Component {
     }
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.numGuessLeft !== this.state.numGuessLeft) {
+      // Update state based on a conditional
+      if (this.state.numGuessLeft === 0) {
+        this.setState({
+          roundNumber: prevState.roundNumber + 1,
+          scoreData: [
+            ...prevState.scoreData,
+            { round: prevState.roundNumber, guess: "lose" },
+          ],
+        });
+      }
+    }
+  }
+
+  updateScoreDataWin = () => {
+    // const { roundNumber, scoreData } = this.state;
+    this.setState((prevState) => ({
+      roundNumber: prevState.roundNumber + 1,
+      scoreData: [
+        ...prevState.scoreData,
+        { round: prevState.roundNumber, guess: "win" },
+      ],
+    }));
+  };
+
+  updateScoreDataLose = () => {
+    // const { roundNumber, scoreData } = this.state;
+    this.setState((prevState) => ({
+      roundNumber: prevState.roundNumber + 1,
+      scoreData: [
+        ...prevState.scoreData,
+        { round: prevState.roundNumber, guess: "lose" },
+      ],
+    }));
+  };
+
   render() {
     const {
       numGuessLeft,
       currWord,
       guessedLetters,
+      scoreData,
       // maxSpaceWidth,
       // minSpaceWidth,
     } = this.state;
@@ -125,24 +165,6 @@ class App extends React.Component {
             minSpaceWidth={minSpaceWidth}
           /> */}
           <h3>Word Display</h3>
-          {/* <Grid container spacing={1} justifyContent="center">
-            {this.generateWordDisplay().map((letter, index) => (
-              <Grid item xs={2} key={index}>
-                <Box
-                  sx={{
-                    height: "50px",
-                    width: "50px",
-                    border: "1px solid black",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {letter}
-                </Box>
-              </Grid>
-            ))}
-          </Grid> */}
           {this.generateWordDisplay()}
           <h3>Guessed Letters</h3>
           {guessedLetters.length > 0
@@ -203,6 +225,18 @@ class App extends React.Component {
               </h3>
             </div>
           )}
+          {/* Keep score here */}
+          <div>
+            <h3>Score</h3>
+            {scoreData.map((item, index) => (
+              <div key={index} style={{ display: "flex" }}>
+                <p style={{ marginRight: "10px" }}>
+                  {"Round " + item.round + ": "}
+                </p>
+                <p>{item.guess}</p>
+              </div>
+            ))}
+          </div>
         </header>
       </div>
     );
