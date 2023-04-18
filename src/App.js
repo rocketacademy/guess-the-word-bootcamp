@@ -2,8 +2,10 @@ import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 import Keyboard from "./Keyboard.js";
-// import Sprite from "./Sprites.js";
+import Sprite from "./Sprites.js";
 // import { Box, Grid } from "@mui/material";
+
+let globalWordDisplay = "";
 
 class App extends React.Component {
   constructor(props) {
@@ -21,10 +23,10 @@ class App extends React.Component {
       // Insert num guesses left state here
       numGuessLeft: 10,
       characterInput: "",
-      // maxSpaceWidth: 750,
-      // minSpaceWidth: 0,
+      maxSpaceWidth: 750,
+      minSpaceWidth: 0,
       roundNumber: 1,
-      scoreData: [{ round: 0, guess: "nothing" }],
+      scoreData: [],
     };
     // bind handleChange and handleSubmit methods to component instance,to keep the reference
     this.handleChange = this.handleChange.bind(this);
@@ -42,6 +44,7 @@ class App extends React.Component {
         wordDisplay.push("_");
       }
     }
+    globalWordDisplay = wordDisplay;
     // this.setState({ wordDisplayed: wordDisplay });
     return wordDisplay.join(" ");
   };
@@ -111,7 +114,15 @@ class App extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.numGuessLeft !== this.state.numGuessLeft) {
       // Update state based on a conditional
-      if (this.state.numGuessLeft === 0) {
+      if (!globalWordDisplay.includes("_")) {
+        this.setState({
+          roundNumber: prevState.roundNumber + 1,
+          scoreData: [
+            ...prevState.scoreData,
+            { round: prevState.roundNumber, guess: "win" },
+          ],
+        });
+      } else if (this.state.numGuessLeft === 0) {
         this.setState({
           roundNumber: prevState.roundNumber + 1,
           scoreData: [
@@ -151,19 +162,19 @@ class App extends React.Component {
       currWord,
       guessedLetters,
       scoreData,
-      // maxSpaceWidth,
-      // minSpaceWidth,
+      maxSpaceWidth,
+      minSpaceWidth,
     } = this.state;
     let wordDisplayed = this.generateWordDisplay();
     return (
       <div className="App">
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
-          {/* <Sprite
+          <Sprite
             numGuessLeft={numGuessLeft}
             maxSpaceWidth={maxSpaceWidth}
             minSpaceWidth={minSpaceWidth}
-          /> */}
+          />
           <h3>Word Display</h3>
           {this.generateWordDisplay()}
           <h3>Guessed Letters</h3>
@@ -172,8 +183,8 @@ class App extends React.Component {
             : "[ ]"}
           {wordDisplayed.includes("_") ? (
             numGuessLeft === 0 ? (
-              <div>
-                <h3>
+              <div style={{ marginBottom: 0 }}>
+                <h3 style={{ marginBottom: 0 }}>
                   Game over. The word is "{currWord}".
                   <br />
                   <br />
@@ -187,31 +198,29 @@ class App extends React.Component {
                 </h3>
               </div>
             ) : (
-              <div>
-                <div>
-                  <br />
-                  <Keyboard onClick={this.handleInput} />
-                </div>{" "}
+              <div style={{ marginBottom: 0 }}>
+                <br />
+                <Keyboard onClick={this.handleInput} />
                 {/* <h3>Key in your guess here:</h3>
-                <form className="Form" onSubmit={this.handleSubmit}>
-                  <label>
-                    <input
-                      name="guess"
-                      type="text"
-                      value={this.state.guess}
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                  <input className="Button" type="submit" value="Submit" />
-                </form> */}
+  <form className="Form" onSubmit={this.handleSubmit}>
+    <label>
+      <input
+        name="guess"
+        type="text"
+        value={this.state.guess}
+        onChange={this.handleChange}
+      />
+    </label>
+    <input className="Button" type="submit" value="Submit" />
+  </form> */}
                 <p>
                   <em>No. of guesses left: {numGuessLeft}</em>
                 </p>
               </div>
             )
           ) : (
-            <div>
-              <h3>
+            <div style={{ marginBottom: 0 }}>
+              <h3 style={{ marginBottom: 0 }}>
                 Congrats! You guessed the word!
                 <br />
                 <br />
@@ -226,16 +235,17 @@ class App extends React.Component {
             </div>
           )}
           {/* Keep score here */}
-          <div>
-            <h3>Score</h3>
-            {scoreData.map((item, index) => (
-              <div key={index} style={{ display: "flex" }}>
-                <p style={{ marginRight: "10px" }}>
-                  {"Round " + item.round + ": "}
-                </p>
-                <p>{item.guess}</p>
-              </div>
-            ))}
+          <div style={{ marginBottom: 30 }}>
+            {scoreData.length === 0 ? null : (
+              <>
+                <h3 style={{ marginBottom: 10 }}>Score</h3>
+                {scoreData.map((item, index) => (
+                  <p key={index} style={{ margin: 0 }}>
+                    {"Round " + item.round + ": " + item.guess}
+                  </p>
+                ))}
+              </>
+            )}
           </div>
         </header>
       </div>

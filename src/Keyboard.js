@@ -64,21 +64,18 @@ class Keyboard extends React.Component {
   // Takes in a button element that is an object
   handleClick(key) {
     const { onClick } = this.props;
-    onClick(key.target.value);
-    this.setState((prevState) => ({
-      clickedKeys: [...prevState.clickedKeys, key.target.value],
-    }));
+    const clickedKey = key.target.value;
+    if (!this.state.clickedKeys.includes(clickedKey)) {
+      onClick(key.target.value);
+      this.setState((prevState) => ({
+        clickedKeys: [...prevState.clickedKeys, key.target.value],
+      }));
+    }
   }
 
   componentDidUpdate() {
     console.log(this.state.clickedKeys);
   }
-
-  // componentDidUpdate() {
-  //   setTimeout(() => {
-  //     console.log(JSON.stringify(this.state.clickedKeys));
-  //   }, 1000);
-  // }
 
   render() {
     const { buttons, clickedKeys } = this.state;

@@ -13,12 +13,12 @@ const Sprite = (props) => {
   const styles = {
     space: {
       width: `${spaceWidth}px`,
-      height: "200px",
+      height: "150px",
       position: "relative",
     },
     sprite: {
-      width: "200px",
-      height: "200px",
+      width: "150px",
+      height: "150px",
       objectFit: "contain",
     },
     sprite1: {
