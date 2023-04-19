@@ -37,8 +37,8 @@ button:disabled {
   pointer-events: none;
 }
 
-/* @media (max-width: 375px) {
+@media (max-width: 375px) {
   button {
     font-size: 18px;
   }
-} */
+}

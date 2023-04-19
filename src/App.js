@@ -44,9 +44,9 @@ class App extends React.Component {
         wordDisplay.push("_");
       }
     }
-    globalWordDisplay = wordDisplay;
+    globalWordDisplay = wordDisplay.join(" ");
     // this.setState({ wordDisplayed: wordDisplay });
-    return wordDisplay.join(" ");
+    return globalWordDisplay;
   };
 
   // Insert form callback functions handleChange
@@ -116,45 +116,23 @@ class App extends React.Component {
       // Update state based on a conditional
       if (!globalWordDisplay.includes("_")) {
         this.setState({
-          roundNumber: prevState.roundNumber + 1,
+          // roundNumber: prevState.roundNumber + 1,
           scoreData: [
             ...prevState.scoreData,
-            { round: prevState.roundNumber, guess: "win" },
+            { round: this.state.currWord, guess: globalWordDisplay },
           ],
         });
       } else if (this.state.numGuessLeft === 0) {
         this.setState({
-          roundNumber: prevState.roundNumber + 1,
+          // roundNumber: prevState.roundNumber + 1,
           scoreData: [
             ...prevState.scoreData,
-            { round: prevState.roundNumber, guess: "lose" },
+            { round: this.state.currWord, guess: globalWordDisplay },
           ],
         });
       }
     }
   }
-
-  updateScoreDataWin = () => {
-    // const { roundNumber, scoreData } = this.state;
-    this.setState((prevState) => ({
-      roundNumber: prevState.roundNumber + 1,
-      scoreData: [
-        ...prevState.scoreData,
-        { round: prevState.roundNumber, guess: "win" },
-      ],
-    }));
-  };
-
-  updateScoreDataLose = () => {
-    // const { roundNumber, scoreData } = this.state;
-    this.setState((prevState) => ({
-      roundNumber: prevState.roundNumber + 1,
-      scoreData: [
-        ...prevState.scoreData,
-        { round: prevState.roundNumber, guess: "lose" },
-      ],
-    }));
-  };
 
   render() {
     const {
@@ -241,7 +219,7 @@ class App extends React.Component {
                 <h3 style={{ marginBottom: 10 }}>Score</h3>
                 {scoreData.map((item, index) => (
                   <p key={index} style={{ margin: 0 }}>
-                    {"Round " + item.round + ": " + item.guess}
+                    {item.round + " : " + item.guess}
                   </p>
                 ))}
               </>
