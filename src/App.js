@@ -16,16 +16,10 @@ class App extends React.Component {
       currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
-      guessedCorrectly: false,
-      // wordDisplayed: ["_"],
       // guess displays the placeholder in the input field
       guess: "Key in your first guess here",
       // Insert num guesses left state here
       numGuessLeft: 10,
-      characterInput: "",
-      maxSpaceWidth: 750,
-      minSpaceWidth: 0,
-      roundNumber: 1,
       scoreData: [],
     };
     // bind handleChange and handleSubmit methods to component instance,to keep the reference
@@ -78,7 +72,6 @@ class App extends React.Component {
       currWord: getRandomWord(),
       guessedLetters: [],
       wordDisplay: [],
-      guessedCorrectly: false,
       guess: "Key in your first guess here",
       numGuessLeft: 10,
     });
@@ -113,18 +106,9 @@ class App extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.numGuessLeft !== this.state.numGuessLeft) {
-      // Update state based on a conditional
-      if (!globalWordDisplay.includes("_")) {
+      // Stores the currWord and wordDisplay if the word has been guessed or if the user has run out of guesses
+      if (!globalWordDisplay.includes("_") || this.state.numGuessLeft === 0) {
         this.setState({
-          // roundNumber: prevState.roundNumber + 1,
-          scoreData: [
-            ...prevState.scoreData,
-            { round: this.state.currWord, guess: globalWordDisplay },
-          ],
-        });
-      } else if (this.state.numGuessLeft === 0) {
-        this.setState({
-          // roundNumber: prevState.roundNumber + 1,
           scoreData: [
             ...prevState.scoreData,
             { round: this.state.currWord, guess: globalWordDisplay },
@@ -135,14 +119,7 @@ class App extends React.Component {
   }
 
   render() {
-    const {
-      numGuessLeft,
-      currWord,
-      guessedLetters,
-      scoreData,
-      maxSpaceWidth,
-      minSpaceWidth,
-    } = this.state;
+    const { numGuessLeft, currWord, guessedLetters, scoreData } = this.state;
     let wordDisplayed = this.generateWordDisplay();
     return (
       <div className="App">
@@ -150,8 +127,6 @@ class App extends React.Component {
           <h1>Guess The Word 🚀</h1>
           <Sprite
             numGuessLeft={numGuessLeft}
-            maxSpaceWidth={maxSpaceWidth}
-            minSpaceWidth={minSpaceWidth}
             globalWordDisplay={globalWordDisplay}
           />
           <h3>Word Display</h3>
@@ -180,18 +155,6 @@ class App extends React.Component {
               <div style={{ marginBottom: 0 }}>
                 <br />
                 <Keyboard onClick={this.handleInput} />
-                {/* <h3>Key in your guess here:</h3>
-  <form className="Form" onSubmit={this.handleSubmit}>
-    <label>
-      <input
-        name="guess"
-        type="text"
-        value={this.state.guess}
-        onChange={this.handleChange}
-      />
-    </label>
-    <input className="Button" type="submit" value="Submit" />
-  </form> */}
                 <p>
                   <em>No. of guesses left: {numGuessLeft}</em>
                 </p>
@@ -213,7 +176,6 @@ class App extends React.Component {
               </h3>
             </div>
           )}
-          {/* Keep score here */}
           <div style={{ marginBottom: 30 }}>
             {scoreData.length === 0 ? null : (
               <>

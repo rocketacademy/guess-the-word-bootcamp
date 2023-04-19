@@ -61,7 +61,7 @@ class Keyboard extends React.Component {
     }
   }
 
-  // Takes in a button element that is an object
+  // If the button is clicked, and has not been clicked before, the value of the button is stored into the clickedKey array
   handleClick(key) {
     const { onClick } = this.props;
     const clickedKey = key.target.value;

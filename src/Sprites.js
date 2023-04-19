@@ -6,12 +6,19 @@ const Sprite = (props) => {
   const sprite2Url =
     "https://mario.wiki.gallery/images/d/d2/Peach_and_Perry.gif";
 
-  const { numGuessLeft, maxSpaceWidth, globalWordDisplay } = props;
+  const { numGuessLeft, globalWordDisplay } = props;
+
+  // Set the width of the viewport
+  const viewportWidth = window.innerWidth;
+
+  // spaceWidth determines the space between the sprites, shrinks with each guess
   const spaceWidth =
     numGuessLeft === 0 && !globalWordDisplay.includes("_")
-      ? (1 / 10) * maxSpaceWidth
-      : (numGuessLeft / 10) * maxSpaceWidth;
-  const rightMargin = spaceWidth === 0 ? -50 : 0;
+      ? (1 / 10) * viewportWidth * 0.4
+      : (numGuessLeft / 10) * viewportWidth * 0.4;
+
+  // Added this spriteMargin to allow the sprites to overlap once the spaceWidth is zero
+  const spriteMargin = spaceWidth === 0 ? -50 : 0;
 
   const styles = {
     space: {
@@ -25,11 +32,11 @@ const Sprite = (props) => {
       objectFit: "contain",
     },
     sprite1: {
-      marginRight: `${rightMargin}px`,
+      marginRight: `${spriteMargin}px`,
       zIndex: "1",
     },
     sprite2: {
-      marginLeft: `${rightMargin}px`,
+      marginLeft: `${spriteMargin}px`,
       zIndex: "0",
     },
   };
