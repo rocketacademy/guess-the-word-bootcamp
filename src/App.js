@@ -14,7 +14,9 @@ class App extends React.Component {
       // Insert num guesses left state here
       // Insert form input state here
       inputValue: "",
-      guessLeft: 0,
+      guessLeft: -1,
+      init: false,
+      won: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,14 +28,9 @@ class App extends React.Component {
   handleSubmit(event) {
     //alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
-    const {inputValue, guessLeft } = this.state;
-    console.log(this.state.currWord.length)
-    
-      this.setState({
-        guessLeft: this.state.currWord.length+5,
-      })
-    
-    
+    const { inputValue, guessLeft,currWord } = this.state;
+ 
+    let ifWin =true;
     if (
       inputValue === "" ||
       inputValue.toUpperCase() === inputValue.toLowerCase()
@@ -48,38 +45,122 @@ class App extends React.Component {
           alert("You have guessed this letter before!");
         }
       }
-      if (repeatCheck === false) {
+      for (let letter of currWord) {
+        if (!this.state.guessedLetters.includes(letter)) {
+          ifWin=false;
+        } }
+      if (repeatCheck === false ) {
+        if(!ifWin){
         this.setState({
           guessedLetters: [...this.state.guessedLetters, letter],
           inputValue: "",
-          guessLeft:guessLeft-1,
-        });
+          guessLeft: guessLeft - 1,
+        });}else{
+          this.setState({
+            won: true,
+          })
+        }
+      }
+      
+      
+  
+      // for...of is a string and array iterator that does not use index
+      
+      
+          
+        
       }
     }
-  }
-
+  
+  initialiseGuess = () => {
+    const num = this.state.currWord.length;
+    this.setState({
+      guessLeft: num + 5,
+      init: true,
+    });
+  };
   //generate a new state
 
   generateWordDisplay = () => {
     const wordDisplay = [];
-    const{currWord}=this.state;
-    
-    // for...of is a string and array iterator that does not use index
+    const { currWord } = this.state;
 
+    // for...of is a string and array iterator that does not use index
+    
     for (let letter of currWord) {
       if (this.state.guessedLetters.includes(letter)) {
         wordDisplay.push(letter);
       } else {
         wordDisplay.push("_");
+        
       }
     }
     
     return wordDisplay.toString();
   };
+  restartGame=()=>{
+    this.setState({
+      currWord: getRandomWord(),
+      
+      guessedLetters: [],
+      
+      inputValue: "",
+      guessLeft: -1,
+      init: false,
+      won: false,
+    })
+  }
+  
 
   // Insert form callback functions handleChange and handleSubmit here
 
   render() {
+    const{guessLeft, won}=this.state
+    const startGame = () => {
+      if (this.state.init) {
+        return (
+          <div>
+            <h3>Guessed Letters</h3>
+
+            {this.state.guessedLetters.length > 0
+              ? this.state.guessedLetters.toString()
+              : "-"}
+            <h3>Input</h3>
+            {/* Insert form element here */}
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Name:
+                <input
+                  type="text"
+                  name="inputValue"
+                  value={this.state.inputValue}
+                  maxLength="1"
+                  onChange={this.handleChange}
+                />
+              </label>
+              <input type="submit" value="Submit" />
+            </form>
+            <h5>You have {this.state.guessLeft} guesses left.</h5>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <br />
+            <button onClick={this.initialiseGuess}>Start game</button>
+          </div>
+        );
+      }
+    };
+    const displayResult = () => {
+      if (guessLeft===0) {
+        return <div>Out of guesses! Please try again.</div>;
+      } else if(won){
+        return <div>Congratulations! You have guessed the word correctly<br /><button onClick={this.restartGame}>Replay</button></div>;
+      }else{
+        return <div></div>
+      }
+    };
     return (
       <div className="App">
         <header className="App-header">
@@ -87,30 +168,9 @@ class App extends React.Component {
           <h3>Word Display</h3>
 
           {this.generateWordDisplay()}
-          
-          
-          <h3>Guessed Letters</h3>
 
-          {this.state.guessedLetters.length > 0
-            ? this.state.guessedLetters.toString()
-            : "-"}
-
-          <h3>Input</h3>
-          {/* Insert form element here */}
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="inputValue"
-                value={this.state.inputValue}
-                maxLength="1"
-                onChange={this.handleChange}
-              />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
-          <h5>You have {this.state.guessLeft} guesses left.</h5>
+          {startGame()}
+          {displayResult()}
         </header>
       </div>
     );
