@@ -152,6 +152,7 @@ class App extends React.Component {
             numGuessLeft={numGuessLeft}
             maxSpaceWidth={maxSpaceWidth}
             minSpaceWidth={minSpaceWidth}
+            globalWordDisplay={globalWordDisplay}
           />
           <h3>Word Display</h3>
           {this.generateWordDisplay()}

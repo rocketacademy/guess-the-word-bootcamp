@@ -6,8 +6,11 @@ const Sprite = (props) => {
   const sprite2Url =
     "https://mario.wiki.gallery/images/d/d2/Peach_and_Perry.gif";
 
-  const { numGuessLeft, maxSpaceWidth } = props;
-  const spaceWidth = (numGuessLeft / 10) * maxSpaceWidth;
+  const { numGuessLeft, maxSpaceWidth, globalWordDisplay } = props;
+  const spaceWidth =
+    numGuessLeft === 0 && !globalWordDisplay.includes("_")
+      ? (1 / 10) * maxSpaceWidth
+      : (numGuessLeft / 10) * maxSpaceWidth;
   const rightMargin = spaceWidth === 0 ? -50 : 0;
 
   const styles = {
