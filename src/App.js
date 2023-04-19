@@ -207,7 +207,7 @@ class App extends React.Component {
                   id="restart-button"
                   onClick={this.handleRestart}
                 >
-                  Restart
+                  Next Word
                 </button>
               </h3>
             </div>
