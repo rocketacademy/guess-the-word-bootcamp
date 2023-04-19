@@ -77,6 +77,25 @@ class App extends React.Component {
     });
   };
 
+  renderRestartButton(message) {
+    return (
+      <div style={{ marginBottom: 0 }}>
+        <h3 style={{ marginBottom: 0 }}>
+          {message}
+          <br />
+          <br />
+          <button
+            className="Button"
+            id="restart-button"
+            onClick={this.handleRestart}
+          >
+            Next Word
+          </button>
+        </h3>
+      </div>
+    );
+  }
+
   handleInput = (character) => {
     const { guessedLetters, numGuessLeft } = this.state;
     this.setState({
@@ -137,20 +156,7 @@ class App extends React.Component {
             : "[ ]"}
           {wordDisplayed.includes("_") ? (
             numGuessLeft === 0 ? (
-              <div style={{ marginBottom: 0 }}>
-                <h3 style={{ marginBottom: 0 }}>
-                  Game over. The word is "{currWord}".
-                  <br />
-                  <br />
-                  <button
-                    className="Button"
-                    id="restart-button"
-                    onClick={this.handleRestart}
-                  >
-                    Restart
-                  </button>
-                </h3>
-              </div>
+              this.renderRestartButton(`Game over. The word is "${currWord}".`)
             ) : (
               <div style={{ marginBottom: 0 }}>
                 <br />
@@ -161,20 +167,7 @@ class App extends React.Component {
               </div>
             )
           ) : (
-            <div style={{ marginBottom: 0 }}>
-              <h3 style={{ marginBottom: 0 }}>
-                Congrats! You guessed the word!
-                <br />
-                <br />
-                <button
-                  className="Button"
-                  id="restart-button"
-                  onClick={this.handleRestart}
-                >
-                  Next Word
-                </button>
-              </h3>
-            </div>
+            this.renderRestartButton(`Congrats! You guessed the word!`)
           )}
           <div style={{ marginBottom: 30 }}>
             {scoreData.length === 0 ? null : (
