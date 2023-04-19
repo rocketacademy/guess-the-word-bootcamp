@@ -16,7 +16,8 @@ class App extends React.Component {
       inputValue: "",
       guessLeft: -1,
       init: false,
-      won: false,
+      played: 0,
+      won: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,9 +29,8 @@ class App extends React.Component {
   handleSubmit(event) {
     //alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
-    const { inputValue, guessLeft,currWord } = this.state;
- 
-    let ifWin =true;
+    const { inputValue, guessLeft } = this.state;
+
     if (
       inputValue === "" ||
       inputValue.toUpperCase() === inputValue.toLowerCase()
@@ -45,77 +45,90 @@ class App extends React.Component {
           alert("You have guessed this letter before!");
         }
       }
-      for (let letter of currWord) {
-        if (!this.state.guessedLetters.includes(letter)) {
-          ifWin=false;
-        } }
-      if (repeatCheck === false ) {
-        if(!ifWin){
+
+      if (repeatCheck === false) {
         this.setState({
           guessedLetters: [...this.state.guessedLetters, letter],
           inputValue: "",
           guessLeft: guessLeft - 1,
-        });}else{
-          this.setState({
-            won: true,
-          })
-        }
-      }
-      
-      
-  
-      // for...of is a string and array iterator that does not use index
-      
-      
-          
-        
+        });
       }
     }
-  
+
+    // for...of is a string and array iterator that does not use index
+  }
+
   initialiseGuess = () => {
     const num = this.state.currWord.length;
     this.setState({
-      guessLeft: num + 5,
+      guessLeft: num + 7,
       init: true,
     });
+  };
+
+  hasWon = () => {
+    const guessedLetters = [...this.state.guessedLetters];
+    for (let letter of this.state.currWord) {
+      if (!guessedLetters.includes(letter)) {
+        return false;
+      }
+    }
+    return true;
   };
   //generate a new state
 
   generateWordDisplay = () => {
     const wordDisplay = [];
-    const { currWord } = this.state;
-
+    const { guessLeft, currWord } = this.state;
+    const hasPlayerWon = this.hasWon();
     // for...of is a string and array iterator that does not use index
-    
-    for (let letter of currWord) {
-      if (this.state.guessedLetters.includes(letter)) {
-        wordDisplay.push(letter);
-      } else {
-        wordDisplay.push("_");
-        
+    if (!hasPlayerWon && guessLeft !== 0) {
+      for (let letter of currWord) {
+        if (this.state.guessedLetters.includes(letter)) {
+          wordDisplay.push(letter);
+        } else {
+          wordDisplay.push("_");
+        }
       }
+
+      return wordDisplay.toString();
+    } else {
+      return currWord.toString();
     }
-    
-    return wordDisplay.toString();
   };
-  restartGame=()=>{
-    this.setState({
-      currWord: getRandomWord(),
-      
-      guessedLetters: [],
-      
-      inputValue: "",
-      guessLeft: -1,
-      init: false,
-      won: false,
-    })
-  }
-  
+  restartGame = () => {
+    const hasPlayerWon = this.hasWon();
+    if (hasPlayerWon) {
+      this.setState({
+        currWord: getRandomWord(),
+
+        guessedLetters: [],
+
+        inputValue: "",
+        guessLeft: -1,
+        init: false,
+        played: this.state.played + 1,
+        won: this.state.won + 1,
+      });
+    } else {
+      this.setState({
+        currWord: getRandomWord(),
+
+        guessedLetters: [],
+
+        inputValue: "",
+        guessLeft: -1,
+        init: false,
+        played: this.state.played + 1,
+      });
+    }
+  };
 
   // Insert form callback functions handleChange and handleSubmit here
 
   render() {
-    const{guessLeft, won}=this.state
+    const { guessLeft, played, won } = this.state;
+    const playerHasWon = this.hasWon();
     const startGame = () => {
       if (this.state.init) {
         return (
@@ -126,20 +139,23 @@ class App extends React.Component {
               ? this.state.guessedLetters.toString()
               : "-"}
             <h3>Input</h3>
-            {/* Insert form element here */}
-            <form onSubmit={this.handleSubmit}>
-              <label>
-                Name:
-                <input
-                  type="text"
-                  name="inputValue"
-                  value={this.state.inputValue}
-                  maxLength="1"
-                  onChange={this.handleChange}
-                />
-              </label>
-              <input type="submit" value="Submit" />
-            </form>
+            {playerHasWon || guessLeft === 0 ? (
+              <div></div>
+            ) : (
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  Name:
+                  <input
+                    type="text"
+                    name="inputValue"
+                    value={this.state.inputValue}
+                    maxLength="1"
+                    onChange={this.handleChange}
+                  />
+                </label>
+                <input type="submit" value="Submit" />
+              </form>
+            )}
             <h5>You have {this.state.guessLeft} guesses left.</h5>
           </div>
         );
@@ -148,17 +164,31 @@ class App extends React.Component {
           <div>
             <br />
             <button onClick={this.initialiseGuess}>Start game</button>
+            <br />
+            You have won {won} out of {played} games so far.
           </div>
         );
       }
     };
     const displayResult = () => {
-      if (guessLeft===0) {
-        return <div>Out of guesses! Please try again.</div>;
-      } else if(won){
-        return <div>Congratulations! You have guessed the word correctly<br /><button onClick={this.restartGame}>Replay</button></div>;
-      }else{
-        return <div></div>
+      if (playerHasWon) {
+        return (
+          <div>
+            Congratulations! You have guessed the word correctly
+            <br />
+            <button onClick={this.restartGame}>Replay</button>
+          </div>
+        );
+      } else if (guessLeft === 0) {
+        return (
+          <div>
+            Out of guesses! Please try again.
+            <br />
+            <button onClick={this.restartGame}>Replay</button>
+          </div>
+        );
+      } else {
+        return <div></div>;
       }
     };
     return (
