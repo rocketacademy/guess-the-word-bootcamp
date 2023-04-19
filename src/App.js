@@ -22,9 +22,8 @@ class App extends React.Component {
       numGuessLeft: 10,
       scoreData: [],
     };
-    // bind handleChange and handleSubmit methods to component instance,to keep the reference
+    // bind handleChange and handleRestart methods to component instance,to keep the reference
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
   }
 
@@ -49,21 +48,6 @@ class App extends React.Component {
     this.setState({
       [name]: value,
     });
-  };
-
-  // handleSubmit to check validation of input to allow only 1 alphabet to be inputted
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const { guessedLetters, guess, numGuessLeft } = this.state;
-    if (guess.length !== 1) {
-      alert("Please input a letter instead");
-    } else {
-      this.setState({
-        guessedLetters: [...guessedLetters, guess],
-        guess: "",
-        numGuessLeft: numGuessLeft - 1,
-      });
-    }
   };
 
   // handleRestart resets all the states
@@ -123,7 +107,7 @@ class App extends React.Component {
     }
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevState) {
     if (prevState.numGuessLeft !== this.state.numGuessLeft) {
       // Stores the currWord and wordDisplay if the word has been guessed or if the user has run out of guesses
       if (!globalWordDisplay.includes("_") || this.state.numGuessLeft === 0) {
