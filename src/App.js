@@ -1,7 +1,8 @@
 import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
-import DisplayImages from "./DisplayImages.js"
+import DisplayImages from "./DisplayImages.js";
+import Box from "@mui/material/Box";
 
 class App extends React.Component {
   constructor(props) {
@@ -76,18 +77,18 @@ class App extends React.Component {
     }
     return true;
   };
-  correctGuess=()=>{
-    const {guessLeft,currWord}=this.state;
+  correctGuess = () => {
+    const { guessLeft, currWord } = this.state;
     const guessedLetters = [...this.state.guessedLetters];
-    let correctGuess=0;
+    let correctGuess = 0;
     for (let letter of this.state.currWord) {
-      if (guessedLetters.includes(letter)){
+      if (guessedLetters.includes(letter)) {
         correctGuess++;
       }
     }
-    const wrongGuess=currWord.length+6-guessLeft-correctGuess;
-    return [correctGuess, wrongGuess]
-  }
+    const wrongGuess = currWord.length + 6 - guessLeft - correctGuess;
+    return [correctGuess, wrongGuess];
+  };
   //generate a new state
 
   generateWordDisplay = () => {
@@ -142,7 +143,7 @@ class App extends React.Component {
   render() {
     const { guessLeft, played, won } = this.state;
     const playerHasWon = this.hasWon();
-    const [cGuess, wGuess]= this.correctGuess();
+    const [cGuess, wGuess] = this.correctGuess();
     const startGame = () => {
       if (this.state.init) {
         return (
@@ -171,9 +172,22 @@ class App extends React.Component {
               </form>
             )}
             {/* <h5>You have guessed {cGuess} letters correctly and {wGuess} letters wrongly</h5> */}
-            <DisplayImages cGuess="0" wGuess={wGuess} length ="0"/>
-            {console.log({wGuess})}
-            <h5>You have {this.state.guessLeft} guesses left.</h5>
+            <Box
+              sx={{
+                width: 370,
+                height: 200,
+                position: "absolute",
+                top: 375,
+                left: 200,
+                padding:1,
+                backgroundColor: "rgb(10, 10, 40)"
+              }}
+            >
+              <DisplayImages cGuess="0" wGuess={wGuess} length="0" />
+            </Box>
+            {console.log({ wGuess })}
+            {guessLeft>0?(<h5>You have {this.state.guessLeft} guesses left.</h5>):(<div></div>)}
+            
           </div>
         );
       } else {
@@ -191,7 +205,7 @@ class App extends React.Component {
       if (playerHasWon) {
         return (
           <div>
-            Congratulations! You have guessed the word correctly
+            You have gained 114514 exp. Your pokemon has reached Lv. {won+1}
             <br />
             <button onClick={this.restartGame}>Replay</button>
           </div>
@@ -199,9 +213,9 @@ class App extends React.Component {
       } else if (guessLeft === 0) {
         return (
           <div>
-            Out of guesses! Please try again.
+            You whited out! Go to Pokemon centre to heal your pokemon
             <br />
-            <button onClick={this.restartGame}>Replay</button>
+            <button onClick={this.restartGame}>Pokemon centre</button>
           </div>
         );
       } else {

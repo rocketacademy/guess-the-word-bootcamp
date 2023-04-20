@@ -1,21 +1,28 @@
 import React from "react";
 
-export default class DisplayImages extends React.Component{
-    constructor(props) {
-        // Always call super with props in constructor to initialise parent class
-        super(props);
-        this.state = {
-          
-        };
+export default class DisplayImages extends React.Component {
+  constructor(props) {
+    // Always call super with props in constructor to initialise parent class
+    super(props);
+    this.state = {};
+  }
+  render() {
+    const { cGuess, wGuess, length } = this.props;
+    let correct = cGuess;
+    let wrong = wGuess;
+    let max = length;
+    if (correct === 0) {
+      max = 0;
+    // } else if (correct === max) {
+    //   correct = 0;
+    //   max = 1;
+     }
+    if (wrong > 7) {
+      wrong = 7;
     }
-        render() {
-            const { cGuess, wGuess, length } = this.props;
-            
-            //const classes = useStyles();
-         
-        
-            const myImage = require(`./images/${cGuess}${wGuess}${length}.png`);
-        
-            return <img src={myImage} width="200px" alt="scene here" />;
-          }
-      }
+
+    const myImage = require(`./images/${correct}${wrong}${max}.png`);
+
+    return <img src={myImage} width="350px" alt="scene here" />;
+  }
+}
