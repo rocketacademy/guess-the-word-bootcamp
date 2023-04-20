@@ -75,6 +75,18 @@ class App extends React.Component {
     }
     return true;
   };
+  correctGuess=()=>{
+    const {guessLeft,currWord}=this.state;
+    const guessedLetters = [...this.state.guessedLetters];
+    let correctGuess=0;
+    for (let letter of this.state.currWord) {
+      if (guessedLetters.includes(letter)){
+        correctGuess++;
+      }
+    }
+    const wrongGuess=currWord.length+7-guessLeft-correctGuess;
+    return [correctGuess, wrongGuess]
+  }
   //generate a new state
 
   generateWordDisplay = () => {
@@ -129,6 +141,7 @@ class App extends React.Component {
   render() {
     const { guessLeft, played, won } = this.state;
     const playerHasWon = this.hasWon();
+    const [cGuess, wGuess]= this.correctGuess();
     const startGame = () => {
       if (this.state.init) {
         return (
@@ -156,6 +169,7 @@ class App extends React.Component {
                 <input type="submit" value="Submit" />
               </form>
             )}
+            <h5>You have guessed {cGuess} letters correctly and {wGuess} letters wrongly</h5>
             <h5>You have {this.state.guessLeft} guesses left.</h5>
           </div>
         );
