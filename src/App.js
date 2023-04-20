@@ -1,6 +1,7 @@
 import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
+import DisplayImages from "./DisplayImages.js"
 
 class App extends React.Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class App extends React.Component {
   initialiseGuess = () => {
     const num = this.state.currWord.length;
     this.setState({
-      guessLeft: num + 7,
+      guessLeft: num + 6,
       init: true,
     });
   };
@@ -84,7 +85,7 @@ class App extends React.Component {
         correctGuess++;
       }
     }
-    const wrongGuess=currWord.length+7-guessLeft-correctGuess;
+    const wrongGuess=currWord.length+6-guessLeft-correctGuess;
     return [correctGuess, wrongGuess]
   }
   //generate a new state
@@ -169,7 +170,9 @@ class App extends React.Component {
                 <input type="submit" value="Submit" />
               </form>
             )}
-            <h5>You have guessed {cGuess} letters correctly and {wGuess} letters wrongly</h5>
+            {/* <h5>You have guessed {cGuess} letters correctly and {wGuess} letters wrongly</h5> */}
+            <DisplayImages cGuess="0" wGuess={wGuess} length ="0"/>
+            {console.log({wGuess})}
             <h5>You have {this.state.guessLeft} guesses left.</h5>
           </div>
         );
