@@ -28,7 +28,7 @@
 }
 
 .keyboard button:hover {
-  background-color: #ddd;
+  background-color: lightgoldenrodyellow;
 }
 
 button:disabled {
