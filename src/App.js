@@ -107,7 +107,7 @@ class App extends React.Component {
     }
   };
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevState.numGuessLeft !== this.state.numGuessLeft) {
       // Stores the currWord and wordDisplay if the word has been guessed or if the user has run out of guesses
       if (!globalWordDisplay.includes("_") || this.state.numGuessLeft === 0) {
