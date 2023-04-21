@@ -20,6 +20,10 @@ class App extends React.Component {
       guessesLeft: numGuesses,
       // Insert form input state here
       input: "",
+      // state for number of rounds played here
+      numOfRounds: 0,
+      // Insert number of rounds won here
+      numOfRoundsWon: 0,
     };
   }
 
@@ -36,14 +40,14 @@ class App extends React.Component {
     return wordDisplay.toString();
   };
 
-  // isInputAlphabet = (guess) => {
-  //   const acceptedLetters = /^[A-Za-z]+$/;
-  //   if (guess.match(acceptedLetters)) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
+  isInputAlphabet = (guess) => {
+    const acceptedLetters = /[a-zA-Z]/;
+    if (guess.match(acceptedLetters)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   // Insert form callback functions handleChange and handleSubmit here
   handleChange = (event) => {
@@ -73,6 +77,11 @@ class App extends React.Component {
       input: "",
       guessedLetters: [],
       guessesLeft: numGuesses,
+      // update state of number of wins across rounds here?
+      numOfRounds: this.state.numOfRounds + 1,
+      numOfRoundsWon: this.checkWordGuess()
+        ? this.state.numOfRoundsWon + 1
+        : this.state.numOfRoundsWon,
     });
   };
 
@@ -152,7 +161,6 @@ class App extends React.Component {
           >
             {this.generateWordDisplay()}
           </Box>
-
           <h3>Guessed Letters</h3>
           <Box>
             {this.state.guessedLetters.length > 0
@@ -167,6 +175,10 @@ class App extends React.Component {
           </Box>
           <h3>User's actions</h3>
           {shouldRemoveInput ? resetGameButton : userGuessInputForm}
+          <p>
+            You've won {this.state.numOfRoundsWon} out of{" "}
+            {this.state.numOfRounds} rounds.
+          </p>
         </header>
       </div>
     );
