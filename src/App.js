@@ -39,9 +39,9 @@ class App extends React.Component {
     return wordDisplay.toString();
   };
 
-  checkHasUserGuessedWord = (guessL) => {
+  checkHasUserGuessedWord = () => {
     // Create new array with spread operator because we do not wish to alter this.state.guessedLetters
-    const guessedLetters = [...guessL];
+    const guessedLetters = [...this.state.guessedLetters];
     for (let letter of this.state.currWord) {
       if (!guessedLetters.includes(letter)) {
         return false;
@@ -51,6 +51,7 @@ class App extends React.Component {
     return true;
   };
 
+  // Insert form callback functions handleChange and handleSubmit here
   handleChange(event) {
     //console.log(event)
     //console.log(event.target.value)
@@ -76,7 +77,7 @@ class App extends React.Component {
     //if the game is over
     if (numTurns === 0 || win){
       //Evaluate the verdict
-      let verdict = (this.checkHasUserGuessedWord(guessL) ? 'win!' : 'lose!');
+      let verdict = (this.checkHasUserGuessedWord() ? 'win!' : 'lose!');
       let output = "Game has ended! You " + verdict + "\nThe word is " + this.state.currWord+".";
       if (win === true){ //If it wins then the scores will be displayed
         winCounter += 1; //Increase by 1
@@ -84,6 +85,7 @@ class App extends React.Component {
 
 
       alert(output)
+      
       this.setState({
         NUM_GUESS: 10,
         buttonText: 'Restart',
@@ -108,10 +110,11 @@ class App extends React.Component {
     event.preventDefault();
   }
 
-  // Insert form callback functions handleChange and handleSubmit here
+  
 
   render() {
     let firstLetter = this.state.formInput.charAt(0) //showfirst letter only
+
     return (
       <div className="App">
         <header className="App-header">
