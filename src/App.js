@@ -15,7 +15,7 @@ class App extends React.Component {
       NUM_GUESS: 10,
       // Insert form input state here
       formInput: '',
-      verdict: '',
+      verdict: 0, //0: ongoing, 1: win, 2: lose
       buttonText: 'Submit',
       answer: 0, //Counter for the scores
       rounds: 0, //Counter for number of rounds
@@ -51,6 +51,34 @@ class App extends React.Component {
     return true;
   };
 
+  animateImage = () =>{
+    //checks if the person gets it right or wrong
+    let classRef = this.checkHasUserGuessedWord() ? 'box box-right' : 'box box-normal'
+    if (this.wordState()===2){ //lose
+      classRef = 'box box-wrong'
+    }
+    console.log(classRef)
+    //include the word display in
+    return <div className={classRef}>
+    {this.generateWordDisplay()} 
+  </div>
+  }
+
+  wordState(){ //evaluate the current status
+    let numTurns = this.state.NUM_GUESS-1;
+    let win = this.checkHasUserGuessedWord();
+    console.log([numTurns,win]);
+    if (win){
+      return 1
+    }
+    else if (numTurns === 0){ //run out of turns
+      return 2
+    }
+    else {
+      return 0
+    }
+  }
+
   // Insert form callback functions handleChange and handleSubmit here
   handleChange(event) {
     //console.log(event)
@@ -61,25 +89,24 @@ class App extends React.Component {
     console.log(this.state.currWord)
   }
 
+ 
   handleSubmit(event) {
     let inputL = [...this.state.formInput][0];//first letter
     let guessL = [...this.state.guessedLetters,inputL];//add to output
-    let numTurns = this.state.NUM_GUESS-1;
-    let win = this.checkHasUserGuessedWord(guessL);
     let winCounter = this.state.winRounds; 
     let roundCount = this.state.rounds;
+    let numTurns = this.state.NUM_GUESS-1;
     console.log(guessL);
-    console.log([numTurns,win]);
     console.log([winCounter,roundCount]);
 
     roundCount += 1; //roundCount increased by 1
 
     //if the game is over
-    if (numTurns === 0 || win){
+    if (this.wordState() === 1 || this.wordState() === 2 ){
       //Evaluate the verdict
       let verdict = (this.checkHasUserGuessedWord() ? 'win!' : 'lose!');
       let output = "Game has ended! You " + verdict + "\nThe word is " + this.state.currWord+".";
-      if (win === true){ //If it wins then the scores will be displayed
+      if (this.wordState()===1){ //If it wins then the scores will be displayed
         winCounter += 1; //Increase by 1
       }
 
@@ -120,18 +147,18 @@ class App extends React.Component {
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
           <h3>Word Display</h3>
-          {this.generateWordDisplay()}
+          {this.animateImage()}
           <h3>Guessed Letters</h3>
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
-          <h3>Input</h3>
+          <h3 id='inputText'>Input</h3>
           {/* Insert form element here */}
           <h4>Turns Left: {this.state.NUM_GUESS}</h4>
           <h4>Winning Streak: {this.state.winRounds}/{this.state.rounds}</h4>
           <form onSubmit={this.handleSubmit}>
             <h4>Please Submit 1 Letter at a Time</h4>
-            <input type='text' value={firstLetter} onChange={this.handleChange}/>
+            <input type='search' value={firstLetter} onChange={this.handleChange}/>
             <input type='submit' value={this.state.buttonText}/>
           </form>
         </header>

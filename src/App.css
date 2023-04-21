@@ -17,3 +17,72 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+h4{
+  margin: 0;
+}
+
+#inputText{
+  color:slateblue
+}
+
+@keyframes drop-in {
+  from {
+    transform:
+      translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform:
+      rotate(0deg) translateY(0%);
+    opacity: 1;
+  }
+}
+
+
+@keyframes turn-green {
+  from {
+    opacity: 0;
+    background: slateblue;
+  }
+  to {
+    opacity: 1;
+    background: green;
+  }
+}
+
+@keyframes turn-red {
+  from {
+    opacity: 0;
+    background: slateblue;
+  }
+  to {
+    opacity: 1;
+    background: red;
+  }
+}
+
+.box-normal {
+  animation: drop-in 1000ms;
+  background: slateblue;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  padding: 8px;
+  display: grid;
+  place-content: center;
+  color: white;
+  text-align: center;
+}
+.box-right {
+  animation: turn-green 1000ms;
+  background: green;
+
+}
+
+.box-wrong{
+  animation: turn-red 1000ms;
+  background: red;
+}
