@@ -177,7 +177,7 @@ class App extends React.Component {
             ) : (
               <form onSubmit={this.handleSubmit}>
                 <label>
-                  Name:
+                  
                   <input
                     type="text"
                     name="inputValue"
@@ -192,11 +192,11 @@ class App extends React.Component {
             {/* <h5>You have guessed {cGuess} letters correctly and {wGuess} letters wrongly</h5> */}
             <Box
               sx={{
-                width: 400,
-                height: 320,
+                width: '25vw',
+                height: 300,
                 position: "absolute",
-                top: 350,
-                left: 200,
+                top: '30vh',
+                left: '5vw',
                 padding: 1,
                 backgroundColor: "rgb(10, 10, 40)",
               }}
