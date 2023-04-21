@@ -25,12 +25,10 @@ class App extends React.Component {
       guessedLetters: [],
       // Insert num guesses left state here
       guessesLeft: 6,
-      // Insert wins here
-      wins: 0,
-      // Insert lost here
-      lost: 0,
+      // Insert win here
+      winScore: 0,
       // Insert rounds here
-      rounds: 0,
+      rounds: 1,
       // Insert form input state here
       input: '',
     };
@@ -86,10 +84,10 @@ class App extends React.Component {
       guessesLeft: 6,
       input: '',
       rounds: this.state.rounds + 1,
-      score: this.checkHasUserGuessedWord()
-        ? this.state.wins + 1
-        : this.state.lost + 1,
-    })
+      win: this.checkHasUserGuessedWord()
+        ? this.state.win + 1
+        : this.state.win,
+    });
   }
 
   // determine if player has guessed the correct word
@@ -126,6 +124,7 @@ class App extends React.Component {
               <input 
                 type="text" 
                 value={this.state.value} 
+                maxLength={1}
                 onChange={this.handleChange}
                 disabled={shouldDisableInput}
                 />
@@ -136,13 +135,15 @@ class App extends React.Component {
           {hasUserGuessedWord && (
             <div>
               <p>YOU WON!</p>{playAgainButton}
-              <p>Played: {this.state.rounds}, W: {this.state.wins} L: {this.state.lost}</p>
+              <p>Played: {this.state.rounds}</p>
+              <p>W: {this.state.winScore}</p>
             </div>
           )}
           {this.state.guessesLeft === 0 && !hasUserGuessedWord && (
             <div>
             <p>YOU LOST!</p>{playAgainButton}
-            <p>Played: {this.state.rounds}, W: {this.state.wins} L: {this.state.lost}</p>
+            <p>Played: {this.state.rounds}</p> 
+            <p>W: {this.state.winScore}</p>
           </div>
           )}
         </header>
