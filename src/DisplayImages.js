@@ -13,9 +13,9 @@ export default class DisplayImages extends React.Component {
     let max = length;
     if (correct === 0) {
       max = 0;
-    // } else if (correct === max) {
-    //   correct = 0;
-    //   max = 1;
+    } else if (correct === max) {
+       correct = 0;
+       max = 1;
      }
     if (wrong > 7) {
       wrong = 7;

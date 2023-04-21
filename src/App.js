@@ -13,17 +13,19 @@ class App extends React.Component {
       currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
-      // Insert num guesses left state here
-      // Insert form input state here
+
       inputValue: "",
       guessLeft: -1,
       init: false,
+      //Information for number of games played or won
       played: 0,
       won: 0,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  tries = 6;
+
   handleChange(event) {
     this.setState({ inputValue: event.target.value });
   }
@@ -31,16 +33,20 @@ class App extends React.Component {
   handleSubmit(event) {
     //alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
-    const { inputValue, guessLeft } = this.state;
-
+    const { inputValue, guessLeft, currWord } = this.state;
+    const currArr = [...currWord];
+    let n = 0;
+    //Check if blank or non-alphabet is entered
     if (
       inputValue === "" ||
       inputValue.toUpperCase() === inputValue.toLowerCase()
     ) {
       alert("Please enter a proper letter first.");
     } else {
+      //Standardise letters entered to lower case
       const letter = inputValue[0].toLocaleLowerCase();
       let repeatCheck = false;
+      //Block any repeated letters
       for (let gLetter of this.state.guessedLetters) {
         if (gLetter === letter) {
           repeatCheck = true;
@@ -49,25 +55,34 @@ class App extends React.Component {
       }
 
       if (repeatCheck === false) {
+        //Check if there are multiples of inputted letter in the word
+        for (let i = 0; i < currWord.length; i++) {
+          if (currArr[i] === letter) {
+            n++;
+          }
+        }
+        if (n === 0 || n === 1) {
+          n = 1;
+        }
+        console.log(n);
         this.setState({
           guessedLetters: [...this.state.guessedLetters, letter],
           inputValue: "",
-          guessLeft: guessLeft - 1,
+          //-1 try if the word has 1 or 0 of inputted letter, -n tries if there are n of the letter in the word
+          guessLeft: guessLeft - n,
         });
       }
     }
-
-    // for...of is a string and array iterator that does not use index
   }
-
+  //Set initial number of guesses and start game
   initialiseGuess = () => {
     const num = this.state.currWord.length;
     this.setState({
-      guessLeft: num + 6,
+      guessLeft: num + this.tries,
       init: true,
     });
   };
-
+  //Function to check if player has won
   hasWon = () => {
     const guessedLetters = [...this.state.guessedLetters];
     for (let letter of this.state.currWord) {
@@ -77,6 +92,7 @@ class App extends React.Component {
     }
     return true;
   };
+  //Function to get the number of correct and wrong guess made respectively
   correctGuess = () => {
     const { guessLeft, currWord } = this.state;
     const guessedLetters = [...this.state.guessedLetters];
@@ -86,7 +102,8 @@ class App extends React.Component {
         correctGuess++;
       }
     }
-    const wrongGuess = currWord.length + 6 - guessLeft - correctGuess;
+
+    const wrongGuess = currWord.length + this.tries - guessLeft - correctGuess;
     return [correctGuess, wrongGuess];
   };
   //generate a new state
@@ -110,6 +127,7 @@ class App extends React.Component {
       return currWord.toString();
     }
   };
+  //Restart game and initialise conditions
   restartGame = () => {
     const hasPlayerWon = this.hasWon();
     if (hasPlayerWon) {
@@ -154,7 +172,7 @@ class App extends React.Component {
               ? this.state.guessedLetters.toString()
               : "-"}
             <h3>Input</h3>
-            {playerHasWon || guessLeft === 0 ? (
+            {playerHasWon || guessLeft === 0 || wGuess === this.tries + 1 ? (
               <div></div>
             ) : (
               <form onSubmit={this.handleSubmit}>
@@ -174,23 +192,31 @@ class App extends React.Component {
             {/* <h5>You have guessed {cGuess} letters correctly and {wGuess} letters wrongly</h5> */}
             <Box
               sx={{
-                width: 370,
-                height: 200,
+                width: 400,
+                height: 320,
                 position: "absolute",
-                top: 375,
+                top: 350,
                 left: 200,
-                padding:1,
-                backgroundColor: "rgb(10, 10, 40)"
+                padding: 1,
+                backgroundColor: "rgb(10, 10, 40)",
               }}
             >
-              <DisplayImages cGuess="0" wGuess={wGuess} length="0" />
+              <DisplayImages
+                cGuess={cGuess}
+                wGuess={wGuess}
+                length={this.state.currWord.length}
+              />
+              <h6>
+                Guess the word correctly and defeat the opponent before your
+                health runs out!
+              </h6>
             </Box>
-            {console.log({ wGuess })}
-            {guessLeft>0?(<h5>You have {this.state.guessLeft} guesses left.</h5>):(<div></div>)}
-            
+
+            {/* {guessLeft>0?(<h5>You have {this.state.guessLeft} guesses left.</h5>):(<div></div>)} */}
           </div>
         );
       } else {
+        //If game has not initialised, display button for initialisation
         return (
           <div>
             <br />
@@ -201,16 +227,20 @@ class App extends React.Component {
         );
       }
     };
+
     const displayResult = () => {
+      //Display for winning the game
       if (playerHasWon) {
         return (
           <div>
-            You have gained 114514 exp. Your pokemon has reached Lv. {won+1}
+            You have defeated your opponent and gained 114514 exp. Your pokemon
+            has reached Lv. {won + 1}
             <br />
             <button onClick={this.restartGame}>Replay</button>
           </div>
         );
-      } else if (guessLeft === 0) {
+      } //Display for losing the game
+      else if (guessLeft === 0 || wGuess === this.tries + 1) {
         return (
           <div>
             You whited out! Go to Pokemon centre to heal your pokemon
@@ -218,7 +248,8 @@ class App extends React.Component {
             <button onClick={this.restartGame}>Pokemon centre</button>
           </div>
         );
-      } else {
+      } //Display when game has not finished
+      else {
         return <div></div>;
       }
     };
