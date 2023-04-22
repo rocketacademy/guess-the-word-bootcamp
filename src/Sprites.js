@@ -27,8 +27,8 @@ const Sprite = (props) => {
       position: "relative",
     },
     sprite: {
-      width: "150px",
-      height: "150px",
+      width: "125px",
+      height: "125px",
       objectFit: "contain",
     },
     sprite1: {
