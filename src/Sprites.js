@@ -18,7 +18,7 @@ const Sprite = (props) => {
       : (numGuessLeft / 10) * viewportWidth * 0.4;
 
   // Added this spriteMargin to allow the sprites to overlap once the spaceWidth is zero
-  const spriteMargin = spaceWidth === 0 ? -50 : 0;
+  const spriteMargin = spaceWidth === 0 ? -35 : 0;
 
   const styles = {
     space: {
