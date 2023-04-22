@@ -158,7 +158,7 @@ class App extends React.Component {
           <h4>Winning Streak: {this.state.winRounds}/{this.state.rounds}</h4>
           <form onSubmit={this.handleSubmit}>
             <h4>Please Submit 1 Letter at a Time</h4>
-            <input type='search' value={firstLetter.toLowerCase()} onChange={this.handleChange}/>
+            <input type='search' value={firstLetter} onChange={this.handleChange}/>
             <input type='submit' value={this.state.buttonText}/>
           </form>
         </header>
