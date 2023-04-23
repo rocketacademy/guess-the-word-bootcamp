@@ -65,7 +65,7 @@ class App extends React.Component {
   }
 
   wordState(){ //evaluate the current status
-    let numTurns = this.state.NUM_GUESS-1;
+    let numTurns = this.state.NUM_GUESS;
     let win = this.checkHasUserGuessedWord();
     console.log([numTurns,win]);
     if (win){
@@ -77,6 +77,20 @@ class App extends React.Component {
     else {
       return 0
     }
+  }
+
+  //Creating filter input fields to letters only
+  allLetter(inputtxt)
+  {
+   let letters = /^[A-Za-z]+$/; //regex
+   if(inputtxt.match(letters))
+     {
+      return true;
+     }
+   else
+     {
+     return false;
+     }
   }
 
   // Insert form callback functions handleChange and handleSubmit here
@@ -115,7 +129,7 @@ class App extends React.Component {
       
       this.setState({
         NUM_GUESS: 10,
-        buttonText: 'Restart',
+        buttonText: 'Submit',
         guessedLetters: [],
         currWord: getRandomWord(),
         rounds: roundCount,
@@ -141,6 +155,8 @@ class App extends React.Component {
 
   render() {
     let firstLetter = this.state.formInput.charAt(0) //showfirst letter only
+    firstLetter = this.allLetter(firstLetter) ? firstLetter : '' //check if letter is alphabet
+    let buttonState = (firstLetter !== '') ? false : true //enable submit button
 
     return (
       <div className="App">
@@ -159,7 +175,7 @@ class App extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <h4>Please Submit 1 Letter at a Time</h4>
             <input type='search' value={firstLetter} onChange={this.handleChange}/>
-            <input type='submit' value={this.state.buttonText}/>
+            <input type='submit' value={this.state.buttonText} disabled={buttonState}/>
           </form>
         </header>
       </div>
