@@ -2,13 +2,22 @@
   "name": "guess-the-word-bootcamp",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://cmz1212.github.io/guess-the-word-bootcamp",
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.12.1",
+    "bootstrap": "^5.2.3",
     "react": "^18.1.0",
+    "react-bootstrap": "^2.7.4",
     "react-dom": "^18.1.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "react-spring": "^9.7.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "WATCHPACK_POLLING=true react-scripts start",
     "build": "react-scripts build"
   },
   "eslintConfig": {
