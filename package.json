@@ -1,13 +1,19 @@
 {
   "name": "guess-the-word-bootcamp",
   "version": "0.1.0",
+  "homepage": "https://KenHo95.github.io/guess-the-word-bootcamp",
   "private": true,
   "dependencies": {
+    "bootstrap": "^5.2.3",
+    "gh-pages": "^5.0.0",
     "react": "^18.1.0",
+    "react-bootstrap": "^2.7.4",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
