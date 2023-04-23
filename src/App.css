@@ -17,3 +17,88 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 20%;
+  height: 20%;
+  margin-top: 25px;
+}
+
+.header {
+  margin-top: 1em;
+  background-color: #7a818d;
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 35em;
+  border-radius: 25px;
+}
+
+.body {
+  margin-top: 1em;
+  background-color: #342828;
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 35em;
+  border-radius: 25px;
+}
+
+.displayGuess {
+  margin-top: 1em;
+  background-color: #303428;
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 35em;
+  border-radius: 25px;
+}
+
+.message {
+  margin-top: 1em;
+  background-color: #343028;
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 35em;
+  height: fit-content;
+  border-radius: 25px;
+}
+
+input[type="text"],
+select {
+  width: fit-content;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  width: auto;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.submitField {
+  margin-top: 1em;
+  background-color: #7a818d;
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 35em;
+  border-radius: 25px;
+}
+
+#endGame {
+  margin: 1px;
+}
