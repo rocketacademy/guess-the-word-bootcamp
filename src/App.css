@@ -17,3 +17,19 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.table thead th {
+  background-color: white;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #ccc;
+}
+form {
+  margin-bottom: 20px; /* add margin to bottom */
+}
+
+table {
+  margin-top: 20px; /* add margin to top */
+}
+h5 {
+  padding: 10px;
+}
