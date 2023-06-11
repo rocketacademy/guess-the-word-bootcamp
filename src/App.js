@@ -1,6 +1,27 @@
+// ToDo:
+// Done: keep track of roundCount and score, stop the page from refreshing after reset
+
 import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+const images = importAll(
+  require.context("./assets/", false, /\.(png|jpe?g|svg)$/)
+);
+
+// Helper function to import all images
+function importAll(r) {
+  let images = {};
+  r.keys().forEach((key) => {
+    images[key] = r(key);
+  });
+  return images;
+}
+
+const validTextInput = /^[a-zA-Z]*$/;
 
 class App extends React.Component {
   constructor(props) {
@@ -11,16 +32,21 @@ class App extends React.Component {
       currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
-      // Insert num guesses left state here
-      // Insert form input state here
+      // num guesses left state
+      guessCountLeft: 10,
+      // form input state
+      userGuess: "",
+      round: 1,
+      score: 0,
     };
   }
 
   generateWordDisplay = () => {
     const wordDisplay = [];
+    const { currWord, guessedLetters } = this.state;
     // for...of is a string and array iterator that does not use index
-    for (let letter of this.state.currWord) {
-      if (this.state.guessedLetters.includes(letter)) {
+    for (const letter of currWord) {
+      if (guessedLetters.includes(letter)) {
         wordDisplay.push(letter);
       } else {
         wordDisplay.push("_");
@@ -29,22 +55,132 @@ class App extends React.Component {
     return wordDisplay.toString();
   };
 
-  // Insert form callback functions handleChange and handleSubmit here
+  // form callback functions handleChange and handleSubmit
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    if (validTextInput.test(value)) {
+      this.setState({
+        [name]: value.toLowerCase(),
+      });
+    }
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { currWord, userGuess, guessedLetters } = this.state;
+
+    if (guessedLetters.includes(userGuess)) {
+      alert(`You have guessed '${userGuess}' before.`);
+      this.setState({
+        userGuess: "",
+      });
+      return;
+    }
+
+    this.setState((state) => ({
+      guessedLetters: [...state.guessedLetters, userGuess],
+      guessCountLeft: currWord.includes(userGuess)
+        ? state.guessCountLeft
+        : state.guessCountLeft - 1,
+      userGuess: "",
+    }));
+  };
+
+  declareWin = () => {
+    const { currWord, guessedLetters } = this.state;
+    for (const letter of currWord) {
+      if (!guessedLetters.includes(letter)) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  resetGame = (e) => {
+    e.preventDefault();
+
+    this.setState((state) => ({
+      currWord: getRandomWord(),
+      guessedLetters: [],
+      guessCountLeft: 10,
+      userGuess: "",
+      round: state.round + 1,
+      score: this.declareWin() ? state.score + 1 : state.score,
+    }));
+  };
 
   render() {
+    const {
+      currWord,
+      guessedLetters,
+      guessCountLeft,
+      userGuess,
+      round,
+      score,
+    } = this.state;
+    const didPlayerWin = this.declareWin();
+    const isGameOver = guessCountLeft === 0;
+    const logo = "🚀";
+
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Guess The Word 🚀</h1>
-          <h3>Word Display</h3>
-          {this.generateWordDisplay()}
-          <h3>Guessed Letters</h3>
-          {this.state.guessedLetters.length > 0
-            ? this.state.guessedLetters.toString()
-            : "-"}
-          <h3>Input</h3>
-          {/* Insert form element here */}
-          Todo: Insert form element here
+          <Container fluid>
+            <h1>Guess The Word 🚀</h1>
+            <br />
+            <Row>
+              <Col>
+                <h3>Secret Word</h3>
+                {didPlayerWin || isGameOver
+                  ? `${currWord}`
+                  : this.generateWordDisplay()}
+              </Col>
+
+              <Col>
+                <h3>Round {round}</h3>
+              </Col>
+
+              <Col>
+                <h3>Guessed Letters</h3>
+                {guessedLetters.length > 0 ? guessedLetters.toString() : "-"}
+              </Col>
+            </Row>
+
+            <h3>Score: {score}</h3>
+
+            {/* form element */}
+            <form
+              onSubmit={
+                didPlayerWin || isGameOver ? this.resetGame : this.handleSubmit
+              }
+            >
+              <input
+                type="text"
+                name="userGuess"
+                value={userGuess}
+                maxLength="1"
+                placeholder="Guess a letter"
+                onChange={this.handleChange}
+                required={!didPlayerWin && !isGameOver}
+              />
+              <br />
+              <button>
+                {didPlayerWin || isGameOver ? "Another round" : "Submit"}
+              </button>
+            </form>
+            <br />
+            <h3>
+              {isGameOver
+                ? "Out of guesses! You lost."
+                : didPlayerWin
+                ? "Correct guess! You won!"
+                : `Number of guesses left: ${guessCountLeft} ${logo.repeat(
+                    guessCountLeft
+                  )}`}
+            </h3>
+            <img src={images[`./${10 - guessCountLeft}.jpg`]} alt="" />
+          </Container>
         </header>
       </div>
     );
