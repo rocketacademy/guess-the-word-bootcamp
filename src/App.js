@@ -79,6 +79,7 @@ const App = () => {
         <h1>Guess The Word 🚀</h1>
         <h3>Word Display</h3>
         {generateWordDisplay()}
+        {/* !! How to make the final word display, before ending the game */}
         <h3>Guessed Letters</h3>
         {guessedLetters.length > 0 ? guessedLetters.toString() : "-"}
         <h3>Hangman - Input</h3>
