@@ -4,8 +4,7 @@ import "./App.css";
 
 function App() {
   // word is the current secret word for this round. Update this with setWord after each round.
-  // const [word, setWord] = useState(getRandomWord());
-  const [word, setWord] = useState("ABCDE");
+  const [word, setWord] = useState(getRandomWord());
   // guessedLetters stores all letters a user has guessed so far
   const [guessedLetters, setGuessedLetters] = useState([]);
   // Insert num guesses left state here
@@ -29,13 +28,9 @@ function App() {
 
   const [wordDisplay, setWordDisplay] = useState(generateWordDisplay([]));
 
-  // Insert form callback functions handleFormChange and handleFormSubmit here
+  // Insert form callback function handleFormSubmit here
   const handleFormSubmit = (event) => {
     event.preventDefault();
-
-    if (guessedLetter === "") {
-      return;
-    }
 
     const newGuessedLetters = [...guessedLetters, guessedLetter];
     setGuessedLetters(newGuessedLetters);
@@ -57,6 +52,16 @@ function App() {
     }
   };
 
+  const handleNewGameClick = () => {
+    setWord(getRandomWord());
+    setGuessedLetters([]);
+    setNumGuesses(10);
+    setGuessedLetter("");
+    setGameWon(false);
+    setGameLost(false);
+    setWordDisplay(generateWordDisplay([]));
+  };
+
   const guessedLetterRef = useRef(null);
   const newGameRef = useRef(null);
 
@@ -64,7 +69,7 @@ function App() {
     if (guessedLetterRef.current) {
       guessedLetterRef.current.focus();
     }
-  }, []);
+  }, [gameWon, gameLost]);
 
   useEffect(() => {
     if (gameWon && newGameRef.current) {
@@ -96,8 +101,8 @@ function App() {
         {gameLost && <p>You ran out of guesses.</p>}
         {(gameWon || gameLost) && (
           <>
-            <button id="new-game" ref={newGameRef}>
-              New Game
+            <button id="new-game" onClick={handleNewGameClick} ref={newGameRef}>
+              Play Again
             </button>
           </>
         )}
