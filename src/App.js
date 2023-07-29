@@ -2,13 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 
+const NUM_GUESSES = 6;
+
 function App() {
   // word is the current secret word for this round. Update this with setWord after each round.
   const [word, setWord] = useState(getRandomWord());
   // guessedLetters stores all letters a user has guessed so far
   const [guessedLetters, setGuessedLetters] = useState([]);
   // Insert num guesses left state here
-  const [numGuesses, setNumGuesses] = useState(10);
+  const [numGuesses, setNumGuesses] = useState(NUM_GUESSES);
   // Insert form input state here
   const [guessedLetter, setGuessedLetter] = useState("");
 
@@ -55,7 +57,7 @@ function App() {
   const handleNewGameClick = () => {
     setWord(getRandomWord());
     setGuessedLetters([]);
-    setNumGuesses(10);
+    setNumGuesses(NUM_GUESSES);
     setGuessedLetter("");
     setGameWon(false);
     setGameLost(false);
