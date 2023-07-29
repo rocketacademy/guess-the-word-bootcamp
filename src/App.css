@@ -17,3 +17,31 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+h1,
+h2,
+p,
+form {
+  margin: 0.5em;
+}
+
+#guessed-letter,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+#guessed-letter {
+  text-transform: uppercase;
+  text-align: center;
+  width: 60px;
+  margin-left: 0.5em;
+}
+
+#submit-guess {
+  margin-left: 0.5em;
+}
+
+#new-game {
+  margin-bottom: 1em;
+}
