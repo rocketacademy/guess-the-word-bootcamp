@@ -1,3 +1,13 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #dcebe3, #a1d4bd, #8eaae2);
+  color: rgb(83, 82, 82);
+}
+
 .App {
   text-align: center;
 }
@@ -16,4 +26,10 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.grayBorder {
+  border: 1px solid rgba(142, 139, 139, 0.916);
+  padding: 10px;
+  margin: 10px 0;
 }
