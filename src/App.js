@@ -14,6 +14,7 @@ function App() {
   const [guessedLetter, setGuessedLetter] = useState("");
 
   const [gameWon, setGameWon] = useState(false);
+  const [gameLost, setGameLost] = useState(false);
 
   const generateWordDisplay = (guessedLetters) => {
     const wordDisplay = word
@@ -51,8 +52,8 @@ function App() {
       .every((letter) => newGuessedLetters.includes(letter));
     setGameWon(newGameWon);
 
-    if (gameWon) {
-    } else if (newNumGuesses === 0) {
+    if (!gameWon && newNumGuesses === 0) {
+      setGameLost(true);
     }
   };
 
@@ -75,8 +76,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Guess The Word 🚀</h1>
-
-        {!gameWon && (
+        {!gameWon && !gameLost && (
           <form onSubmit={handleFormSubmit}>
             <label htmlFor="guessed-letter">Guess a letter:</label>
             <input
@@ -92,9 +92,10 @@ function App() {
           </form>
         )}
 
-        {gameWon && (
+        {gameWon && <p>You've guessed the word!</p>}
+        {gameLost && <p>You ran out of guesses.</p>}
+        {(gameWon || gameLost) && (
           <>
-            <p>You've guessed the word!</p>
             <button id="new-game" ref={newGameRef}>
               New Game
             </button>
@@ -102,10 +103,8 @@ function App() {
         )}
 
         <p>Guesses left: {numGuesses}</p>
-
         <h2>The Word</h2>
         <p>{wordDisplay}</p>
-
         {guessedLetters.length > 0 && (
           <>
             <h2>Guessed Letters</h2>
