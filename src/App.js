@@ -39,8 +39,11 @@ function App() {
 
     setWordDisplay(generateWordDisplay(newGuessedLetters));
 
-    const newNumGuesses = numGuesses - 1;
-    setNumGuesses(newNumGuesses);
+    let newNumGuesses = numGuesses;
+    if (!word.includes(guessedLetter)) {
+      newNumGuesses -= 1;
+      setNumGuesses(newNumGuesses);
+    }
 
     setGuessedLetter("");
 
