@@ -98,7 +98,7 @@ function App() {
         )}
 
         {gameWon && <p>You've guessed the word!</p>}
-        {gameLost && <p>You ran out of guesses.</p>}
+        {gameLost && <p>You ran out of guesses. The answer was {word}.</p>}
         {(gameWon || gameLost) && (
           <>
             <button id="new-game" onClick={handleNewGameClick} ref={newGameRef}>
