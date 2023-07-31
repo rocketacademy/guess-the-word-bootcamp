@@ -17,3 +17,44 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+h3 {
+  margin: 10px;
+}
+
+form {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-end {
+  height: 150px;
+}
+
+#input-text {
+  width: 200px;
+  padding: 10px;
+  font-size: x-large;
+  align-items: center;
+}
+
+#submit-button {
+  width: 20 0px;
+  padding: 10px;
+  margin: 20px;
+  border: 2px solid rgb(20, 23, 44);
+  border-radius: 2px;
+  font-size: x-large;
+}
+
+button {
+  width: 20 0px;
+  padding: 10px;
+  margin: 20px;
+  border: 2px solid rgb(20, 23, 44);
+  border-radius: 2px;
+  font-size: x-large;
+}
