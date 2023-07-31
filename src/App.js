@@ -6,7 +6,7 @@ function App(){
     const [state, setState] = useState({
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       //getRandomWord() to get a random word, use fixed word to test first...
-      currWord: 'apple',
+      currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
