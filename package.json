@@ -28,7 +28,8 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
+    ],
+      "homepage": "https://llesterja.github.io/guess-the-word-bootcamp/"
   },
   "devDependencies": {
     "gh-pages": "^5.0.0"
