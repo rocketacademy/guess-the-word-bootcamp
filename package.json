@@ -1,6 +1,6 @@
 {
   "name": "guess-the-word-bootcamp",
-  "homepage": "https://llesterja.github.io/guess-the-word-bootcamp",
+  "homepage": "https://llesterja.github.io/guess-the-word-bootcamp/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
