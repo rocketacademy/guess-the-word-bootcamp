@@ -17,3 +17,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.heart-image {
+  height: 50px; /* Adjust the height to your desired size */
+  margin-right: 5px; /* Optional: Add some margin for spacing between the hearts */
+}
