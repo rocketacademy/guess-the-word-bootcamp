@@ -118,6 +118,17 @@ class App extends React.Component {
     }
   };
 
+  handleRoundPlayedIncrement = () => {
+    this.setState(
+      (prevState) => ({
+        roundsPlayed: prevState.roundsPlayed + 1,
+      }),
+      () => {
+        this.updateLocalStorageRoundsPlayed(this.state.roundsPlayed);
+      }
+    );
+  };
+
   generateWordDisplay = () => {
     const wordDisplay = [];
     for (let letter of this.state.currWord) {
