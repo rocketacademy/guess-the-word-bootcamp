@@ -132,7 +132,7 @@ class App extends React.Component {
           {/* Game Title */}
           <header className="justify-center items-center flex text-[10px] h-14 bg-accent-focus rounded-xl text-slate-50">
             <p className="text-white w-2/3">
-              How to Play:<br></br>You have a limited number of guesses to
+              🚀How to Play:🚀<br></br>You have a limited number of guesses to
               figure out the secret word <br></br>Guess one letter at a time and
               figure out this puzzle before its too late!
             </p>
