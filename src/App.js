@@ -13,7 +13,6 @@ class App extends React.Component {
       currWord: getRandomWord(),
       guessedLetters: [],
       remainingGuesses: 10,
-      input: "",
       message: "Guess a character below to start!",
       playingState: true,
       cheatState: false,
@@ -22,7 +21,6 @@ class App extends React.Component {
 
   generateWordDisplay = () => {
     const wordDisplay = [];
-    // for...of is a string and array iterator that does not use index
     for (let letter of this.state.currWord) {
       if (this.state.guessedLetters.includes(letter)) {
         wordDisplay.push(letter);
@@ -69,19 +67,17 @@ class App extends React.Component {
   };
 
   handleSubmit = (event, letter) => {
-    const input = letter;
-
     event.preventDefault(); // Prevent the default form submission behavior
-    if (input === "🚀") {
+    if (letter === "🚀") {
       // If input is "🚀", trigger the cheating function
-      this.cheating(input);
+      this.cheating(letter);
     } else {
       // Input guessed letter
-      this.setState({ guessedLetters: [...this.state.guessedLetters, input] });
+      this.setState({ guessedLetters: [...this.state.guessedLetters, letter] });
       console.log(this.state.cheatState);
       this.setState(
         {
-          remainingGuesses: this.state.currWord.includes(input)
+          remainingGuesses: this.state.currWord.includes(letter)
             ? this.state.remainingGuesses
             : this.state.remainingGuesses - 1,
         },
@@ -141,13 +137,15 @@ class App extends React.Component {
           <main className="container mx-auto p-5 bg-slate-300 rounded-xl shadow-lg grid grid-cols-2 gap-5">
             {/* Left Section */}
             <section className="bg-slate-300">
+              {/* Hangman Image */}
               <div className="flex flex-col justify-center items-center">
                 <img
                   src={hangsheep[remainingGuesses]}
                   alt="Hangman"
                   className="w-40 h-40 p-0 m-0"
                 />
-                <h3 className="p=0 m-0">Word Display</h3>
+                {/* Secret Word */}
+                <h3 className="p=0 m-0">Secret Word:</h3>
                 <p>{this.generateWordDisplay()}</p>
                 <br></br>
               </div>
@@ -155,6 +153,7 @@ class App extends React.Component {
             {/* Right Section */}
             <section>
               <form className="bg-slate-300">
+                {/* Cheat popup card */}
                 <div
                   className={`card text-white w-full bg-accent-focus shadow-xl ${
                     this.state.cheatState ? "" : "hidden"
@@ -174,7 +173,7 @@ class App extends React.Component {
                 <div className="grid items-center justify-center left-0 right-0">
                   <Message message={this.state.message} />
                 </div>
-                {/* Input */}
+                {/* Input Keyboard */}
                 <figure className="items-center justify-center grid grid-row">
                   <div className="buttons">
                     {playingState
@@ -193,7 +192,7 @@ class App extends React.Component {
                             {letter}
                           </button>
                         ))
-                      : //Disable all buttons if playingState
+                      : //Disable all buttons if playingState=false
                         letters.map((letter, index) => (
                           <button
                             key={index}
@@ -204,6 +203,7 @@ class App extends React.Component {
                           </button>
                         ))}
                   </div>
+                  {/* Reset Button */}
                   <button className="bg-slate-400 rounded-md m-1">
                     Reset Game
                   </button>
