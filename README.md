@@ -4,13 +4,14 @@
 - Tailwind Formatting
 - Number of remaining guesses
 - Button to restart the game
-- Input validation on the form element to prevent multiple characters (Only characters - alert feature to inform that is invalid input)
+- Input validation on the form element to prevent multiple characters
 - Win condition to check if all letters have been guessed correctly
+- Prevent all input once win condition is met
+- Make the hangman UI for each remaining guess
+- Cheat! Press the little rocket 🚀
 
 ## Outstanding Features
 
-- Prevent input once win condition is met
-- Make the hangman UI for each remaining guess
 - Difficulty feature - easy, medium hard (Reduce guesses or harder words)
 - Build a scoreboard to track current score
 
