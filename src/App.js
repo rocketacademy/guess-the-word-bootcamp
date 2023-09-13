@@ -123,12 +123,12 @@ class App extends React.Component {
     const { guessedLetters, playingState, remainingGuesses, cheatState } =
       this.state;
     return (
-      <div className=" bg-slate-200 text-center flex flex-col">
+      <div className=" bg-slate-200 h-auto text-center flex flex-col">
         {/* Header */}
         <header className=" fixed top-0 left-0 right-0 w-full text-center bg-accent p-2 shadow-md">
           <h1 className="text-m font-semibold text-white">Hang Sheep? 🐏</h1>
         </header>
-        <body className="container mx-auto p-5 bg-white rounded-xl shadow-lg gap-5 mt-16">
+        <body className="container mx-auto p-5 bg-white rounded-xl shadow-lg gap-5 mt-20">
           {/* Game Title */}
           <header className="justify-center items-center flex text-[10px] h-14 bg-accent-focus rounded-xl text-slate-50">
             <p className="text-white w-2/3">
