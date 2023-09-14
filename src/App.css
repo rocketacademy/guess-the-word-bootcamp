@@ -1,19 +1,39 @@
-.App {
-  text-align: center;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1,
+h2,
+h3 {
+  font-family: "Cinzel", serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
+/* .App {
+  background: linear-gradient(to bottom right, gray, red);
+  position: relative;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 2rem;
 }
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#game-message,
+#game-score {
+  flex: 1;
+  min-width: 45%; 
+  margin-right: 2%;
+}
+
+#game-play {
+  flex: 2;
+  min-width: 45%; 
+}
+
+#game-hangman,
+#game-rules {
+  flex-basis: 100%;
+  margin-top: 2rem;
+} */
