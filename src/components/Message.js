@@ -10,7 +10,7 @@ export default class Message extends React.Component {
             <img src={hangbot} alt="hangman" />
           </div>
         </div>
-        <div className=" shadow-lg min-w-full chat-bubble text-[9px]">
+        <div className=" shadow-lg min-w-full chat-bubble text-[12px]">
           {this.props.message}
         </div>
       </div>

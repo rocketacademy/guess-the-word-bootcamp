@@ -66,6 +66,29 @@ class App extends React.Component {
     });
   };
 
+  componentDidMount() {
+    // Add keydown event listener
+    window.addEventListener("keydown", this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    // Remove keydown event listener when the component unmounts
+    window.removeEventListener("keydown", this.handleKeyPress);
+  }
+
+  handleKeyPress = (event) => {
+    // Get the pressed key (letter) from the event
+    const letter = event.key.toUpperCase();
+
+    // Check if the key pressed is a valid letter or "🚀"
+    if (/^[A-Z🚀]$/.test(letter)) {
+      if (!this.state.guessedLetters.includes(letter)) {
+        // Trigger the handleSubmit function for the corresponding letter
+        this.handleSubmit(event, letter);
+      }
+    }
+  };
+
   handleSubmit = (event, letter) => {
     event.preventDefault(); // Prevent the default form submission behavior
     if (letter === "🚀") {
@@ -119,14 +142,14 @@ class App extends React.Component {
     const { guessedLetters, playingState, remainingGuesses, cheatState } =
       this.state;
     return (
-      <div className=" bg-slate-200 h-auto text-center flex flex-col">
+      <div className=" bg-slate-200 h-auto text-center flex flex-col min-h-screen">
         {/* Header */}
         <header className=" fixed top-0 left-0 right-0 w-full text-center bg-accent p-2 shadow-md">
-          <h1 className="text-m font-semibold text-white">Hang Sheep? 🐏</h1>
+          <h1 className="text-lg font-semibold text-white">Hang Sheep? 🐏</h1>
         </header>
-        <body className="container mx-auto p-5 bg-white rounded-xl shadow-lg gap-5 mt-20">
-          {/* Game Title */}
-          <header className="justify-center items-center flex text-[10px] h-14 bg-accent-focus rounded-xl text-slate-50">
+        <body className="container mx-auto p-5 h-auto bg-white rounded-xl shadow-lg gap-5 mt-20">
+          {/* How to Play */}
+          <header className="justify-center items-center flex text-s h-auto bg-accent-focus rounded-xl text-slate-50">
             <p className="text-white w-2/3">
               🚀How to Play:🚀<br></br>You have a limited number of guesses to
               figure out the secret word <br></br>Guess one letter at a time and
@@ -142,7 +165,7 @@ class App extends React.Component {
                 <img
                   src={hangsheep[remainingGuesses]}
                   alt="Hangman"
-                  className="w-40 h-40 p-0 m-0"
+                  className="w-auto h-full max-h-[240px] p-0 m-0 shadow-lg"
                 />
                 {/* Secret Word */}
                 <h3 className="p=0 m-0">Secret Word:</h3>
@@ -162,11 +185,15 @@ class App extends React.Component {
                   Answer: {this.state.currWord}
                 </div>
                 <figure className="grid grid-cols-2">
-                  <h2 className="text-sm">Guessed Letters:</h2>
-                  {this.state.guessedLetters.length > 0
-                    ? this.state.guessedLetters.toString()
-                    : "-"}
-                  <h2 className="text-sm left-0 right-0">Remaining Guesses:</h2>
+                  <h2 className="text-xs md:text-lg">Guessed Letters:</h2>
+                  <p className="overflow-scroll">
+                    {this.state.guessedLetters.length > 0
+                      ? this.state.guessedLetters.toString()
+                      : "-"}
+                  </p>
+                  <h2 className="text-xs md:text-lg left-0 right-0">
+                    Remaining Guesses:
+                  </h2>
                   <p>{this.state.remainingGuesses}</p>
                 </figure>
                 {/* Game State Message */}
@@ -174,8 +201,10 @@ class App extends React.Component {
                   <Message message={this.state.message} />
                 </div>
                 {/* Input Keyboard */}
-                <figure className="items-center justify-center grid grid-row">
-                  <div className="buttons">
+                <figure className=" flex items-center justify-center">
+                  <div className="grid-cols-5 grid-rows-6 sm:grid-cols-9 sm:grid-rows-3 grid gap-0 items-center justify-center button">
+                    {" "}
+                    {/* grid lg:grid-cols-9 sm:grid-cols-7 */}
                     {playingState
                       ? letters.map((letter, index) => (
                           <button
@@ -185,8 +214,7 @@ class App extends React.Component {
                             onClick={(event) =>
                               this.handleSubmit(event, letter)
                             }
-                            // onKeyDown={(event) => this.handleSubmit(event, letter)}
-                            className="btn w-1 btn-outline btn-accent"
+                            className="text-xl btn w-1 btn-outline btn-accent"
                             disabled={guessedLetters.includes(letter)}
                           >
                             {letter}
@@ -203,11 +231,11 @@ class App extends React.Component {
                           </button>
                         ))}
                   </div>
-                  {/* Reset Button */}
-                  <button className="bg-slate-400 rounded-md m-1">
-                    Reset Game
-                  </button>
                 </figure>
+                {/* Reset Button */}
+                <button className="bg-slate-400 rounded-md m-1 w-1/2">
+                  Reset Game
+                </button>
               </form>
             </section>
           </main>
