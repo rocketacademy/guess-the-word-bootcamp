@@ -1,19 +1,32 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    text-align: center;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #fdf7ea;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #49443a;
+}
+
+input[type="text"] {
+    background-color: #2e2b26;
+    font-family: "Inconsolata", monospace;
+    color: #74d144;
+
+    font-size: 2rem;
+
+    border: 0;
+    outline: 0;
+
+    border-radius: 5px;
+    border: 10px solid #bab6ae;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    width: 4.5rem;
+    height: 4.55rem;
+    padding: 1rem 0rem 1rem 1.1rem;
 }
