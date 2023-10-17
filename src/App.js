@@ -96,19 +96,30 @@ class App extends React.Component {
       </div>
     );
 
+    const fractionTriesUsed =
+      1 - remainingGuesses / (this.state.currWord.length * 2);
+
     return (
       <div className="App">
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
-          <h3>Word Display</h3>
+          <h4>Word Display</h4>
           {remainingGuesses > 0 && currWordDisplay.includes("_")
             ? currWordDisplay
             : this.state.currWord}
-          <h3>Guessed Letters</h3>
+          <h4>Guessed Letters</h4>
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
-          <h3>Remaining guesses: {remainingGuesses}</h3>
+          <h4>Remaining guesses: {remainingGuesses}</h4>
+          <div className="loading-img-container">
+            <img
+              style={{ width: fractionTriesUsed * 100 + "px" }}
+              className="loading-img"
+              src="./logo512.png"
+              alt=""
+            />
+          </div>
 
           {/* Insert form element here */}
           {remainingGuesses > 0 && currWordDisplay.includes("_") ? form : retry}
