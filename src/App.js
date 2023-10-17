@@ -57,30 +57,54 @@ class App extends React.Component {
   };
 
   render() {
+    const remainingGuesses =
+      this.state.currWord.length * 2 - this.state.guessedLetters.length;
+
+    const form = (
+      <div>
+        <h3>Input</h3>
+        <form onSubmit={this.handleSubmit}>
+          <label>Type your guess here: </label>
+          <input
+            type="text"
+            name="guessValue"
+            value={this.state.guessValue}
+            onChange={this.handleChange}
+          />
+          <br />
+          {this.state.inputWarning !== undefined && this.state.inputWarning}
+          <input type="submit" value="submit" />
+        </form>
+      </div>
+    );
+
+    const currWordDisplay = this.generateWordDisplay();
+
+    const retry = (
+      <div>
+        <h3>Game over</h3>
+        <p>
+          {currWordDisplay.includes("_")
+            ? "Better luck next time"
+            : "Good job!"}
+        </p>
+      </div>
+    );
+
     return (
       <div className="App">
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
           <h3>Word Display</h3>
-          {this.generateWordDisplay()}
+          {currWordDisplay}
           <h3>Guessed Letters</h3>
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
-          <h3>Input</h3>
+          <h3>Remaining guesses: {remainingGuesses}</h3>
+
           {/* Insert form element here */}
-          <form onSubmit={this.handleSubmit}>
-            <label for="guess">Type your guess here: </label>
-            <input
-              type="text"
-              name="guessValue"
-              value={this.state.guessValue}
-              onChange={this.handleChange}
-            />
-            <br />
-            {this.state.inputWarning !== undefined && this.state.inputWarning}
-            <input type="submit" value="submit" />
-          </form>
+          {remainingGuesses > 0 && currWordDisplay.includes("_") ? form : retry}
         </header>
       </div>
     );
