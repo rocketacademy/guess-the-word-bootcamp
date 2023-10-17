@@ -56,6 +56,10 @@ class App extends React.Component {
     });
   };
 
+  refreshPage = () => {
+    window.location.reload();
+  };
+
   render() {
     const remainingGuesses =
       this.state.currWord.length * 2 - this.state.guessedLetters.length;
@@ -88,6 +92,7 @@ class App extends React.Component {
             ? "Better luck next time"
             : "Good job!"}
         </p>
+        <button onClick={this.refreshPage}>Try again</button>
       </div>
     );
 
@@ -96,7 +101,9 @@ class App extends React.Component {
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
           <h3>Word Display</h3>
-          {currWordDisplay}
+          {remainingGuesses > 0 && currWordDisplay.includes("_")
+            ? currWordDisplay
+            : this.state.currWord}
           <h3>Guessed Letters</h3>
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
