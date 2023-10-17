@@ -14,6 +14,7 @@ class App extends React.Component {
       // Insert num guesses left state here
       // Insert form input state here
       guessValue: "",
+      inputWarning: null,
     };
   }
 
@@ -33,12 +34,19 @@ class App extends React.Component {
   // Insert form callback functions handleChange and handleSubmit here
   handleSubmit = (event) => {
     event.preventDefault();
-    // alert("submitted data: " + event.target);
-    console.log(event);
-    this.setState({
-      guessedLetters: [...this.state.guessedLetters, this.state.guessValue],
-      guessValue: "",
-    });
+    if (this.state.guessValue.length !== 1) {
+      this.setState({ inputWarning: <p>Only one letter is allowed</p> });
+    } else if (this.state.guessedLetters.includes(this.state.guessValue)) {
+      this.setState({
+        inputWarning: <p>You have already guessed this letter</p>,
+      });
+    } else {
+      this.setState({
+        guessedLetters: [...this.state.guessedLetters, this.state.guessValue],
+        guessValue: "",
+        inputWarning: null,
+      });
+    }
   };
 
   handleChange = (event) => {
@@ -70,6 +78,7 @@ class App extends React.Component {
               onChange={this.handleChange}
             />
             <br />
+            {this.state.inputWarning !== undefined && this.state.inputWarning}
             <input type="submit" value="submit" />
           </form>
         </header>
