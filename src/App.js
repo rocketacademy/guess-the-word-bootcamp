@@ -4,6 +4,15 @@ import "./App.css";
 import detResult from "./detResult.js";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -124,17 +133,30 @@ class App extends React.Component {
         <div className="App">
           <header className="App-header">
             <h1>Guess The Word 🚀</h1>
-
-            <h3>Word Display</h3>
-            {this.generateWordDisplay()}
-            <h3>Guessed Letters</h3>
-            {this.state.guessedLetters.length > 0
-              ? this.state.guessedLetters.toString()
-              : "-"}
+            <TableContainer align="center">
+              <TableRow>
+                <TableCell sx={{ border: 1 }}>
+                  <h2>Word Display</h2>
+                </TableCell>
+                <TableCell sx={{ border: 1 }}>
+                  <h2>{this.generateWordDisplay()}</h2>
+                </TableCell>
+              </TableRow>
+              <TableCell sx={{ border: 1 }}>
+                <h3>Guessed Letters</h3>
+              </TableCell>
+              <TableCell sx={{ border: 1 }}>
+                <h3>
+                  {this.state.guessedLetters.length > 0
+                    ? this.state.guessedLetters.toString()
+                    : "-"}
+                </h3>
+              </TableCell>
+            </TableContainer>
             {this.state.result === "" ? (
               <div color="black" bgcolor="palevioletred">
-                <h3>Guess letter left: {this.state.numGuess}</h3>
-                <h3>Please guess one alphabet letter</h3>
+                <h4>Guess letter left: {this.state.numGuess}</h4>
+                <h4>Please guess one alphabet letter</h4>
                 {inputGuess}
               </div>
             ) : (
