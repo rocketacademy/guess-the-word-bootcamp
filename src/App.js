@@ -2,6 +2,20 @@ import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 import detResult from "./detResult.js";
+import Button from "@mui/material/Button";
+import Input from "@mui/material/Input";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#A9FBD7",
+    },
+    secondary: {
+      main: "#B0C6CE",
+    },
+  },
+});
 
 class App extends React.Component {
   constructor(props) {
@@ -63,7 +77,7 @@ class App extends React.Component {
 
   handleChange = (e) => {
     let { value } = e.target;
-    if (value.match(/^[a-z]+$/) || value === "") {
+    if ((value.match(/^[a-z]+$/) && value.length === 1) || value === "") {
       this.setState({ userWord: value });
     }
   };
@@ -85,14 +99,17 @@ class App extends React.Component {
   render() {
     const inputGuess = (
       <form onSubmit={this.handleSubmit}>
-        <label></label>
-        <input
-          type="text"
+        <Input
           value={this.state.userWord}
           onChange={this.handleChange}
-          maxLength={1}
+          maxlength={1}
+          placeholder="One alphabet letter only"
+          variant="standard"
+          color="primary"
         />
-        <input type="submit" value="Guess!" />
+        <Button type="submit" variant="contained" color="secondary">
+          Guess!
+        </Button>
       </form>
     );
 
@@ -103,31 +120,45 @@ class App extends React.Component {
     );
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Guess The Word 🚀</h1>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <header className="App-header">
+            <h1>Guess The Word 🚀</h1>
 
-          <h3>Word Display</h3>
-          {this.generateWordDisplay()}
-          <h3>Guessed Letters</h3>
-          {this.state.guessedLetters.length > 0
-            ? this.state.guessedLetters.toString()
-            : "-"}
-          {this.state.result === "" ? (
-            <div>
-              <h3>Guess letter left: {this.state.numGuess}</h3>
-              <h3>Please guess one alphabet letter</h3>
-              {inputGuess}
-            </div>
-          ) : (
-            <div>
-              {this.genResultDisplay()}
-              <button onClick={this.reset}>Replay</button>
-              <button onClick={window.close}>Quit</button>
-            </div>
-          )}
-        </header>
-      </div>
+            <h3>Word Display</h3>
+            {this.generateWordDisplay()}
+            <h3>Guessed Letters</h3>
+            {this.state.guessedLetters.length > 0
+              ? this.state.guessedLetters.toString()
+              : "-"}
+            {this.state.result === "" ? (
+              <div color="black" bgcolor="palevioletred">
+                <h3>Guess letter left: {this.state.numGuess}</h3>
+                <h3>Please guess one alphabet letter</h3>
+                {inputGuess}
+              </div>
+            ) : (
+              <div>
+                {this.genResultDisplay()}
+                <Button
+                  onClick={this.reset}
+                  variant="contained"
+                  color="secondary"
+                >
+                  Replay
+                </Button>
+                <Button
+                  onClick={window.close}
+                  variant="contained"
+                  color="secondary"
+                >
+                  Quit
+                </Button>
+              </div>
+            )}
+          </header>
+        </div>
+      </ThemeProvider>
     );
   }
 }
