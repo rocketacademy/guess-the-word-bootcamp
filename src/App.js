@@ -9,7 +9,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      currWord: "hello",
+      currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       numGuess: 10,
@@ -22,7 +22,10 @@ class App extends React.Component {
     const wordDisplay = [];
 
     for (let letter of this.state.currWord) {
-      if (this.state.guessedLetters.includes(letter)) {
+      if (
+        this.state.guessedLetters.includes(letter) ||
+        this.state.result === "lose"
+      ) {
         wordDisplay.push(letter);
       } else {
         wordDisplay.push("_");
@@ -46,6 +49,16 @@ class App extends React.Component {
         Error01 :error is occur, please contact the creator for more detail.
       </h3>
     );
+  };
+
+  reset = () => {
+    this.setState({
+      currWord: getRandomWord(),
+      guessedLetters: [],
+      numGuess: 10,
+      userWord: "",
+      result: "",
+    });
   };
 
   handleChange = (e) => {
@@ -103,7 +116,7 @@ class App extends React.Component {
           ) : (
             <div>
               {this.genResultDisplay()}
-              <button>Replay</button>
+              <button onClick={this.reset}>Replay</button>
               <button onClick={window.close}>Quit</button>
             </div>
           )}
