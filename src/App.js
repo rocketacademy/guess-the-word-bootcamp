@@ -13,6 +13,7 @@ class App extends React.Component {
       guessedLetters: [],
       // Insert num guesses left state here
       // Insert form input state here
+      input: "",
     };
   }
 
@@ -30,6 +31,12 @@ class App extends React.Component {
   };
 
   // Insert form callback functions handleChange and handleSubmit here
+  handleChange = (event) => {
+    this.setState({ input: event.target.value });
+  };
+  handleSubmit(event) {
+    event.preventDefault();
+  }
 
   render() {
     return (
@@ -42,9 +49,20 @@ class App extends React.Component {
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
-          <h3>Input</h3>
+          <h3>Your letter</h3>
           {/* Insert form element here */}
-          Todo: Insert form element here
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              maxLength={1}
+              minLength={1}
+              name="input"
+              value={this.state.input}
+              onChange={this.handleChange}
+            />
+            <br />
+            <input type="submit" value="Submit" />
+          </form>
         </header>
       </div>
     );
