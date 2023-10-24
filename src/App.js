@@ -18,9 +18,12 @@ class App extends React.Component {
 
   generateWordDisplay = () => {
     const wordDisplay = [];
-    // for...of is a string and array iterator that does not use index
+
     for (let letter of this.state.currWord) {
-      if (this.state.guessedLetters.includes(letter)) {
+      if (
+        this.state.guessedLetters.includes(letter) ||
+        this.state.numGuess === 0
+      ) {
         wordDisplay.push(letter);
       } else {
         wordDisplay.push("_");
@@ -43,8 +46,6 @@ class App extends React.Component {
       numGuess: this.state.numGuess - 1,
     });
   };
-
-  // and handleSubmit here
 
   render() {
     const inputGuess = (
