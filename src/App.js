@@ -63,17 +63,23 @@ class App extends React.Component {
 
   handleChange = (e) => {
     let { value } = e.target;
-    this.setState({ userWord: value });
+    if (value.match(/^[a-z]+$/) || value === "") {
+      this.setState({ userWord: value });
+    }
   };
 
   handleSubmit = (e) => {
     let { userWord } = this.state;
     e.preventDefault();
-    this.state.numGuess -= 1;
-    this.setState({
-      userWord: "",
-      guessedLetters: [...this.state.guessedLetters, userWord],
-    });
+    if (userWord === "") {
+      return;
+    } else {
+      this.state.numGuess -= 1;
+      this.setState({
+        userWord: "",
+        guessedLetters: [...this.state.guessedLetters, userWord],
+      });
+    }
   };
 
   render() {
@@ -110,7 +116,7 @@ class App extends React.Component {
           {this.state.result === "" ? (
             <div>
               <h3>Guess letter left: {this.state.numGuess}</h3>
-              <h3>Input</h3>
+              <h3>Please guess one alphabet letter</h3>
               {inputGuess}
             </div>
           ) : (
