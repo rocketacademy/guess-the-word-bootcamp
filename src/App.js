@@ -4,15 +4,6 @@ import "./App.css";
 import detResult from "./detResult.js";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -133,12 +124,12 @@ class App extends React.Component {
         <div className="App">
           <header className="App-header">
             <h1>Guess The Word 🚀</h1>
-                  {this.state.guessedLetters.length > 0
-                    ? this.state.guessedLetters.toString()
-                    : "-"}
-                </h3>
-              </TableCell>
-            </TableContainer>
+            <h3>Word Display</h3>
+            {this.generateWordDisplay()}
+            <h3>Guessed Letters</h3>
+            {this.state.guessedLetters.length > 0
+              ? this.state.guessedLetters.toString()
+              : "-"}
             {this.state.result === "" ? (
               <div color="black" bgcolor="palevioletred">
                 <h3>Guess letter left: {this.state.numGuess}</h3>
