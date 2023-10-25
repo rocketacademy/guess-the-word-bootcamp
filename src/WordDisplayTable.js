@@ -1,7 +1,7 @@
 import { TableCell, TableContainer, TableRow } from "@mui/material";
 import React from "react";
 
-export default class WordDisplay extends React.Component {
+export default class WordDisplayTable extends React.Component {
   generateWordDisplay = () => {
     const { currWord, guessedLetters, result } = this.props.info;
     const wordDisplay = [];

@@ -29,6 +29,7 @@ class App extends React.Component {
       numGuess: 10,
       userWord: "",
       result: "",
+      score: 0,
     };
   }
 
@@ -44,10 +45,12 @@ class App extends React.Component {
   updateGuess = (userWord) => {
     const updateGuess = [...this.state.guessedLetters, userWord];
     const updateNumGuess = this.state.numGuess - 1;
+    const result = detResult(this.state.currWord, updateGuess, updateNumGuess);
+    result === "win" && this.setState({ score: this.state.score + 1 });
     this.setState({
       guessedLetters: updateGuess,
       numGuess: updateNumGuess,
-      result: detResult(this.state.currWord, updateGuess, updateNumGuess),
+      result: result,
     });
   };
 
@@ -57,6 +60,7 @@ class App extends React.Component {
         <div className="App">
           <header className="App-header">
             <h1>Guess The Word 🚀</h1>
+            <h2>Score: {this.state.score}</h2>
             <WordDisplayTable info={this.state} />
             <PlayArea
               updateGuess={this.updateGuess}
