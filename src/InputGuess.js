@@ -36,7 +36,7 @@ export default class App extends React.Component {
         <Input
           value={this.state.userWord}
           onChange={this.handleChange}
-          maxlength={1}
+          maxLength={1}
           placeholder="One alphabet letter only"
           variant="standard"
           color="primary"

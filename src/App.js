@@ -4,6 +4,7 @@ import "./App.css";
 import PlayArea from "./PlayArea.js";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import detResult from "./detResult.js";
+import WordDisplayTable from "./WordDisplayTable.js";
 
 const theme = createTheme({
   palette: {
@@ -31,22 +32,6 @@ class App extends React.Component {
     };
   }
 
-  generateWordDisplay = () => {
-    const wordDisplay = [];
-
-    for (let letter of this.state.currWord) {
-      if (
-        this.state.guessedLetters.includes(letter) ||
-        this.state.result === "lose"
-      ) {
-        wordDisplay.push(letter);
-      } else {
-        wordDisplay.push("_");
-      }
-    }
-    return wordDisplay.toString();
-  };
-
   reset = () => {
     this.setState({
       currWord: getRandomWord(),
@@ -72,12 +57,7 @@ class App extends React.Component {
         <div className="App">
           <header className="App-header">
             <h1>Guess The Word 🚀</h1>
-            <h3>Word Display</h3>
-            {this.generateWordDisplay()}
-            <h3>Guessed Letters</h3>
-            {this.state.guessedLetters.length > 0
-              ? this.state.guessedLetters.toString()
-              : "-"}
+            <WordDisplayTable info={this.state} />
             <PlayArea
               updateGuess={this.updateGuess}
               numGuess={this.state.numGuess}
