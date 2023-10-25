@@ -2,9 +2,8 @@ import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 import detResult from "./detResult.js";
-import Button from "@mui/material/Button";
-import Input from "@mui/material/Input";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import PlayArea from "./PlayArea.js";
 
 const theme = createTheme({
   palette: {
@@ -48,23 +47,6 @@ class App extends React.Component {
     return wordDisplay.toString();
   };
 
-  genResultDisplay = () => {
-    if (this.state.result === "win") {
-      return (
-        <h3>Congratulations, You win with {10 - this.state.numGuess} guess.</h3>
-      );
-    }
-    if (this.state.result === "lose") {
-      return <h3>Oh, You have no guess chance left. You lose.</h3>;
-    }
-
-    return (
-      <h3>
-        Error01 :error is occur, please contact the creator for more detail.
-      </h3>
-    );
-  };
-
   reset = () => {
     this.setState({
       currWord: getRandomWord(),
@@ -88,37 +70,18 @@ class App extends React.Component {
     if (userWord === "") {
       return;
     } else {
-      this.state.numGuess -= 1;
+      const updateGuess = [...this.state.guessedLetters, userWord];
+      const updateNumGuess = this.state.numGuess - 1;
       this.setState({
         userWord: "",
-        guessedLetters: [...this.state.guessedLetters, userWord],
+        guessedLetters: updateGuess,
+        numGuess: updateNumGuess,
+        result: detResult(this.state.currWord, updateGuess, updateNumGuess),
       });
     }
   };
 
   render() {
-    const inputGuess = (
-      <form onSubmit={this.handleSubmit}>
-        <Input
-          value={this.state.userWord}
-          onChange={this.handleChange}
-          maxlength={1}
-          placeholder="One alphabet letter only"
-          variant="standard"
-          color="primary"
-        />
-        <Button type="submit" variant="contained" color="secondary">
-          Guess!
-        </Button>
-      </form>
-    );
-
-    this.state.result = detResult(
-      this.state.currWord,
-      this.state.guessedLetters,
-      this.state.numGuess
-    );
-
     return (
       <ThemeProvider theme={theme}>
         <div className="App">
@@ -130,31 +93,7 @@ class App extends React.Component {
             {this.state.guessedLetters.length > 0
               ? this.state.guessedLetters.toString()
               : "-"}
-            {this.state.result === "" ? (
-              <div color="black" bgcolor="palevioletred">
-                <h3>Guess letter left: {this.state.numGuess}</h3>
-                <h3>Please guess one alphabet letter</h3>
-                {inputGuess}
-              </div>
-            ) : (
-              <div>
-                {this.genResultDisplay()}
-                <Button
-                  onClick={this.reset}
-                  variant="contained"
-                  color="secondary"
-                >
-                  Replay
-                </Button>
-                <Button
-                  onClick={window.close}
-                  variant="contained"
-                  color="secondary"
-                >
-                  Quit
-                </Button>
-              </div>
-            )}
+            <PlayArea info={this.state} />
           </header>
         </div>
       </ThemeProvider>

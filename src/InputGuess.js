@@ -1,4 +1,7 @@
 import React from "react";
+import App from "./App";
+import Button from "@mui/material/Button";
+import Input from "@mui/material/Input";
 
 export default class InputGuess extends React.Component {
   constructor(props) {
@@ -6,12 +9,11 @@ export default class InputGuess extends React.Component {
   }
 
   render() {
-    const { handleChange, handleSubmit, userWord } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={App.handleSubmit}>
         <Input
-          value={userWord}
-          onChange={handleChange}
+          value={App.state.userWord}
+          onChange={App.handleChange}
           maxlength={1}
           placeholder="One alphabet letter only"
           variant="standard"
