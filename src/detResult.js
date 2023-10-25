@@ -5,20 +5,14 @@ export default function detResult(currWord, guessedLetters, numGuess) {
       hash[currWord[i]] = false;
     }
   }
-
   for (let i = 0; i < guessedLetters.length; i++) {
     if (guessedLetters[i] in hash) {
       hash[guessedLetters[i]] = true;
     }
   }
-
   if (!Object.values(hash).includes(false)) {
     return "win";
-  }
-
-  if (numGuess === 0) {
+  } else if (numGuess === 0) {
     return "lose";
   }
-
-  return "";
 }

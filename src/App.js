@@ -1,11 +1,9 @@
 import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
-import detResult from "./detResult.js";
-import Button from "@mui/material/Button";
-import Input from "@mui/material/Input";
+import PlayArea from "./PlayArea.js";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import InputGuess from "./InputGuess.js";
+import detResult from "./detResult.js";
 
 const theme = createTheme({
   palette: {
@@ -49,46 +47,11 @@ class App extends React.Component {
     return wordDisplay.toString();
   };
 
-  genPlayArea = () => {
-    const inputGuess = <InputGuess updateGuess={this.updateGuess} />;
-    if (this.state.result === "win") {
-      return (
-        <div>
-          <h3>
-            Congratulations, You win with {10 - this.state.numGuess} guess.
-          </h3>
-          <Button onClick={this.reset} variant="contained" color="secondary">
-            Replay
-          </Button>
-        </div>
-      );
-    }
-    if (this.state.result === "lose") {
-      return (
-        <div>
-          <h3>Oh, You have no guess chance left. You lose.</h3>
-          <Button onClick={this.reset} variant="contained" color="secondary">
-            Replay
-          </Button>
-        </div>
-      );
-    }
-
-    return (
-      <div>
-        <h3>Guess letter left: {this.state.numGuess}</h3>
-        <h3>Please guess one alphabet letter</h3>
-        {inputGuess}
-      </div>
-    );
-  };
-
   reset = () => {
     this.setState({
       currWord: getRandomWord(),
       guessedLetters: [],
       numGuess: 10,
-      userWord: "",
       result: "",
     });
   };
@@ -115,7 +78,12 @@ class App extends React.Component {
             {this.state.guessedLetters.length > 0
               ? this.state.guessedLetters.toString()
               : "-"}
-            {this.genPlayArea()}
+            <PlayArea
+              updateGuess={this.updateGuess}
+              numGuess={this.state.numGuess}
+              result={this.state.result}
+              reset={this.reset}
+            />
           </header>
         </div>
       </ThemeProvider>
