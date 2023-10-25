@@ -1,6 +1,21 @@
 import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
+import PlayArea from "./PlayArea.js";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import detResult from "./detResult.js";
+import WordDisplayTable from "./WordDisplayTable.js";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#A9FBD7",
+    },
+    secondary: {
+      main: "#B0C6CE",
+    },
+  },
+});
 
 class App extends React.Component {
   constructor(props) {
@@ -11,44 +26,52 @@ class App extends React.Component {
       currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
-      // Insert num guesses left state here
-      // Insert form input state here
+      numGuess: 10,
+      userWord: "",
+      result: "",
+      score: 0,
     };
   }
 
-  generateWordDisplay = () => {
-    const wordDisplay = [];
-    // for...of is a string and array iterator that does not use index
-    for (let letter of this.state.currWord) {
-      if (this.state.guessedLetters.includes(letter)) {
-        wordDisplay.push(letter);
-      } else {
-        wordDisplay.push("_");
-      }
-    }
-    return wordDisplay.toString();
+  reset = () => {
+    this.setState({
+      currWord: getRandomWord(),
+      guessedLetters: [],
+      numGuess: 10,
+      result: "",
+    });
   };
 
-  // Insert form callback functions handleChange and handleSubmit here
+  updateGuess = (userWord) => {
+    const updateGuess = [...this.state.guessedLetters, userWord];
+    const updateNumGuess = this.state.numGuess - 1;
+    const result = detResult(this.state.currWord, updateGuess, updateNumGuess);
+    result === "win" && this.setState({ score: this.state.score + 1 });
+    this.setState({
+      guessedLetters: updateGuess,
+      numGuess: updateNumGuess,
+      result: result,
+    });
+  };
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Guess The Word 🚀</h1>
-          <h3>Word Display</h3>
-          {this.generateWordDisplay()}
-          <h3>Guessed Letters</h3>
-          {this.state.guessedLetters.length > 0
-            ? this.state.guessedLetters.toString()
-            : "-"}
-          <h3>Input</h3>
-          {/* Insert form element here */}
-          Todo: Insert form element here
-        </header>
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <header className="App-header">
+            <h1>Guess The Word 🚀</h1>
+            <h2>Score: {this.state.score}</h2>
+            <WordDisplayTable info={this.state} />
+            <PlayArea
+              updateGuess={this.updateGuess}
+              numGuess={this.state.numGuess}
+              result={this.state.result}
+              reset={this.reset}
+            />
+          </header>
+        </div>
+      </ThemeProvider>
     );
   }
 }
-
 export default App;
