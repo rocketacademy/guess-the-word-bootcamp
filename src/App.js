@@ -2,8 +2,9 @@ import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 import detResult from "./detResult.js";
+import Button from "@mui/material/Button";
+import Input from "@mui/material/Input";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import PlayArea from "./PlayArea.js";
 
 const theme = createTheme({
   palette: {
@@ -45,6 +46,55 @@ class App extends React.Component {
       }
     }
     return wordDisplay.toString();
+  };
+
+  genPlayArea = () => {
+    const inputGuess = (
+      <form onSubmit={this.handleSubmit}>
+        <Input
+          value={this.state.userWord}
+          onChange={this.handleChange}
+          maxlength={1}
+          placeholder="One alphabet letter only"
+          variant="standard"
+          color="primary"
+        />
+        <Button type="submit" variant="contained" color="secondary">
+          Guess!
+        </Button>
+      </form>
+    );
+
+    if (this.state.result === "win") {
+      return (
+        <div>
+          <h3>
+            Congratulations, You win with {10 - this.state.numGuess} guess.
+          </h3>
+          <Button onClick={this.reset} variant="contained" color="secondary">
+            Replay
+          </Button>
+        </div>
+      );
+    }
+    if (this.state.result === "lose") {
+      return (
+        <div>
+          <h3>Oh, You have no guess chance left. You lose.</h3>
+          <Button onClick={this.reset} variant="contained" color="secondary">
+            Replay
+          </Button>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <h3>Guess letter left: {this.state.numGuess}</h3>
+        <h3>Please guess one alphabet letter</h3>
+        {inputGuess}
+      </div>
+    );
   };
 
   reset = () => {
@@ -93,12 +143,11 @@ class App extends React.Component {
             {this.state.guessedLetters.length > 0
               ? this.state.guessedLetters.toString()
               : "-"}
-            <PlayArea info={this.state} />
+            {this.genPlayArea()}
           </header>
         </div>
       </ThemeProvider>
     );
   }
 }
-
 export default App;
