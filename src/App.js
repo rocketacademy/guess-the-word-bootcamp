@@ -8,11 +8,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      currWord: getRandomWord(),
+      currWord: "abc",
+      //getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
+      numGuessLeft: 10,
       // Insert form input state here
+      guessedInput: "",
     };
   }
 
@@ -30,6 +33,23 @@ class App extends React.Component {
   };
 
   // Insert form callback functions handleChange and handleSubmit here
+  handleChange = (e) => {
+    let { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const guessedAlphabet = this.state.guessedInput;
+    console.log(guessedAlphabet);
+    alert(`Letter submitted:  ${guessedAlphabet}`);
+    this.setState({
+      guessedLetters: [...this.state.guessedLetters, guessedAlphabet],
+      guessedInput: "",
+    });
+  };
 
   render() {
     return (
@@ -43,7 +63,15 @@ class App extends React.Component {
             ? this.state.guessedLetters.toString()
             : "-"}
           <h3>Input</h3>
-          {/* Insert form element here */}
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              name="guessedInput"
+              value={this.state.guessedInput}
+              onChange={(e) => this.handleChange(e)}
+            />
+            <input type="submit" value="submit" />
+          </form>
           Todo: Insert form element here
         </header>
       </div>
