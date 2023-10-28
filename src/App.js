@@ -1,5 +1,5 @@
 import React from "react";
-// import { getRandomWord } from "./utils.js";
+import { getRandomWord } from "./utils.js";
 import "./App.css";
 
 class App extends React.Component {
@@ -10,7 +10,7 @@ class App extends React.Component {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       // currWord: getRandomWord(),
 
-      currWord: "dog",
+      currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
@@ -47,13 +47,21 @@ class App extends React.Component {
     const hasUserWon = this.checkIfUserWon();
     if (!hasUserWon && this.state.numOfGuessesLeft === 0) return true;
   };
+
+  resetGame = () => {
+    this.setState({
+      currWord: getRandomWord(),
+      guessedLetters: [],
+      input: "",
+      numOfGuessesLeft: 10,
+    });
+  };
   // Insert form callback functions handleChange and handleSubmit here
   handleChange = (event) => {
     this.setState({ input: event.target.value });
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
     const guessedLetter = this.state.input.toLowerCase();
     if (guessedLetter) {
       this.setState((prevState) => ({
@@ -68,9 +76,6 @@ class App extends React.Component {
   };
 
   render() {
-    // console.log(this.state.input);
-    // console.log(this.checkIfUserWon());
-    // const hasPlayerWon = this.checkIfUserWon();
     return (
       <div className="App">
         <header className="App-header">
@@ -82,7 +87,7 @@ class App extends React.Component {
             ? this.state.guessedLetters.toString()
             : "-"}
           <h4>You got {this.state.numOfGuessesLeft} guesses left.</h4>
-          <h3>Your letter</h3>
+          <h5>Type in one letter into the input field.</h5>
           {/* Insert form element here */}
           <form onSubmit={this.handleSubmit}>
             <input
@@ -96,9 +101,18 @@ class App extends React.Component {
             <br />
             <input type="submit" value={"Submit"} />
           </form>
-          {this.checkIfUserWon() && <p>Bravo! You guessed the word!</p>}
+          {this.checkIfUserWon() && (
+            <div>
+              {" "}
+              <p>Bravo! You guessed the word!</p>
+              <button onClick={this.resetGame}>Play again</button>
+            </div>
+          )}
           {this.checkIfUserLost() && (
-            <p>Oops! No more guesses left, you lose!</p>
+            <div>
+              <p>Oops! No more guesses left, you lose!</p>
+              <button onClick={this.resetGame}>Play again</button>
+            </div>
           )}
         </header>
       </div>
