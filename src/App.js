@@ -10,7 +10,7 @@ class App extends React.Component {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
       // currWord: getRandomWord(),
 
-      currWord: "banana",
+      currWord: "apple",
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
@@ -33,6 +33,15 @@ class App extends React.Component {
     return wordDisplay.toString();
   };
 
+  checkIfUserWon = () => {
+    for (let letter of this.state.currWord) {
+      if (this.state.guessedLetters.includes(letter)) continue;
+      else {
+        return null;
+      }
+    }
+    return <p>Well done! You guessed the word!</p>;
+  };
   // Insert form callback functions handleChange and handleSubmit here
   handleChange = (event) => {
     this.setState({ input: event.target.value });
@@ -42,17 +51,20 @@ class App extends React.Component {
     console.log(this.state);
     const guessedLetter = this.state.input.toLowerCase();
     if (guessedLetter) {
-      // this.setState((prevState) => ({
-      //   guessedLetters: [...prevState.guessedLetters, guessedLetter],
-      // input: "",
-      this.setState({
-        guessedLetters: [...this.state.guessedLetters, guessedLetter],
-      });
+      this.setState((prevState) => ({
+        guessedLetters: [...prevState.guessedLetters, guessedLetter],
+        input: "",
+        // this.setState({
+        //   guessedLetters: [...this.state.guessedLetters, guessedLetter],
+        //   input: "",
+      }));
     }
   };
 
   render() {
     console.log(this.state.input);
+    console.log(this.checkIfUserWon());
+
     return (
       <div className="App">
         <header className="App-header">
@@ -78,6 +90,7 @@ class App extends React.Component {
             <br />
             <input type="submit" value={"Submit"} />
           </form>
+          {this.checkIfUserWon()}
         </header>
       </div>
     );
