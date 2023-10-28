@@ -11,6 +11,8 @@ class App extends React.Component {
       currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
+      numGuessesLeft: 6,
+      formInput: "",
       // Insert num guesses left state here
       // Insert form input state here
     };
@@ -31,6 +33,29 @@ class App extends React.Component {
 
   // Insert form callback functions handleChange and handleSubmit here
 
+  handleChange = (event) => {
+    this.setState({ formInput: event.target.value });
+    event.preventDefault();
+  };
+
+  handleSubmit = (event) => {
+    this.setState({
+      guessedLetters: [...this.state.guessedLetters, this.state.formInput],
+    });
+    if (this.state.formInput.toString.length > 1) {
+      <p>Only one letter at a time</p>;
+    }
+    event.preventDefault();
+  };
+
+  resetGuesses = () => {
+    this.setState({
+      guessedLetters: [],
+      numGuessesLeft: 6,
+      currWord: getRandomWord(),
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -45,6 +70,15 @@ class App extends React.Component {
           <h3>Input</h3>
           {/* Insert form element here */}
           Todo: Insert form element here
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              value={this.state.formInput}
+              onChange={this.handleChange}
+            ></input>
+          </form>
+          <button onClick={this.handleSubmit}>Submit</button>
+          <button onClick={this.resetGuesses}>Reset</button>
         </header>
       </div>
     );
