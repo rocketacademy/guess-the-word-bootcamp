@@ -1,5 +1,5 @@
 import React from "react";
-import { getRandomWord } from "./utils.js";
+// import { getRandomWord } from "./utils.js";
 import "./App.css";
 
 class App extends React.Component {
@@ -8,7 +8,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      currWord: getRandomWord(),
+      // currWord: getRandomWord(),
+
+      currWord: "banana",
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
@@ -27,6 +29,7 @@ class App extends React.Component {
         wordDisplay.push("_");
       }
     }
+
     return wordDisplay.toString();
   };
 
@@ -34,11 +37,22 @@ class App extends React.Component {
   handleChange = (event) => {
     this.setState({ input: event.target.value });
   };
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
-  }
+    console.log(this.state);
+    const guessedLetter = this.state.input.toLowerCase();
+    if (guessedLetter) {
+      // this.setState((prevState) => ({
+      //   guessedLetters: [...prevState.guessedLetters, guessedLetter],
+      // input: "",
+      this.setState({
+        guessedLetters: [...this.state.guessedLetters, guessedLetter],
+      });
+    }
+  };
 
   render() {
+    console.log(this.state.input);
     return (
       <div className="App">
         <header className="App-header">
@@ -46,6 +60,7 @@ class App extends React.Component {
           <h3>Word Display</h3>
           {this.generateWordDisplay()}
           <h3>Guessed Letters</h3>
+
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
@@ -61,7 +76,7 @@ class App extends React.Component {
               onChange={this.handleChange}
             />
             <br />
-            <input type="submit" value="Submit" />
+            <input type="submit" value={"Submit"} />
           </form>
         </header>
       </div>
