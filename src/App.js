@@ -49,10 +49,25 @@ class App extends React.Component {
       this.setState({
         guessedLetters: [...this.state.guessedLetters, guessedAlphabet],
         guessedInput: "",
+        numGuessLeft: this.state.numGuessLeft - 1,
       });
     } else {
       alert(`Only 1 alphabet!`);
     }
+  };
+
+  restartGame = () => {
+    this.setState({
+      // currWord is the current secret word for this round. Update this with this.setState after each round.
+      currWord: "abc",
+      //getRandomWord(),
+      // guessedLetters stores all letters a user has guessed so far
+      guessedLetters: [],
+      // Insert num guesses left state here
+      numGuessLeft: 10,
+      // Insert form input state here
+      guessedInput: "",
+    });
   };
 
   render() {
@@ -76,7 +91,7 @@ class App extends React.Component {
             />
             <input type="submit" value="submit" />
           </form>
-          Todo: Insert form element here
+          No. of guess left: {this.state.numGuessLeft}
         </header>
       </div>
     );
