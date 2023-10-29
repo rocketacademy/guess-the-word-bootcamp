@@ -13,7 +13,7 @@ class App extends React.Component {
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
-      numGuessLeft: 10,
+      numGuessLeft: 2,
       // Insert form input state here
       guessedInput: "",
     };
@@ -92,6 +92,9 @@ class App extends React.Component {
             <input type="submit" value="submit" />
           </form>
           No. of guess left: {this.state.numGuessLeft}
+          {this.state.numGuessLeft === 0 && (
+            <button onClick={this.restartGame}>Restart</button>
+          )}
         </header>
       </div>
     );
