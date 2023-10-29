@@ -52,7 +52,6 @@ class App extends React.Component {
             onSubmit={this.handleSubmit}
             onChange={this.handleChange}
           />
-          Todo: Insert form element here
         </header>
       </div>
     );
