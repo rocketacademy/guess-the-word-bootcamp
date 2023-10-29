@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 
@@ -43,12 +43,16 @@ class App extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const guessedAlphabet = this.state.guessedInput;
-    console.log(guessedAlphabet);
-    alert(`Letter submitted:  ${guessedAlphabet}`);
-    this.setState({
-      guessedLetters: [...this.state.guessedLetters, guessedAlphabet],
-      guessedInput: "",
-    });
+    if (guessedAlphabet.length === 1) {
+      console.log(guessedAlphabet);
+      alert(`Letter submitted:  ${guessedAlphabet}`);
+      this.setState({
+        guessedLetters: [...this.state.guessedLetters, guessedAlphabet],
+        guessedInput: "",
+      });
+    } else {
+      alert(`Only 1 alphabet!`);
+    }
   };
 
   render() {
