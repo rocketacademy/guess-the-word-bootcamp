@@ -1,6 +1,7 @@
 import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
+import Form from "./Components/Form.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +13,9 @@ class App extends React.Component {
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
+      numGuessLeft: 10,
       // Insert form input state here
+      currInput: "",
     };
   }
 
@@ -44,6 +47,11 @@ class App extends React.Component {
             : "-"}
           <h3>Input</h3>
           {/* Insert form element here */}
+          <Form
+            value={this.state.currInput}
+            onSubmit={this.handleSubmit}
+            onChange={this.handleChange}
+          />
           Todo: Insert form element here
         </header>
       </div>
