@@ -76,6 +76,7 @@ class App extends React.Component {
   };
 
   render() {
+    const button = <button onClick={this.resetGame}>Play again</button>;
     return (
       <div className="App">
         <header className="App-header">
@@ -105,13 +106,13 @@ class App extends React.Component {
             <div>
               {" "}
               <p>Bravo! You guessed the word!</p>
-              <button onClick={this.resetGame}>Play again</button>
+              {button}
             </div>
           )}
           {this.checkIfUserLost() && (
             <div>
               <p>Oops! No more guesses left, you lose!</p>
-              <button onClick={this.resetGame}>Play again</button>
+              {button}
             </div>
           )}
         </header>
