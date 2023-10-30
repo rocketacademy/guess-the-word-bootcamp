@@ -42,11 +42,19 @@ class App extends React.Component {
   handleSubmit = (event) => {
     let { currInput, guessedLetters } = this.state;
     event.preventDefault();
-    if (currInput === "") {
+    if (currInput === "" || currInput.length > 1) {
       alert("Please input a letter");
+      this.setState({
+        currInput: "",
+      });
     } else if (!guessedLetters.includes(currInput)) {
       this.setState({
-        guessedLetters: [...guessedLetters, currInput.toUpperCase()],
+        guessedLetters: [...guessedLetters, currInput],
+        currInput: "",
+      });
+    } else {
+      alert("You have entered a duplicated letter");
+      this.setState({
         currInput: "",
       });
     }
@@ -54,6 +62,7 @@ class App extends React.Component {
 
   render() {
     let { currInput } = this.state;
+
     return (
       <div className="App">
         <header className="App-header">
