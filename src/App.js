@@ -1,7 +1,7 @@
 import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
-import Form from "./Components/Form.js";
+import Form from "./Components/Form";
 
 class App extends React.Component {
   constructor(props) {
@@ -33,8 +33,27 @@ class App extends React.Component {
   };
 
   // Insert form callback functions handleChange and handleSubmit here
+  handleChange = (event) => {
+    this.setState({
+      currInput: event.target.value,
+    });
+  };
+
+  handleSubmit = (event) => {
+    let { currInput, guessedLetters } = this.state;
+    event.preventDefault();
+    if (currInput === "") {
+      alert("Please input a letter");
+    } else if (!guessedLetters.includes(currInput)) {
+      this.setState({
+        guessedLetters: [...guessedLetters, currInput.toUpperCase()],
+        currInput: "",
+      });
+    }
+  };
 
   render() {
+    let { currInput } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -47,10 +66,11 @@ class App extends React.Component {
             : "-"}
           <h3>Input</h3>
           {/* Insert form element here */}
+
           <Form
-            value={this.state.currInput}
-            onSubmit={this.handleSubmit}
+            value={currInput}
             onChange={this.handleChange}
+            onSubmit={this.handleSubmit}
           />
         </header>
       </div>
