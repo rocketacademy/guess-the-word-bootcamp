@@ -36,16 +36,16 @@ class App extends React.Component {
 
   checkIfUserWon = () => {
     for (let letter of this.state.currWord) {
-      if (this.state.guessedLetters.includes(letter)) continue;
-      else {
-        return false;
-      }
+      if (!this.state.guessedLetters.includes(letter)) return false;
+      // if (this.state.guessedLetters.includes(letter)) continue;
+      // else {
+      //   return false;}
     }
     return true;
   };
   checkIfUserLost = () => {
-    const hasUserWon = this.checkIfUserWon();
-    if (!hasUserWon && this.state.numOfGuessesLeft === 0) return true;
+    if (!this.checkIfUserWon() && this.state.numOfGuessesLeft === 0)
+      return true;
   };
 
   resetGame = () => {
@@ -84,7 +84,7 @@ class App extends React.Component {
           <h3>Word Display</h3>
           {this.generateWordDisplay()}
           <h3>Guessed Letters</h3>
-          {this.state.guessedLetters.length > 0
+          {this.state.guessedLetters.length
             ? this.state.guessedLetters.toString()
             : "-"}
           <h4>You got {this.state.numOfGuessesLeft} guesses left.</h4>
