@@ -23,6 +23,7 @@ class App extends React.Component {
       // Insert form input state here
       formInput: "",
       scores: 0,
+      correctGuess: false,
     };
   }
 
@@ -53,32 +54,49 @@ class App extends React.Component {
     if (this.state.formInput.length === 0 || this.state.formInput.length > 1) {
       return;
     }
-    //check whether it is alphabet
 
     //make to lowercase
     const lowerCaseFormInput = this.state.formInput.toLowerCase();
 
     //save the state
-    this.setState((prevState) => ({
-      guessedLetters: [...prevState.guessedLetters, lowerCaseFormInput],
+    this.setState(
+      (prevState) => ({
+        guessedLetters: [...prevState.guessedLetters, lowerCaseFormInput],
 
-      numGuesses: this.state.currWord.includes(lowerCaseFormInput)
-        ? this.state.numGuesses
-        : this.state.numGuesses - 1,
-      formInput: "",
-    }));
+        numGuesses: this.state.currWord.includes(lowerCaseFormInput)
+          ? this.state.numGuesses
+          : this.state.numGuesses - 1,
+        formInput: "",
+      }),
+      this.checkGuess
+    );
   };
 
   checkGuess = () => {
+    let temp = true;
     for (let char of this.state.currWord) {
       if (!this.state.guessedLetters.includes(char)) {
-        return false;
+        temp = false;
       }
     }
-    return true;
+
+    this.setState(
+      {
+        correctGuess: temp,
+      },
+      () => {
+        if (temp) {
+          this.countScore();
+        }
+      }
+    );
   };
 
-  countScore = () => {};
+  countScore = () => {
+    this.setState((prevState) => ({
+      scores: prevState.scores + 1,
+    }));
+  };
 
   reset = () => {
     this.setState({
@@ -86,19 +104,18 @@ class App extends React.Component {
       guessedLetters: [],
       numGuesses: TOTALGUESS,
       formInput: "",
+      correctGuess: false,
     });
   };
 
   render() {
-    const hasUserGuessedWord = this.checkGuess();
-    const gameEnd = this.state.numGuesses === 0 || hasUserGuessedWord;
+    const gameEnd = this.state.numGuesses === 0 || this.state.correctGuess;
     const gameReset = (
       <button className="btn btn-dark" onClick={this.reset}>
         Reset
       </button>
     );
     const imgSrc = require(`./PNG/${this.state.numGuesses}.png`);
-    console.log(imgSrc);
 
     return (
       <div className="container">
@@ -115,7 +132,6 @@ class App extends React.Component {
           </div>
           <div className="col-6 ">
             <h1>Guess The Word 🚀</h1>
-            {this.state.currWord}
             <br />
             <h1>{this.generateWordDisplay()}</h1>
             <p>Number of guesses left: {this.state.numGuesses}</p>
@@ -136,13 +152,14 @@ class App extends React.Component {
               <input type="submit" value="submit" disabled={gameEnd} />
             </form>
             <p>Overall score: {this.state.scores}</p>
-            {hasUserGuessedWord && (
+            {console.log(this.state.correctGuess)}
+            {this.state.correctGuess && (
               <div>
                 <h1>Congrats!</h1>
                 {gameReset}
               </div>
             )}
-            {!hasUserGuessedWord && this.state.numGuesses < 1 && (
+            {!this.state.correctGuess && this.state.numGuesses < 1 && (
               <div>
                 <h1>Try again </h1>
                 <p>The word is {this.state.currWord}</p>
