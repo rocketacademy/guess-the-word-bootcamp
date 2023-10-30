@@ -75,9 +75,10 @@ class App extends React.Component {
         return false;
       }
     }
-
     return true;
   };
+
+  countScore = () => {};
 
   reset = () => {
     this.setState({
@@ -96,7 +97,7 @@ class App extends React.Component {
         Reset
       </button>
     );
-    const imgSrc = require(`./JPG/${this.state.numGuesses}.png`);
+    const imgSrc = require(`./PNG/${this.state.numGuesses}.png`);
     console.log(imgSrc);
 
     return (
@@ -114,9 +115,9 @@ class App extends React.Component {
           </div>
           <div className="col-6 ">
             <h1>Guess The Word 🚀</h1>
+            {this.state.currWord}
             <br />
             <h1>{this.generateWordDisplay()}</h1>
-
             <p>Number of guesses left: {this.state.numGuesses}</p>
             <p>
               Guessed Letters:{" "}
@@ -124,7 +125,6 @@ class App extends React.Component {
                 ? this.state.guessedLetters.toString()
                 : "-"}
             </p>
-
             {/* Insert form element here */}
             <form onSubmit={this.handleSubmit}>
               <input
@@ -135,7 +135,6 @@ class App extends React.Component {
               />
               <input type="submit" value="submit" disabled={gameEnd} />
             </form>
-
             <p>Overall score: {this.state.scores}</p>
             {hasUserGuessedWord && (
               <div>
