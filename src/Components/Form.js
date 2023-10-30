@@ -1,11 +1,15 @@
 import React from "react";
 
-const Form = ({ value, onSubmit, onChange }) => {
+const Form = ({ value, onChange, onSubmit }) => {
   return (
     <>
-      <form onClick={onSubmit}>
-        <input onChange={onChange} value={value} />
-        <input type="submit" />
+      <form onSubmit={onSubmit}>
+        <input
+          value={value}
+          onChange={onChange}
+          placeholder="Enter only one letter"
+        />
+        <input type="submit" value="Submit" />
       </form>
     </>
   );
