@@ -17,3 +17,14 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.loading-img-container {
+  text-align: left;
+  width: 100px;
+}
+
+.loading-img {
+  object-fit: cover;
+  object-position: 0%;
+  height: 100px;
+}

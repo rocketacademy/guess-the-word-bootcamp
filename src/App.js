@@ -13,6 +13,8 @@ class App extends React.Component {
       guessedLetters: [],
       // Insert num guesses left state here
       // Insert form input state here
+      guessValue: "",
+      inputWarning: null,
     };
   }
 
@@ -30,21 +32,97 @@ class App extends React.Component {
   };
 
   // Insert form callback functions handleChange and handleSubmit here
+  handleSubmit = (event) => {
+    event.preventDefault();
+    if (this.state.guessValue.length !== 1) {
+      this.setState({ inputWarning: <p>Only one letter is allowed</p> });
+    } else if (this.state.guessedLetters.includes(this.state.guessValue)) {
+      this.setState({
+        inputWarning: <p>You have already guessed this letter</p>,
+      });
+    } else {
+      this.setState({
+        guessedLetters: [...this.state.guessedLetters, this.state.guessValue],
+        guessValue: "",
+        inputWarning: null,
+      });
+    }
+  };
+
+  handleChange = (event) => {
+    let { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  refreshPage = () => {
+    window.location.reload();
+  };
 
   render() {
+    const remainingGuesses =
+      this.state.currWord.length * 2 - this.state.guessedLetters.length;
+
+    const form = (
+      <div>
+        <h3>Input</h3>
+        <form onSubmit={this.handleSubmit}>
+          <label>Type your guess here: </label>
+          <input
+            type="text"
+            name="guessValue"
+            value={this.state.guessValue}
+            onChange={this.handleChange}
+          />
+          <br />
+          {this.state.inputWarning !== undefined && this.state.inputWarning}
+          <input type="submit" value="submit" />
+        </form>
+      </div>
+    );
+
+    const currWordDisplay = this.generateWordDisplay();
+
+    const retry = (
+      <div>
+        <h3>Game over</h3>
+        <p>
+          {currWordDisplay.includes("_")
+            ? "Better luck next time"
+            : "Good job!"}
+        </p>
+        <button onClick={this.refreshPage}>Try again</button>
+      </div>
+    );
+
+    const fractionTriesUsed =
+      1 - remainingGuesses / (this.state.currWord.length * 2);
+
     return (
       <div className="App">
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
-          <h3>Word Display</h3>
-          {this.generateWordDisplay()}
-          <h3>Guessed Letters</h3>
+          <h4>Word Display</h4>
+          {remainingGuesses > 0 && currWordDisplay.includes("_")
+            ? currWordDisplay
+            : this.state.currWord}
+          <h4>Guessed Letters</h4>
           {this.state.guessedLetters.length > 0
             ? this.state.guessedLetters.toString()
             : "-"}
-          <h3>Input</h3>
+          <h4>Remaining guesses: {remainingGuesses}</h4>
+          <div className="loading-img-container">
+            <img
+              style={{ width: fractionTriesUsed * 100 + "px" }}
+              className="loading-img"
+              src="./logo512.png"
+              alt=""
+            />
+          </div>
+
           {/* Insert form element here */}
-          Todo: Insert form element here
+          {remainingGuesses > 0 && currWordDisplay.includes("_") ? form : retry}
         </header>
       </div>
     );
