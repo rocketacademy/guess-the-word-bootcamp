@@ -92,7 +92,7 @@ class App extends React.Component {
     const hasUserGuessedWord = this.checkGuess();
     const gameEnd = this.state.numGuesses === 0 || hasUserGuessedWord;
     const gameReset = (
-      <button className="btn btn-light" onClick={this.reset}>
+      <button className="btn btn-dark" onClick={this.reset}>
         Reset
       </button>
     );
@@ -100,50 +100,58 @@ class App extends React.Component {
     console.log(imgSrc);
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Guess The Word 🚀</h1>
-          <br />
-          {this.generateWordDisplay()}
-          <img
-            src={imgSrc}
-            alt={`Guesses left: ${this.state.numGuesses}`}
-            style={{ height: "200px" }}
-          />
-          <p>Number of guesses left: {this.state.numGuesses}</p>
-          <p>
-            Guessed Letters:{" "}
-            {this.state.guessedLetters.length > 0
-              ? this.state.guessedLetters.toString()
-              : "-"}
-          </p>
-
-          {/* Insert form element here */}
-          <form onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              value={this.state.formInput}
-              onChange={this.handleChange}
-              disabled={gameEnd}
+      <div className="container">
+        <div
+          className="row d-flex align-items-center"
+          style={{ minHeight: "100vh" }}
+        >
+          <div className="col-6">
+            <img
+              src={imgSrc}
+              alt={`Guesses left: ${this.state.numGuesses}`}
+              style={{ height: "400px" }}
             />
-            <input type="submit" value="submit" disabled={gameEnd} />
-          </form>
+          </div>
+          <div className="col-6 ">
+            <h1>Guess The Word 🚀</h1>
+            <br />
+            <h1>{this.generateWordDisplay()}</h1>
 
-          <p>Overall score: {this.state.scores}</p>
-          {hasUserGuessedWord && (
-            <div>
-              <h1>Congrats!</h1>
-              {gameReset}
-            </div>
-          )}
-          {!hasUserGuessedWord && this.state.numGuesses < 1 && (
-            <div>
-              <h1>Try again </h1>
-              <h3>The word is {this.state.currWord}</h3>
-              {gameReset}
-            </div>
-          )}
-        </header>
+            <p>Number of guesses left: {this.state.numGuesses}</p>
+            <p>
+              Guessed Letters:{" "}
+              {this.state.guessedLetters.length > 0
+                ? this.state.guessedLetters.toString()
+                : "-"}
+            </p>
+
+            {/* Insert form element here */}
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                value={this.state.formInput}
+                onChange={this.handleChange}
+                disabled={gameEnd}
+              />
+              <input type="submit" value="submit" disabled={gameEnd} />
+            </form>
+
+            <p>Overall score: {this.state.scores}</p>
+            {hasUserGuessedWord && (
+              <div>
+                <h1>Congrats!</h1>
+                {gameReset}
+              </div>
+            )}
+            {!hasUserGuessedWord && this.state.numGuesses < 1 && (
+              <div>
+                <h1>Try again </h1>
+                <p>The word is {this.state.currWord}</p>
+                {gameReset}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
