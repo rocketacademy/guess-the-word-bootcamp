@@ -3,7 +3,11 @@ import { getRandomWord } from "./utils.js";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const TOTALGUESS = 5;
+const TOTALGUESS = 7;
+const numGuessesArray = [];
+for (let i = TOTALGUESS; i >= 0; i--) {
+  numGuessesArray.push(i);
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -92,6 +96,8 @@ class App extends React.Component {
         Reset
       </button>
     );
+    const imgSrc = require(`./JPG/${this.state.numGuesses}.png`);
+    console.log(imgSrc);
 
     return (
       <div className="App">
@@ -99,6 +105,11 @@ class App extends React.Component {
           <h1>Guess The Word 🚀</h1>
           <br />
           {this.generateWordDisplay()}
+          <img
+            src={imgSrc}
+            alt={`Guesses left: ${this.state.numGuesses}`}
+            style={{ height: "200px" }}
+          />
           <p>Number of guesses left: {this.state.numGuesses}</p>
           <p>
             Guessed Letters:{" "}
@@ -117,6 +128,7 @@ class App extends React.Component {
             />
             <input type="submit" value="submit" disabled={gameEnd} />
           </form>
+
           <p>Overall score: {this.state.scores}</p>
           {hasUserGuessedWord && (
             <div>
