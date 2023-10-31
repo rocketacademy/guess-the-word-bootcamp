@@ -25,8 +25,9 @@ class App extends React.Component {
     let { currWord, guessedLetters, wordDisplay } = this.state;
 
     // for...of is a string and array iterator that does not use index
-    console.log(currWord);
+
     for (let letter of currWord) {
+      console.log(currWord);
       if (guessedLetters.includes(letter)) {
         wordDisplay.push(letter);
       } else {
@@ -84,14 +85,32 @@ class App extends React.Component {
   };
 
   render() {
-    let { currInput, numGuessLeft } = this.state;
+    let { currInput, numGuessLeft, currWord, wordDisplay } = this.state;
+    let hasUserWonMessage;
+    let correctWord = wordDisplay.join("");
+    if (correctWord === currWord) {
+      hasUserWonMessage = (
+        <>
+          <p>Congrats, you won!</p>
+        </>
+      );
+    }
+
+    let hasUserLostMessage;
+    if (numGuessLeft === 0) {
+      hasUserLostMessage = (
+        <>
+          <p>You lose, the word was {currWord}</p>
+        </>
+      );
+    }
 
     return (
       <div className="App">
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
           <h3>Word Display</h3>
-          {this.state.wordDisplay.toString()}
+          {this.state.wordDisplay.join("")}
           <h5>
             Guessed Letters:{" "}
             {this.state.guessedLetters.length > 0
@@ -101,7 +120,8 @@ class App extends React.Component {
 
           <h5>Guesses Left: {numGuessLeft} </h5>
 
-          {/* Insert form element here */}
+          {hasUserWonMessage}
+          {hasUserLostMessage}
 
           <Form
             value={currInput}
