@@ -16,20 +16,28 @@ class App extends React.Component {
       numGuessLeft: 10,
       // Insert form input state here
       currInput: "",
+      wordDisplay: [],
+      hasPlayerGuessedCorrectly: true,
     };
   }
 
   generateWordDisplay = () => {
-    const wordDisplay = [];
+    let { currWord, guessedLetters, wordDisplay } = this.state;
+
     // for...of is a string and array iterator that does not use index
-    for (let letter of this.state.currWord) {
-      if (this.state.guessedLetters.includes(letter)) {
+    console.log(currWord);
+    for (let letter of currWord) {
+      if (guessedLetters.includes(letter)) {
         wordDisplay.push(letter);
       } else {
         wordDisplay.push("_");
       }
     }
-    return wordDisplay.toString();
+
+    this.setState({
+      wordDisplay: wordDisplay,
+      currInput: "",
+    });
   };
 
   // Insert form callback functions handleChange and handleSubmit here
@@ -40,7 +48,7 @@ class App extends React.Component {
   };
 
   handleSubmit = (event) => {
-    let { currInput, guessedLetters } = this.state;
+    let { currInput, guessedLetters, currWord } = this.state;
     event.preventDefault();
     if (currInput === "" || currInput.length > 1) {
       alert("Please input a letter");
@@ -48,10 +56,15 @@ class App extends React.Component {
         currInput: "",
       });
     } else if (!guessedLetters.includes(currInput)) {
-      this.setState({
-        guessedLetters: [...guessedLetters, currInput],
-        currInput: "",
-      });
+      this.setState(
+        (prevState) => ({
+          guessedLetters: [...guessedLetters, currInput],
+          numGuessLeft: currWord.includes(currInput)
+            ? prevState.numGuessLeft
+            : prevState.numGuessLeft - 1,
+        }),
+        () => this.resetWordDisplay()
+      );
     } else {
       alert("You have entered a duplicated letter");
       this.setState({
@@ -60,20 +73,34 @@ class App extends React.Component {
     }
   };
 
+  // make all letters in wordDisplay equal to '-' in order to avoid duplicated lengths
+  resetWordDisplay = () => {
+    this.setState(
+      {
+        wordDisplay: [],
+      },
+      () => this.generateWordDisplay()
+    );
+  };
+
   render() {
-    let { currInput } = this.state;
+    let { currInput, numGuessLeft } = this.state;
 
     return (
       <div className="App">
         <header className="App-header">
           <h1>Guess The Word 🚀</h1>
           <h3>Word Display</h3>
-          {this.generateWordDisplay()}
-          <h3>Guessed Letters</h3>
-          {this.state.guessedLetters.length > 0
-            ? this.state.guessedLetters.toString()
-            : "-"}
-          <h3>Input</h3>
+          {this.state.wordDisplay.toString()}
+          <h5>
+            Guessed Letters:{" "}
+            {this.state.guessedLetters.length > 0
+              ? this.state.guessedLetters.toString()
+              : "-"}
+          </h5>
+
+          <h5>Guesses Left: {numGuessLeft} </h5>
+
           {/* Insert form element here */}
 
           <Form
