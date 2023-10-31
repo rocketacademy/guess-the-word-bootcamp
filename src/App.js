@@ -34,7 +34,7 @@ class App extends React.Component {
         wordDisplay.push("_");
       }
     }
-
+    // display word and make text in textbox empty
     this.setState({
       wordDisplay: wordDisplay,
       currInput: "",
@@ -74,7 +74,7 @@ class App extends React.Component {
     }
   };
 
-  // make all letters in wordDisplay equal to '-' in order to avoid duplicated lengths
+  // make all letters in wordDisplay empty to avoid duplicates when calling generateWordDisplay function
   resetWordDisplay = () => {
     this.setState(
       {
