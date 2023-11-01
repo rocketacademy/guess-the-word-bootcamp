@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { getRandomWord } from "./utils.js";
 import "./App.css";
 
@@ -8,12 +8,11 @@ class App extends React.Component {
     super(props);
     this.state = {
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      currWord: "abc",
-      //getRandomWord(),
+      currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
-      numGuessLeft: 2,
+      numGuessLeft: 10,
       // Insert form input state here
       guessedInput: "",
     };
@@ -59,8 +58,7 @@ class App extends React.Component {
   restartGame = () => {
     this.setState({
       // currWord is the current secret word for this round. Update this with this.setState after each round.
-      currWord: "abc",
-      //getRandomWord(),
+      currWord: getRandomWord(),
       // guessedLetters stores all letters a user has guessed so far
       guessedLetters: [],
       // Insert num guesses left state here
@@ -70,7 +68,29 @@ class App extends React.Component {
     });
   };
 
+  // determineWinner = (guessedAlphabet) => {
+  //   const guessedLetters = [...this.state.guessedLetters, guessedAlphabet];
+  //   for (let i = 0; i < this.state.currWord.length; i += 0) {
+  //     if (!guessedLetters.includes(this.state.currWord[i])) {
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // };
+
+  determineWinner = (guessedAlphabet) => {
+    const guessedLetters = [...this.state.guessedLetters, guessedAlphabet];
+    for (let letter of this.state.currWord) {
+      if (!guessedLetters.includes(letter)) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   render() {
+    const hasPlayerGuessedTheWord = this.determineWinner();
+
     return (
       <div className="App">
         <header className="App-header">
@@ -82,6 +102,7 @@ class App extends React.Component {
             ? this.state.guessedLetters.toString()
             : "-"}
           <h3>Input</h3>
+          <br />
           <form onSubmit={this.handleSubmit}>
             <input
               type="text"
@@ -89,11 +110,18 @@ class App extends React.Component {
               value={this.state.guessedInput}
               onChange={(e) => this.handleChange(e)}
             />
-            <input type="submit" value="submit" />
+            {this.state.numGuessLeft === 0 || hasPlayerGuessedTheWord ? (
+              <button onClick={this.restartGame}>Restart</button>
+            ) : (
+              <input type="submit" value="submit" />
+            )}
           </form>
-          No. of guess left: {this.state.numGuessLeft}
-          {this.state.numGuessLeft === 0 && (
-            <button onClick={this.restartGame}>Restart</button>
+          {hasPlayerGuessedTheWord && <h3>You've won!</h3>}
+          {!hasPlayerGuessedTheWord && this.state.numGuessLeft === 0 ? (
+            <h3>You lose.. The word is "{this.state.currWord}"~ Try again!</h3>
+          ) : null}
+          {!hasPlayerGuessedTheWord && (
+            <p>No. of guess left: {this.state.numGuessLeft}</p>
           )}
         </header>
       </div>
