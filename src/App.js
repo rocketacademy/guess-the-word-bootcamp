@@ -34,7 +34,7 @@ class App extends React.Component {
   // Insert form callback functions handleChange and handleSubmit here
 
   handleChange = (event) => {
-    this.setState({ formInput: event.target.value });
+    this.setState({ formInput: event.target.value.toLowerCase() });
     event.preventDefault();
   };
 
@@ -62,6 +62,8 @@ class App extends React.Component {
         `Incorrect! You have ${this.state.numGuessesLeft - 1} guesses left.`
       );
       this.setState({ numGuessesLeft: this.state.numGuessesLeft - 1 });
+    } else if (this.state.numGuessesLeft === 0) {
+      alert(`You have lost! The word was ${this.state.currWord}.`);
     } else {
       alert(`You have lost! The word was ${this.state.currWord}.`);
     }
