@@ -42,9 +42,30 @@ class App extends React.Component {
     this.setState({
       guessedLetters: [...this.state.guessedLetters, this.state.formInput],
     });
-    if (this.state.formInput.toString.length > 1) {
-      <p>Only one letter at a time</p>;
+
+    if (this.state.formInput.length > 1) {
+      this.setState({
+        guessedLetters: this.state.guessedLetters.slice(
+          this.state.guessedLetters.pop
+        ),
+      });
+      alert("Please enter only one letter at a time.");
+    } else if (this.state.guessedLetters.includes(this.state.formInput)) {
+      alert("You have already guessed this letter.");
+    } else if (this.state.currWord.includes(this.state.formInput)) {
+      alert(
+        `Correct! You have guessed a letter in the word! You have ${this.state.numGuessesLeft} guesses left.`
+      );
+    } else if (this.state.numGuessesLeft !== 0) {
+      this.state.formInput = "";
+      alert(
+        `Incorrect! You have ${this.state.numGuessesLeft - 1} guesses left.`
+      );
+      this.setState({ numGuessesLeft: this.state.numGuessesLeft - 1 });
+    } else {
+      alert(`You have lost! The word was ${this.state.currWord}.`);
     }
+
     event.preventDefault();
   };
 
@@ -68,8 +89,6 @@ class App extends React.Component {
             ? this.state.guessedLetters.toString()
             : "-"}
           <h3>Input</h3>
-          {/* Insert form element here */}
-          Todo: Insert form element here
           <form onSubmit={this.handleSubmit}>
             <input
               type="text"
@@ -77,7 +96,13 @@ class App extends React.Component {
               onChange={this.handleChange}
             ></input>
           </form>
-          <button onClick={this.handleSubmit}>Submit</button>
+          {this.state.numGuessesLeft > 1 ? (
+            <button onClick={this.handleSubmit}>Submit</button>
+          ) : (
+            <button onClick={this.handleSubmit} disabled>
+              Submit
+            </button>
+          )}
           <button onClick={this.resetGuesses}>Reset</button>
         </header>
       </div>
